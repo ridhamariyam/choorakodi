@@ -1,0 +1,208 @@
+/*
+ * The site footer, after noahlesage.com's: one compact band in the muted
+ * teal-blue below — mark,
+ * link columns and outbound links on one row, a hairline, then the fine
+ * print. Values are the source's computed ones (docs: noahlesage.com
+ * footer-reveal spec); the inline padding is the site gutter so the footer
+ * lines up with the navbar.
+ */
+.footer {
+  --pad: clamp(1.25rem, 5vw, 5.5rem);
+  /* Deep, desaturated teal-blue. Flat — no gradient or texture. Kept in step
+   * with the reveal ground in RevealFooter.module.css. */
+  background-color: #35494a;
+  color: #fff;
+  padding: 2.8vw var(--pad) 2vw;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8vw;
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Set by RevealFooter until the footer has lifted into view. */
+:global([data-visible="false"]) .inner {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vw;
+}
+
+.brand {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.brandMark {
+  height: clamp(30px, 2.8vw, 42px);
+}
+
+.cols {
+  display: flex;
+  flex: 1 1 0%;
+  gap: clamp(16px, 2.5vw, 40px);
+}
+
+.nav {
+  display: contents;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.colHead {
+  margin: 0 0 3px;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.55);
+}
+
+.list {
+  display: contents;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  font-size: clamp(10px, 0.78vw, 12px);
+  font-weight: 400;
+  line-height: 1.35;
+  color: rgb(255 255 255 / 0.78);
+  transition: color 0.25s;
+}
+
+a.link:hover,
+a.link:focus-visible {
+  color: #fff;
+}
+
+.socials {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 20px;
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgb(255 255 255 / 0.78);
+  transition: color 0.25s;
+}
+
+.social:hover,
+.social:focus-visible {
+  color: #fff;
+}
+
+.social svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.social span {
+  font-size: 9px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.2vw;
+  border-top: 1px solid rgb(255 255 255 / 0.16);
+  font-size: clamp(8px, 0.65vw, 10px);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.04em;
+  color: rgb(255 255 255 / 0.55);
+}
+
+.bottomRight {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 26px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.62);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 7vw var(--pad) 4vw;
+  }
+  .inner {
+    gap: 6vw;
+  }
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6vw;
+  }
+  .brandMark {
+    height: clamp(34px, 9vw, 44px);
+  }
+  .cols {
+    flex-wrap: wrap;
+    gap: 5vw 10vw;
+    width: 100%;
+  }
+  .col {
+    gap: 5px;
+  }
+  .colHead {
+    margin-bottom: 4px;
+  }
+  .link {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .socials {
+    gap: 24px;
+  }
+  .social svg {
+    width: 20px;
+    height: 20px;
+  }
+  .social span {
+    font-size: 10px;
+  }
+  .bottom {
+    flex-wrap: wrap;
+    padding-top: 5vw;
+    font-size: clamp(9px, 2.5vw, 11px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner {
+    transition: opacity 0.3s linear;
+  }
+  :global([data-visible="false"]) .inner {
+    transform: none;
+  }
+}

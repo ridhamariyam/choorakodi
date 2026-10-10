@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choorakkodi — Page Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #F7F5F0;
+      --surface: #FFFFFF;
+      --surface-raised: #FDFCFA;
+      --border: #E4DED4;
+      --border-light: #EDE8E0;
+
+      --text-primary: #1C1917;
+      --text-secondary: #5C5448;
+      --text-tertiary: #9C9080;
+
+      --accent-gold: #B8860B;
+      --accent-gold-light: #FBF3DC;
+      --accent-gold-mid: #F0D98A;
+
+      --seo-bg: #EBF5E8;
+      --seo-text: #1E5C12;
+      --seo-dot: #2E8B1A;
+      --seo-border: #C5E0BE;
+
+      --brand-bg: #FFF3E4;
+      --brand-text: #7A3800;
+      --brand-dot: #C15C0A;
+      --brand-border: #F0D0AE;
+
+      --dynamic-bg: #E8F1FB;
+      --dynamic-text: #0A3E78;
+      --dynamic-dot: #1A6AB8;
+      --dynamic-border: #B8D3EF;
+
+      --heavy-bg: #FCF0EC;
+      --heavy-text: #6B1F0A;
+      --heavy-dot: #B83018;
+      --heavy-border: #F0C4B8;
+
+      --intensity-fill: #B8860B;
+      --intensity-empty: #E8E0D0;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ─────────────────────────────────── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem 1.25rem;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+    }
+
+    .header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .header-sub {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+      font-weight: 300;
+    }
+
+    /* ── Wrap ─────────────────────────────────── */
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+    }
+
+    /* ── Summary Grid ──────────────────────────── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 560px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .wrap {
+        padding: 1.25rem 1rem 3rem;
+      }
+
+      .header {
+        padding: 1.25rem 1rem 1rem;
+      }
+    }
+
+    .sum-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sum-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-mid));
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .sum-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .sum-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    /* ── Legend ────────────────────────────────── */
+    .legend-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: .85rem 1.1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem 1.4rem;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .legend-heading {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      margin-right: 4px;
+    }
+
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .leg-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* ── Filter Row ────────────────────────────── */
+    .filter-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+      font-family: 'DM Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .pill {
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      background: var(--surface);
+      color: var(--text-secondary);
+      transition: all .18s ease;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.1px;
+    }
+
+    .pill:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: var(--accent-gold-light);
+    }
+
+    .pill.on {
+      background: var(--accent-gold);
+      color: #fff;
+      border-color: var(--accent-gold);
+      box-shadow: 0 2px 8px rgba(184, 134, 11, 0.3);
+    }
+
+    .pill.on-seo {
+      background: var(--seo-text);
+      color: #fff;
+      border-color: var(--seo-text);
+      box-shadow: 0 2px 8px rgba(30, 92, 18, 0.25);
+    }
+
+    .pill.on-brand {
+      background: var(--brand-text);
+      color: #fff;
+      border-color: var(--brand-text);
+      box-shadow: 0 2px 8px rgba(122, 56, 0, 0.25);
+    }
+
+    .pill.on-dynamic {
+      background: var(--dynamic-text);
+      color: #fff;
+      border-color: var(--dynamic-text);
+      box-shadow: 0 2px 8px rgba(10, 62, 120, 0.25);
+    }
+
+    .pill.on-heavy {
+      background: var(--heavy-text);
+      color: #fff;
+      border-color: var(--heavy-text);
+      box-shadow: 0 2px 8px rgba(107, 31, 10, 0.25);
+    }
+
+    /* ── Pages List ────────────────────────────── */
+    .pages-list {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    /* ── Page Card ─────────────────────────────── */
+    .page-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s ease, border-color .2s ease, transform .15s ease;
+    }
+
+    .page-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #D4C8B0;
+      transform: translateY(-1px);
+    }
+
+    .page-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1rem 1.1rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .page-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--accent-gold-light);
+      border: 1px solid var(--accent-gold-mid);
+      font-size: 11.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .page-title {
+      font-size: 14px;
+      font-weight: 600;
+      flex: 1;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .page-url {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      font-weight: 400;
+      margin-top: 2px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .page-badges {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      border: 1px solid transparent;
+    }
+
+    .b-seo {
+      background: var(--seo-bg);
+      color: var(--seo-text);
+      border-color: var(--seo-border);
+    }
+
+    .b-brand {
+      background: var(--brand-bg);
+      color: var(--brand-text);
+      border-color: var(--brand-border);
+    }
+
+    .b-dynamic {
+      background: var(--dynamic-bg);
+      color: var(--dynamic-text);
+      border-color: var(--dynamic-border);
+    }
+
+    .b-heavy {
+      background: var(--heavy-bg);
+      color: var(--heavy-text);
+      border-color: var(--heavy-border);
+    }
+
+    .b-core {
+      background: #F2EDE5;
+      color: var(--text-secondary);
+      border-color: var(--border);
+    }
+
+    .page-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-size: 12px;
+      flex-shrink: 0;
+      transition: all .2s ease;
+    }
+
+    .page-card:hover .page-toggle {
+      background: var(--accent-gold-light);
+      border-color: var(--accent-gold-mid);
+      color: var(--accent-gold);
+    }
+
+    .page-toggle.open {
+      transform: rotate(180deg);
+      background: var(--accent-gold-light);
+      border-color: var(--accent-gold-mid);
+      color: var(--accent-gold);
+    }
+
+    /* ── Page Body ─────────────────────────────── */
+    .page-body {
+      border-top: 1px solid var(--border-light);
+      background: var(--surface-raised);
+      display: none;
+      padding: 1.1rem 1.2rem 1.2rem;
+    }
+
+    .page-body.open {
+      display: block;
+      animation: slideDown .18s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Meta Grid ─────────────────────────────── */
+    .page-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .6rem 1.5rem;
+      margin-bottom: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: .85rem 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .page-meta {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .meta-item .ml {
+      font-size: 9.5px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: 3px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .meta-item .mv {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ── Section Heads ─────────────────────────── */
+    .section-head {
+      font-size: 9.5px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      margin: .9rem 0 .5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-head::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
+    }
+
+    /* ── Content List ──────────────────────────── */
+    .content-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .ci {
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.55;
+    }
+
+    .ci:last-child {
+      border-bottom: none;
+    }
+
+    .ci-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-gold-mid);
+      border: 1.5px solid var(--accent-gold);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* ── Purpose strip ─────────────────────────── */
+    .purpose-strip {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-bottom: .4rem;
+      padding-left: 2px;
+      line-height: 1.5;
+    }
+
+    /* ── SEO Note ──────────────────────────────── */
+    .seo-note {
+      background: var(--seo-bg);
+      border: 1px solid var(--seo-border);
+      border-left: 3px solid var(--seo-text);
+      border-radius: var(--radius-md);
+      padding: .65rem .85rem;
+      font-size: 12px;
+      color: var(--seo-text);
+      margin-top: .85rem;
+      line-height: 1.6;
+    }
+
+    .seo-note strong {
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── Intensity Bar ─────────────────────────── */
+    .intensity-bar {
+      display: flex;
+      gap: 4px;
+      margin-top: 5px;
+    }
+
+    .ib {
+      width: 16px;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--intensity-empty);
+      transition: background .2s;
+    }
+
+    .ib.fill {
+      background: var(--intensity-fill);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-eyebrow">Website Planning Document</div>
+      <div class="header-title">Choorakkodi Martial Arts Academy</div>
+      <div class="header-sub">Page architecture &amp; content strategy — Kozhikode</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="summary-grid">
+      <div class="sum-card">
+        <div class="sum-label">Total pages</div>
+        <div class="sum-val" id="total-count">15</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-label">SEO-Priority</div>
+        <div class="sum-val">12</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-label">Brand recovery</div>
+        <div class="sum-val">6</div>
+      </div>
+      <div class="sum-card">
+        <div class="sum-label">Dynamic / CMS</div>
+        <div class="sum-val">4</div>
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <span class="legend-heading">Legend</span>
+      <span class="leg-item"><span class="leg-swatch"
+          style="background:var(--seo-bg);border:1.5px solid var(--seo-dot)"></span>SEO priority</span>
+      <span class="leg-item"><span class="leg-swatch"
+          style="background:var(--brand-bg);border:1.5px solid var(--brand-dot)"></span>Brand recovery</span>
+      <span class="leg-item"><span class="leg-swatch"
+          style="background:var(--dynamic-bg);border:1.5px solid var(--dynamic-dot)"></span>Dynamic / CMS</span>
+      <span class="leg-item"><span class="leg-swatch"
+          style="background:var(--heavy-bg);border:1.5px solid var(--heavy-dot)"></span>Content-heavy</span>
+    </div>
+
+    <div class="filter-section">
+      <span class="filter-label">Filter:</span>
+      <button class="pill on" onclick="filterPages('all',this,'on')">All pages</button>
+      <button class="pill" onclick="filterPages('seo',this,'on-seo')">SEO priority</button>
+      <button class="pill" onclick="filterPages('brand',this,'on-brand')">Brand recovery</button>
+      <button class="pill" onclick="filterPages('dynamic',this,'on-dynamic')">Dynamic</button>
+      <button class="pill" onclick="filterPages('heavy',this,'on-heavy')">Content-heavy</button>
+    </div>
+
+    <div class="pages-list" id="pages-list"></div>
+  </div>
+
+  <script>
+    const pages = [
+      {
+        num: 1, title: "Home", tags: ["seo", "brand", "heavy"], url: "/", purpose: "First impression + brand authority statement", intensity: 5,
+        meta: [
+          { l: "Primary keyword", v: "Choorakkodi Martial Arts Academy Kozhikode" },
+          { l: "Secondary keyword", v: "Kalarippayattu training Calicut" },
+          { l: "Content volume", v: "High — multiple sections" },
+          { l: "CTA type", v: "WhatsApp — Enquire / Book a free trial" }
+        ],
+        content: [
+          "Full-width hero: heritage-anchored headline, subheading referencing 1960s lineage of Usthad C.M.M. Gurukkal",
+          "Trust bar: Founded 1960 · GMP Certified · Kozhikode's Original Kalari · X students trained",
+          "Short legacy statement: who Choorakkodi is, why it is the original — 80–100 words, clear and bold",
+          "Disciplines overview: 4–6 cards (Kalarippayattu, [other forms TBD]) each linking to discipline page",
+          "Founder spotlight section: photo of Usthad C.M.M. Gurukkal, short bio, quote",
+          "Testimonials strip: 3–4 student/practitioner quotes",
+          "Gallery teaser: 6 photos max with 'View Gallery' link",
+          "WhatsApp sticky CTA button throughout + hero CTA button"
+        ],
+        seo: "This is your highest-traffic page and the most critical for brand SERP ownership. The headline and first 100 words must include both 'Choorakkodi' and 'Kalarippayattu' naturally. Google uses this to understand what the site is about."
+      },
+
+      {
+        num: 2, title: "About — The Legacy of Usthad C.M.M. Gurukkal", tags: ["brand", "heavy", "seo"], url: "/about", purpose: "Brand recovery + authenticity proof — the most strategically important page", intensity: 5,
+        meta: [
+          { l: "Primary keyword", v: "Usthad CMM Gurukkal Choorakkodi Kalari" },
+          { l: "Secondary keyword", v: "Original Choorakkodi Kalari Sangham history" },
+          { l: "Content volume", v: "Very high — long-form editorial" },
+          { l: "CTA type", v: "WhatsApp — Learn more / Join the legacy" }
+        ],
+        content: [
+          "Timeline section: year-by-year milestones from 1960s to present (visual horizontal or vertical timeline)",
+          "Full founder biography: Usthad C.M.M. Gurukkal — background, expertise in Kalari, Marma, Ayurveda, Yoga",
+          "The Choorakkodi lineage explained: what makes this style unique, how it differs from derivatives",
+          "Dr. Saheer Ali profile: current head, credentials (BAMS), continuing the legacy",
+          "Historical photos if available — extremely powerful for authenticity",
+          "Press mentions, awards, international recognition (SIGARO France story, etc.)",
+          "Statement of authenticity — factual, not aggressive — establishing the original institution's founding date"
+        ],
+        seo: "This page will directly compete for 'Choorakkodi Kalari' branded searches. It must be content-rich, use structured data (Person schema for Gurukkal, Organization schema), and include dates prominently. This is your strongest tool against the brand conflict."
+      },
+
+      {
+        num: 3, title: "Kalarippayattu", tags: ["seo", "heavy"], url: "/kalarippayattu", purpose: "Primary discipline page — main SEO traffic driver", intensity: 5,
+        meta: [
+          { l: "Primary keyword", v: "Kalarippayattu training Kozhikode / Calicut" },
+          { l: "Secondary keyword", v: "Kalari classes Kerala — Choorakkodi style" },
+          { l: "Content volume", v: "High — educational + enrolment" },
+          { l: "CTA type", v: "WhatsApp — Book a free trial class" }
+        ],
+        content: [
+          "What is Kalarippayattu — history, origin, Kerala roots (150–200 words, original, not copy-pasted)",
+          "The Choorakkodi style: what makes this lineage's approach unique (Marma integration, Gurukkal methodology)",
+          "What students learn: curriculum breakdown — stages, weapons, unarmed combat, healing applications",
+          "Who can join: age groups, fitness requirements, beginner-friendly messaging",
+          "Schedule & batches: morning/evening, days of week",
+          "Fees structure or 'Contact us for fees' WhatsApp CTA",
+          "Photo/video section: practice footage, demonstrations",
+          "FAQ section: 5–8 common questions (do doubles as FAQ schema for Google)"
+        ],
+        seo: "Highest potential organic traffic page. 'Kalarippayattu training Kozhikode' and variants have real search volume with low-to-medium competition. FAQ schema here can get Google featured snippets."
+      },
+
+      {
+        num: 4, title: "Other Martial Arts Disciplines", tags: ["seo"], url: "/disciplines", purpose: "Positions the academy as multi-discipline, not just Kalari", intensity: 3,
+        meta: [
+          { l: "Primary keyword", v: "Martial arts classes Kozhikode" },
+          { l: "Secondary keyword", v: "Self-defence training Calicut" },
+          { l: "Content volume", v: "Medium — overview + individual cards" },
+          { l: "CTA type", v: "WhatsApp — Enquire about a specific discipline" }
+        ],
+        content: [
+          "Overview section: why Choorakkodi Academy is expanding beyond Kalari",
+          "Discipline cards: one card per art form being introduced (confirm with client which ones)",
+          "Each card: name, brief description, who it is for, link to sub-page if content-ready",
+          "'Coming soon' states for disciplines not yet launched — creates anticipation",
+          "Combined training option: if students can mix disciplines"
+        ],
+        seo: "Even if only Kalari is live at launch, this page should exist. It signals to Google the academy's scope and captures 'martial arts Kozhikode' searches — broader than Kalari-only traffic."
+      },
+
+      {
+        num: 5, title: "Kalari Marma Healing", tags: ["seo", "heavy"], url: "/kalari-marma-healing", purpose: "Bridges the academy with the therapeutic/wellness side", intensity: 4,
+        meta: [
+          { l: "Primary keyword", v: "Kalari Marma Chikitsa Kozhikode" },
+          { l: "Secondary keyword", v: "Marma healing therapy Calicut" },
+          { l: "Content volume", v: "High — medical + cultural education" },
+          { l: "CTA type", v: "WhatsApp — Book a Marma consultation" }
+        ],
+        content: [
+          "What is Marma Shastra: the 107 vital points, its Kalari origins",
+          "How Choorakkodi's Marma tradition differs: rooted in Gurukkal's lineage",
+          "Conditions addressed: joint pain, injuries, recovery, stress",
+          "Is this a treatment clinic or an academy learning module? (clarify with client — could be both)",
+          "Connection to Shafi Dawa Khana: cross-link to the Ayurveda clinic website naturally",
+          "Testimonials from people who experienced Marma healing",
+          "WhatsApp CTA for consultation or to learn Marma as a student"
+        ],
+        seo: "Very low competition keyword with real search intent. This page also creates a natural SEO bridge between the academy and the wellness clinic, building topical authority across both properties."
+      },
+
+      {
+        num: 6, title: "Admissions / Join Us", tags: ["seo", "brand"], url: "/admissions", purpose: "Conversion page — turns visitors into enquiries", intensity: 3,
+        meta: [
+          { l: "Primary keyword", v: "Join Kalarippayattu academy Kozhikode" },
+          { l: "Secondary keyword", v: "Martial arts academy admission Kerala" },
+          { l: "Content volume", v: "Medium — structured, action-oriented" },
+          { l: "CTA type", v: "WhatsApp — primary CTA on this entire page" }
+        ],
+        content: [
+          "Who can join: age ranges, beginner vs experienced, international students welcome",
+          "Batch timings: morning / evening / weekend options",
+          "What to bring / what to expect on Day 1",
+          "Fee structure overview (or 'WhatsApp us for current fees')",
+          "Step-by-step: How to join — 1. WhatsApp us → 2. Free trial class → 3. Enrol",
+          "Guarantee or reassurance: free trial, no commitment first class",
+          "FAQs specific to admission"
+        ],
+        seo: "This is your conversion page. It should rank for 'how to join Kalarippayattu class' type searches. The page structure should be clean and direct — reduce friction to the WhatsApp tap."
+      },
+
+      {
+        num: 7, title: "Gallery", tags: ["brand"], url: "/gallery", purpose: "Visual trust-builder — shows the practice is real and active", intensity: 2,
+        meta: [
+          { l: "Primary keyword", v: "Choorakkodi Kalari photos / training" },
+          { l: "Content volume", v: "Light text, heavy media" },
+          { l: "CTA type", v: "WhatsApp — Come see for yourself" }
+        ],
+        content: [
+          "Categorised photo sections: Kalarippayattu practice, weapons training, Marma healing, Gurukkal legacy photos, academy facility",
+          "Short descriptive captions on key images (these are alt text opportunities for image SEO)",
+          "Video section if available: training demonstrations, student testimonials on camera",
+          "Instagram feed embed (optional — if they have/start an account)"
+        ],
+        seo: "Gallery pages are weak for direct keyword ranking but very strong for image search, brand authenticity, and reducing bounce rate. Alt text on every image is non-negotiable."
+      },
+
+      {
+        num: 8, title: "The Gurukkal Lineage / Heritage", tags: ["brand", "heavy"], url: "/heritage", purpose: "Deep-dive brand recovery page — the 'receipts' page", intensity: 4,
+        meta: [
+          { l: "Primary keyword", v: "Choorakkodi Kalari original history 1960" },
+          { l: "Content volume", v: "Long-form — editorial storytelling" },
+          { l: "CTA type", v: "WhatsApp — Connect with the legacy" }
+        ],
+        content: [
+          "Full editorial story of Choorakkodi Kalari from its founding in the 1960s",
+          "Usthad C.M.M. Gurukkal's life story, mastery, teaching philosophy",
+          "Notable students and their achievements (international recognition stories)",
+          "The SIGARO France recognition story — powerful credibility moment",
+          "How the academy has evolved: from pure Kalari to multi-discipline",
+          "Photos, documents, historical artefacts if available",
+          "A clear factual statement of the founding date and original institution — not a legal claim, just factual storytelling"
+        ],
+        seo: "This long-form page is your best weapon for brand SERP ownership. When someone Googles 'Choorakkodi Kalari', this page — alongside the About page — should appear in the top results. It needs depth, dates, and named individuals to build E-E-A-T signals with Google."
+      },
+
+      {
+        num: 9, title: "Blog / Articles", tags: ["seo", "dynamic"], url: "/blog", purpose: "Long-term SEO engine and thought leadership", intensity: 2,
+        meta: [
+          { l: "Primary keyword", v: "Various — each post targets one keyword" },
+          { l: "Content volume", v: "Ongoing — 1–2 posts per month ideal" },
+          { l: "CTA type", v: "WhatsApp — embedded in each post" }
+        ],
+        content: [
+          "Blog index page: category filters (Kalarippayattu, Marma, Heritage, Training Tips)",
+          "Starter posts recommended at launch: 'History of Choorakkodi Kalari', 'What is Marma Shastra', 'Benefits of Kalarippayattu', 'Kalari training for kids in Kozhikode', 'How Ayurveda and Kalari connect'",
+          "Each post: 600–1000 words, one target keyword, internal links to relevant pages, WhatsApp CTA at end",
+          "Author attribution: Dr. Saheer Ali byline builds E-E-A-T"
+        ],
+        seo: "The blog is the single highest ROI SEO investment over time. Without it, the site plateaus. With it, you compound organic traffic month over month. This is the core argument for the ongoing SEO retainer."
+      },
+
+      {
+        num: 10, title: "Testimonials / Student Stories", tags: ["brand", "seo"], url: "/testimonials", purpose: "Social proof — reduces the trust gap for new visitors", intensity: 2,
+        meta: [
+          { l: "Primary keyword", v: "Choorakkodi Kalari student reviews" },
+          { l: "Content volume", v: "Medium — structured review cards" },
+          { l: "CTA type", v: "WhatsApp — Join them" }
+        ],
+        content: [
+          "Written testimonials: name, discipline, duration of training — 8–12 entries",
+          "Video testimonials if available",
+          "Notable alumni section: students who went on to compete, perform internationally",
+          "Star rating display (Review schema markup — can appear in Google search results)",
+          "Google Reviews embed or screenshots"
+        ],
+        seo: "Review schema markup on this page can produce star ratings in Google search results — a significant CTR booster. Named testimonials with real stories also build E-E-A-T."
+      },
+
+      {
+        num: 11, title: "Events & Demonstrations", tags: ["dynamic", "seo"], url: "/events", purpose: "Activity signal to Google — shows the academy is live and growing", intensity: 2,
+        meta: [
+          { l: "Primary keyword", v: "Kalarippayattu events Kozhikode / Kerala" },
+          { l: "Content volume", v: "Low per post, frequent updates" },
+          { l: "CTA type", v: "WhatsApp — RSVP / Attend" }
+        ],
+        content: [
+          "Upcoming events: demonstrations, open days, competitions, workshops",
+          "Past events archive with photos",
+          "Annual events if recurring (national Kalari days, academy anniversaries)",
+          "Event schema markup for each event — can appear directly in Google search"
+        ],
+        seo: "Event schema gives direct Google SERP visibility for upcoming events. Also signals to Google that the site is actively updated — a freshness ranking factor."
+      },
+
+      {
+        num: 12, title: "Contact", tags: ["seo"], url: "/contact", purpose: "Local SEO landing page + conversion endpoint", intensity: 1,
+        meta: [
+          { l: "Primary keyword", v: "Choorakkodi Martial Arts Academy contact Kozhikode" },
+          { l: "Content volume", v: "Low — structured and clean" },
+          { l: "CTA type", v: "WhatsApp — primary action" }
+        ],
+        content: [
+          "WhatsApp button — large, prominent, above the fold",
+          "Phone numbers",
+          "Full address: exact location in Chelavoor, Wayanad Road, Calicut — for Local SEO NAP consistency",
+          "Embedded Google Map",
+          "Operating hours",
+          "Brief directions from key landmarks"
+        ],
+        seo: "NAP (Name, Address, Phone) on this page must exactly match Google My Business. This is a local SEO ranking factor. The full address written in plain text — not just embedded in an image — is essential."
+      },
+
+      {
+        num: 13, title: "404 / Error page", tags: [], url: "/404", purpose: "Retention — don't lose visitors on broken links", intensity: 1,
+        meta: [
+          { l: "Content volume", v: "Minimal" },
+          { l: "CTA type", v: "WhatsApp or Back to Home" }
+        ],
+        content: [
+          "Branded, on-theme 404 message",
+          "Links back to Home, Disciplines, Contact",
+          "WhatsApp button"
+        ],
+        seo: "A well-designed 404 reduces bounce and retains visitors who land on dead URLs. Low priority but worth building properly."
+      },
+
+      {
+        num: 14, title: "Blog Post Detail", tags: ["seo", "dynamic"], url: "/blog/:slug", purpose: "Individual article page — the actual SEO workhorse of the blog", intensity: 3,
+        meta: [
+          { l: "Primary keyword", v: "One target keyword per post (e.g. 'Benefits of Kalarippayattu for kids')" },
+          { l: "Secondary keyword", v: "Supporting long-tail variants within the post body" },
+          { l: "Content volume", v: "Medium — 600–1000 words per post" },
+          { l: "CTA type", v: "WhatsApp — embedded mid-post and at the end" }
+        ],
+        content: [
+          "Post title (H1): keyword-led, human-readable — not clickbait",
+          "Author byline: Dr. Saheer Ali with BAMS credential — builds E-E-A-T with Google",
+          "Published date + last-updated date — freshness signal for Google",
+          "Body copy: 600–1000 words, structured with H2/H3 subheadings, one target keyword focus",
+          "Internal links: 2–3 contextual links to relevant discipline pages, About, or Admissions",
+          "Featured image with descriptive alt text",
+          "WhatsApp CTA block embedded after the first 2–3 paragraphs and again at the end",
+          "Related posts strip: 3 cards linking to other articles — reduces bounce rate",
+          "Breadcrumb navigation: Home → Blog → Post title"
+        ],
+        seo: "Each post page is an independent SEO landing page. Article schema markup (author, datePublished, dateModified) is essential. The URL slug must contain the target keyword. Internal linking from these posts to the main discipline pages passes authority and improves rankings across the site."
+      },
+
+      {
+        num: 15, title: "Event Detail", tags: ["dynamic", "seo"], url: "/events/:slug", purpose: "Individual event page — converts interest into attendance and enquiries", intensity: 2,
+        meta: [
+          { l: "Primary keyword", v: "Event-specific (e.g. 'Kalarippayattu demonstration Kozhikode [Month Year]')" },
+          { l: "Content volume", v: "Low-to-medium — structured event info" },
+          { l: "CTA type", v: "WhatsApp — RSVP / Register interest" }
+        ],
+        content: [
+          "Event title and date/time — prominently displayed above the fold",
+          "Event type label: Demonstration / Workshop / Open Day / Competition",
+          "Short event description: what will happen, who it is for, what to expect (150–250 words)",
+          "Location details: venue name, address, embedded map if different from academy",
+          "Instructor or performer spotlight: who is leading the event",
+          "Photo or poster image for the event",
+          "WhatsApp RSVP button — the primary conversion action",
+          "Past event gallery (for recurring events): photos from previous editions build credibility",
+          "Related events strip: 2–3 upcoming events to keep visitors engaged"
+        ],
+        seo: "Event schema markup on this page enables the event to appear directly in Google Search results and Google Maps — a major visibility advantage that the index page alone cannot provide. Each event needs its own URL with the event name and date in the slug for maximum discoverability."
+      }
+    ];
+
+    function renderPages(filter) {
+      const list = document.getElementById('pages-list');
+      const filtered = filter === 'all' ? pages : pages.filter(p => p.tags.includes(filter));
+      document.getElementById('total-count').textContent = filtered.length;
+      list.innerHTML = '';
+
+      filtered.forEach(p => {
+        const tagMap = {
+          seo: ['b-seo', 'SEO priority'],
+          brand: ['b-brand', 'Brand recovery'],
+          dynamic: ['b-dynamic', 'Dynamic'],
+          heavy: ['b-heavy', 'Content-heavy']
+        };
+        const tagHtml = p.tags.map(t => tagMap[t]
+          ? `<span class="badge ${tagMap[t][0]}">${tagMap[t][1]}</span>`
+          : '').join('');
+
+        const bars = Array.from({ length: 5 }, (_, i) =>
+          `<div class="ib${i < p.intensity ? ' fill' : ''}"></div>`).join('');
+
+        const metaHtml = p.meta.map(m =>
+          `<div class="meta-item"><div class="ml">${m.l}</div><div class="mv">${m.v}</div></div>`
+        ).join('');
+
+        const contentHtml = p.content.map(c =>
+          `<div class="ci"><div class="ci-dot"></div><div>${c}</div></div>`
+        ).join('');
+
+        const seoNote = p.seo
+          ? `<div class="seo-note"><strong>🔍 SEO note:</strong> ${p.seo}</div>` : '';
+
+        const card = document.createElement('div');
+        card.className = 'page-card';
+        card.dataset.tags = p.tags.join(',');
+        card.innerHTML = `
+      <div class="page-head" onclick="toggleCard(this)">
+        <div class="page-num">${p.num}</div>
+        <div class="page-title">${p.title}<div class="page-url">${p.url}</div></div>
+        <div class="page-badges">${tagHtml}</div>
+        <div class="page-toggle">▾</div>
+      </div>
+      <div class="page-body">
+        <div class="page-meta">
+          ${metaHtml}
+          <div class="meta-item">
+            <div class="ml">Content intensity</div>
+            <div class="mv"><div class="intensity-bar">${bars}</div></div>
+          </div>
+        </div>
+        <div class="section-head">Page purpose</div>
+        <div class="purpose-strip">${p.purpose}</div>
+        <div class="section-head">Content sections</div>
+        <div class="content-list">${contentHtml}</div>
+        ${seoNote}
+      </div>`;
+        list.appendChild(card);
+      });
+    }
+
+    function toggleCard(el) {
+      const body = el.nextElementSibling;
+      const tog = el.querySelector('.page-toggle');
+      body.classList.toggle('open');
+      tog.classList.toggle('open');
+    }
+
+    let activeClass = 'on';
+    function filterPages(f, btn, cls) {
+      document.querySelectorAll('.pill').forEach(p => {
+        p.classList.remove('on', 'on-seo', 'on-brand', 'on-dynamic', 'on-heavy');
+      });
+      btn.classList.add(cls);
+      activeClass = cls;
+      renderPages(f);
+    }
+
+    renderPages('all');
+  </script>
+</body>
+
+</html>

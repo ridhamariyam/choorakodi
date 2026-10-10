@@ -1,0 +1,37 @@
+/*
+ * Footer reveal, after noahlesage.com: the footer sits fixed at the bottom of
+ * the screen, under the page; as the page ends it is clipped from the bottom
+ * (clip-path, set by RevealFooter), its corners rounding as the footer shows
+ * (to 52px when all of it does).
+ */
+.card {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-bone);
+}
+
+.footer {
+  position: relative;
+  z-index: 0;
+}
+
+.footer[data-mode="fixed"] {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* The page's rounded corners sit above the footer's top edge, so the ground
+ * behind the page there has to be the footer's teal too. It stays hidden
+ * under the page everywhere else. */
+.footer[data-mode="fixed"]::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: 100lvh;
+  background-color: #35494a;
+  pointer-events: none;
+}
