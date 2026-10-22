@@ -20,6 +20,7 @@ import {
   contact,
   notFound,
   type ArchiveEntry,
+  type StoryParagraph,
 } from "@/data/pages";
 import { kalarippayattuFaq, admissionsFaq, marmaFaq, type FaqItem } from "@/data/faq";
 import { timeline, type TimelineEntry } from "@/data/timeline";
@@ -30,6 +31,7 @@ import {
   chapters,
   mura,
   laterChapters,
+  values,
   affiliations,
   programmes,
   type CaptionLine,
@@ -56,6 +58,8 @@ export type Story = {
     caption: CaptionLine[];
   };
   laterChapters: StoryChapter[];
+  /** The closing interlude of the academy's values; built-in copy only. */
+  values: Story["mura"];
   affiliations: string[];
   programmes: { bg: string; counter: string; title: string[]; note: string; items: Programme[] };
 };
@@ -77,6 +81,7 @@ export type Content = {
     name: string;
     heading: string[];
     intro: string;
+    highlights: string[];
     pending: string;
     image: ImageSlot;
     facts: { label: string; value: string }[];
@@ -84,15 +89,20 @@ export type Content = {
   pillars: { eyebrow: string; heading: string[]; items: { index: string; title: string; body: string }[] };
   about: Header & {
     sections: { title: string; body: string; pending: string }[];
+    highlights: string[];
     portrait: ImageSlot;
     archival: ImageSlot;
     wide: ImageSlot;
+    team: ImageSlot;
+    history: StoryParagraph[];
     recognition: { title: string; items: string[]; pending: string };
   };
   kalarippayattu: Header & {
     what: Titled<{ body: string[] }>;
     style: Titled<{ body: string; pending: string }>;
+    anghanghal: Story["mura"];
     stages: { index: string; name: string; translation: string; body: string }[];
+    philosophy: Titled<{ intro: string; items: { title: string; body: string }[]; image: ImageSlot }>;
     learn: Titled<{ items: string[] }>;
     who: Titled<{ body: string; pending: string }>;
     schedule: Titled<{ items: string[]; pending: string }>;
@@ -111,11 +121,14 @@ export type Content = {
     consultation: Titled<{ body: string; pending: string }>;
     disclaimer: string;
     image: ImageSlot;
+    campus: ImageSlot;
   };
   admissions: Header & {
     steps: { index: string; title: string; body: string }[];
     who: Titled<{ body: string; pending: string }>;
     bring: Titled<{ items: string[] }>;
+    journey: Titled<{ intro: string; items: { name: string; detail: string }[]; note: string; image: ImageSlot }>;
+    recovery: Titled<{ body: string[] }>;
     scheduleTitle: string;
     scheduleItems: string[];
     schedulePending: string;
@@ -123,7 +136,7 @@ export type Content = {
     feesPending: string;
   };
   heritage: Header & { method: string; entries: ArchiveEntry[] };
-  contact: Header;
+  contact: Header & { landmark: Titled<{ body: string; image: ImageSlot }> };
   faq: { kalarippayattu: FaqItem[]; admissions: FaqItem[]; marma: FaqItem[] };
   timeline: TimelineEntry[];
   disciplines: Discipline[];
@@ -160,6 +173,10 @@ export const defaultContent: Content = {
       rows: mura.rows.map((r) => ({ words: [r.words[0]!, r.words[1]!], direction: r.direction === -1 ? -1 : 1 })),
     },
     laterChapters,
+    values: {
+      ...values,
+      rows: values.rows.map((r) => ({ words: [r.words[0]!, r.words[1]!], direction: r.direction === -1 ? -1 : 1 })),
+    },
     affiliations,
     programmes,
   },

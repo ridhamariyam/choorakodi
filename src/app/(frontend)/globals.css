@@ -9,14 +9,14 @@
   --color-ink: #101312;        /* near black  */
   --color-green: #c4a487;      /* taupe — the brand accent on white */
   --color-soil: #c4a487;       /* warm taupe  */
-  --color-bone: #ffffff;       /* white       */
+  --color-bone: #e6d9c6;       /* beige       */
   --color-wenge: #3b3028;      /* dark brown  */
   --color-muted: #8a8175;      /* muted text  */
 
   /* Derived tones. Kept few on purpose — the palette is the palette. */
   --color-ink-soft: #1a1e1c;
   --color-green-deep: #a88a6d;
-  --color-bone-dim: #efefef;
+  --color-bone-dim: #dccdb6;
   --color-hairline: rgb(16 19 18 / 0.14);
   --color-hairline-invert: rgb(255 255 255 / 0.18);
 
@@ -193,12 +193,12 @@
  * turns light-on-dark copy into dark-on-white without touching each component.
  */
 .tone-flip {
-  --color-ink: #ffffff;
-  --color-ink-soft: #f4f4f4;
+  --color-ink: #e6d9c6;
+  --color-ink-soft: #dccdb6;
   --color-bone: #101312;
   --color-bone-dim: #2a2e2c;
   --color-hairline-invert: rgb(16 19 18 / 0.14);
-  background-color: #ffffff;
+  background-color: #e6d9c6;
   color: #101312;
 }
 
@@ -423,7 +423,7 @@
 }
 .founder-mat {
   padding: 5vw;
-  background: #efe8db;
+  background: #dccdb6;
   box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.35), inset 0.3vw 0.3vw 0.6vw rgb(0 0 0 / 0.18);
 }
 .founder-print {
@@ -460,19 +460,10 @@
    askew, the ink broken up where the rubber did not meet the paper. */
 .story-stamp {
   --ink: #b3261e;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.5em 0.9em 0.45em;
-  font-size: 4.6vw;
-  line-height: 0.95;
-  text-transform: uppercase;
+  width: 26vw;
   color: var(--ink);
-  border: 0.14em solid var(--ink);
-  border-radius: 0.18em;
-  box-shadow: inset 0 0 0 0.09em #fff, inset 0 0 0 0.16em var(--ink);
   rotate: -9deg;
-  opacity: 0.88;
+  opacity: 0.9;
   mix-blend-mode: multiply;
   pointer-events: none;
   /* Worn rubber: speckled gaps and a fade towards one corner. */
@@ -482,21 +473,8 @@
   mask-composite: intersect;
   mask-size: 160px 160px, 100% 100%;
 }
-.story-stamp-small {
-  display: none;
-  margin-bottom: 0.45em;
-  font-size: 0.26em;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  white-space: nowrap;
-}
-.story-stamp-big {
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-}
 @media (min-width: 768px) {
-  .story-stamp { font-size: 2.3vw; }
-  .story-stamp-small { display: block; }
+  .story-stamp { width: 11vw; }
 }
 
 /* Brand mark knocked out to a single ink tone (bone on dark chapters). */
@@ -564,7 +542,16 @@ html[data-footer-revealed="true"] .story-counter,
   letter-spacing: -0.01em;
 }
 
-/* The taupe disc behind a page title grows in on arrival. */
+/*
+ * The black disc behind a title. It inverts whatever lies under it, so the
+ * beige ground reads black and dark lettering crossing it reads light.
+ */
+.disc-ink {
+  -webkit-backdrop-filter: invert(1) grayscale(1);
+  backdrop-filter: invert(1) grayscale(1);
+}
+
+/* The disc behind a page title grows in on arrival. */
 .story-disc {
   transform: translate(-50%, -50%) scale(1);
   animation: story-disc-in 1.6s var(--ease-kalari) 0.15s both;

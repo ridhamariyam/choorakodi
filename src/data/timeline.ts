@@ -51,8 +51,10 @@ export const timeline: TimelineEntry[] = [
     title: "SIGARO",
     lead: "A.M. Shamsuddeen, a student of Usthad C.M.M. Gurukkal, is selected by the Director of SIGARO in France as one of eight performers chosen from nearly 60 camps. The troupe also performs in Russia and the Gulf countries.",
     pending: "Confirm the year of the SIGARO selection.",
-    image: slot("HISTORICAL IMAGE", "Archive print: a practitioner leaps with a shield above a crouching opponent", {
-      src: "/images/archive/kalari-archive-10.webp",
+    image: slot("HISTORICAL IMAGE", "A practitioner swings from a rope and flies feet-first over a crouching partner, from the academy archive", {
+      src: "/images/heritage/archive-rope-leap.webp",
+      width: 1053,
+      height: 880,
       brief: "public/images/heritage — performance photograph",
     }),
   },
@@ -79,10 +81,12 @@ export const timeline: TimelineEntry[] = [
   {
     year: "2026",
     title: "The Next Chapter",
-    lead: "66 years on, as CMM Gurukkal's Choorakkodi Martial Arts Academy in Chelavoor. Thousands trained; nearly 50 now run academies of their own. Morning classes are planned next.",
+    lead: "66 years on, as CMM Gurukkal's Choorakkodi Martial Arts Academy in Chelavoor. Six generations of students; nearly 50 now run academies of their own. A new sub-junior batch begins with Meythari, and morning classes are planned next.",
     pending: "",
-    image: slot("KALARI IMAGE", "Two Choorakkodi students leap with sword and shield inside the kalari today", {
-      src: "/images/training/shield-leap.webp",
+    image: slot("KALARI IMAGE", "Choorakkodi sub-juniors line up barefoot in the kalari", {
+      src: "/images/academy/sub-juniors.webp",
+      width: 1170,
+      height: 986,
       brief: "public/images/heritage — contemporary interior, empty floor",
     }),
   },

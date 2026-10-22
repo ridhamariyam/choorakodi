@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { BlogList } from "@/components/blog/BlogList";
@@ -34,6 +36,7 @@ export default async function BlogPage() {
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/blog")}
         eyebrow="Writing"
         lines={["The", "Choorakkodi", "Journal."]}
         standfirst="Notes on the art, the archive and the practice — written for people who want to understand what they are looking at."
@@ -57,6 +60,8 @@ export default async function BlogPage() {
         message="Hello Choorakkodi — I have a question after reading the journal."
         secondary={{ label: "Admissions", href: "/admissions" }}
       />
+
+      <NextChapter from="/blog" />
 
       <JsonLd
         schema={breadcrumbSchema([

@@ -18,7 +18,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: { path: string; priority: number; changeFrequency: "monthly" | "yearly" | "weekly" }[] = [
     { path: "/", priority: 1, changeFrequency: "monthly" },
-    { path: "/about", priority: 0.9, changeFrequency: "yearly" },
     { path: "/kalarippayattu", priority: 0.9, changeFrequency: "monthly" },
     { path: "/disciplines", priority: 0.8, changeFrequency: "monthly" },
     { path: "/kalari-marma-healing", priority: 0.8, changeFrequency: "monthly" },

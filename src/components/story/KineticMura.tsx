@@ -9,9 +9,18 @@ import { animateChapterParts } from "./motion";
 
 /**
  * Interlude: the four styles the founder learned, set as mega type in rows
- * that slide against each other as you scroll.
+ * that slide against each other as you scroll. Also closes the present day
+ * with the academy's values, under its own id and label.
  */
-export function KineticMura({ mura }: { mura: Story["mura"] }) {
+export function KineticMura({
+  mura,
+  id = "mura",
+  label = "Four styles of kalari",
+}: {
+  mura: Story["mura"];
+  id?: string;
+  label?: string;
+}) {
   const scope = useRef<HTMLElement>(null);
 
   useGsap(
@@ -37,12 +46,12 @@ export function KineticMura({ mura }: { mura: Story["mura"] }) {
   return (
     <section
       ref={scope}
-      id="mura"
+      id={id}
       data-chapter
       data-bg={mura.bg}
       data-counter={mura.counter}
       data-nav-theme="light"
-      aria-label="Four styles of kalari"
+      aria-label={label}
       className="relative overflow-hidden py-[14vw] text-[#1f1d1e] md:py-[7vw]"
     >
       {/* The caption introduces the four styles before they slide past. */}

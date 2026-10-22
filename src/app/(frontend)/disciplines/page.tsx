@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { SplitHeading } from "@/components/animation/SplitHeading";
@@ -38,6 +40,7 @@ export default async function DisciplinesPage() {
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/disciplines")}
         eyebrow="What we teach"
         lines={["Disci", "plines."]}
         label="Disciplines."
@@ -158,6 +161,8 @@ export default async function DisciplinesPage() {
         message="Hello Choorakkodi — I would like to ask about the disciplines you teach."
         secondary={{ label: "Admissions", href: "/admissions" }}
       />
+
+      <NextChapter from="/disciplines" />
 
       <JsonLd
         schema={breadcrumbSchema([

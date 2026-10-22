@@ -13,7 +13,6 @@ export function YearMark({
   marker,
   face,
   kicker,
-  disc,
   as: Tag = "h2",
   className,
   countFrom,
@@ -23,7 +22,6 @@ export function YearMark({
   marker: string;
   face: StoryChapter["face"];
   kicker: string;
-  disc: string;
   as?: "h1" | "h2" | "div";
   className?: string;
 }) {
@@ -36,12 +34,6 @@ export function YearMark({
 
   return (
     <div className={cn("relative flex flex-col items-center", className)}>
-      <span
-        aria-hidden="true"
-        data-disc
-        style={{ backgroundColor: disc }}
-        className="absolute left-1/2 top-[58%] -z-10 size-[46vw] -translate-x-1/2 -translate-y-1/2 rounded-full md:size-[28vw]"
-      />
       <div data-kicker className="flex flex-col items-center gap-[0.6vw]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/brand/logo-square.svg" alt="" aria-hidden="true" className="story-knockout h-auto w-[10vw] md:w-[4.2vw]" />
@@ -49,7 +41,14 @@ export function YearMark({
           <ScrollWords text={kicker} />
         </span>
       </div>
-      <Tag className="m-0 leading-[0.9] font-normal" style={style}>
+      {/* The bottom margin, in the marker's own em, keeps the caption clear of the disc. */}
+      <Tag className="relative m-0 mb-[0.3em] leading-[0.9] font-normal" style={style}>
+        {/* Sized in em so the disc scales with the marker, which stops growing at its clamp. */}
+        <span
+          aria-hidden="true"
+          data-disc
+          className="disc-ink pointer-events-none absolute left-1/2 top-[45%] z-10 size-[1.45em] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        />
         <span className="sr-only">
           {kicker}: {marker}
         </span>

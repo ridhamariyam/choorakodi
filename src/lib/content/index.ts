@@ -95,6 +95,7 @@ export const getContent = cache(async (): Promise<Content> => {
         name: str(shared.founder?.name, settings.founder.name),
         heading: toLines(shared.founder?.heading),
         intro: str(shared.founder?.intro),
+        highlights: d.founder.highlights,
         pending: str(shared.founder?.pending),
         image: slot(shared.founder?.image, "FOUNDER IMAGE"),
         facts: (shared.founder?.facts ?? []).map((f) => ({ label: f.label, value: f.value })),
@@ -107,9 +108,13 @@ export const getContent = cache(async (): Promise<Content> => {
       about: {
         ...header(aboutPage.about),
         sections: (aboutPage.about?.sections ?? []).map((s) => ({ title: s.title, body: str(s.body), pending: str(s.pending) })),
-        portrait: slot(aboutPage.about?.portrait, "FOUNDER IMAGE"),
+        highlights: d.about.highlights,
+        // The founder's photograph shows until one is uploaded in the admin.
+        portrait: orDefault(slot(aboutPage.about?.portrait, "FOUNDER IMAGE"), d.about.portrait),
         archival: slot(aboutPage.about?.archival, "HISTORICAL IMAGE"),
         wide: slot(aboutPage.about?.wide, "KALARI IMAGE"),
+        team: d.about.team,
+        history: d.about.history,
         recognition: {
           title: str(aboutPage.about?.recognition?.title),
           items: toLines(aboutPage.about?.recognition?.items),
@@ -122,12 +127,14 @@ export const getContent = cache(async (): Promise<Content> => {
           ...header(p),
           what: { title: str(p?.what?.title), body: toParagraphs(p?.what?.body) },
           style: { title: str(p?.style?.title), body: str(p?.style?.body), pending: str(p?.style?.pending) },
+          anghanghal: d.kalarippayattu.anghanghal,
           stages: (p?.stages ?? []).map((s) => ({
             index: str(s.index),
             name: str(s.name),
             translation: str(s.translation),
             body: str(s.body),
           })),
+          philosophy: d.kalarippayattu.philosophy,
           learn: { title: str(p?.learn?.title), items: toLines(p?.learn?.items) },
           who: { title: str(p?.who?.title), body: str(p?.who?.body), pending: str(p?.who?.pending) },
           schedule: {
@@ -164,6 +171,7 @@ export const getContent = cache(async (): Promise<Content> => {
           },
           disclaimer: str(p?.disclaimer, d.marma.disclaimer),
           image: slot(p?.image, "MARMA IMAGE"),
+          campus: d.marma.campus,
         };
       })(),
       admissions: (() => {
@@ -173,6 +181,8 @@ export const getContent = cache(async (): Promise<Content> => {
           steps: (p?.steps ?? []).map(indexed),
           who: { title: str(p?.who?.title), body: str(p?.who?.body), pending: str(p?.who?.pending) },
           bring: { title: str(p?.bring?.title), items: toLines(p?.bring?.items) },
+          journey: d.admissions.journey,
+          recovery: d.admissions.recovery,
           scheduleTitle: str(p?.scheduleTitle),
           scheduleItems: toLines(p?.scheduleItems),
           schedulePending: str(p?.schedulePending),
@@ -193,7 +203,7 @@ export const getContent = cache(async (): Promise<Content> => {
           image: slot(e.image, "HISTORICAL IMAGE"),
         })),
       },
-      contact: header(contactPage),
+      contact: { ...header(contactPage), landmark: d.contact.landmark },
       faq: {
         kalarippayattu: faq(kalariPage.faq),
         admissions: faq(admissionsPage.faq),
@@ -247,6 +257,11 @@ function slot(group: ImageGroup, fallbackLabel: string): ImageSlot {
     width: file?.width ?? undefined,
     height: file?.height ?? undefined,
   };
+}
+
+/** An image slot left empty in the CMS falls back to the built-in photograph. */
+function orDefault(cms: ImageSlot, fallback: ImageSlot): ImageSlot {
+  return cms.src ? cms : fallback;
 }
 
 function header(p: { eyebrow?: string | null; heading?: string | null; standfirst?: string | null } | null | undefined) {
@@ -328,8 +343,8 @@ function toChapter(c: ChapterDoc): StoryChapter {
     face: c.face,
     kicker: str(c.kicker),
     counter: c.counter,
-    bg: str(c.bg, "#ffffff"),
-    disc: str(c.disc, "#a8724b"),
+    bg: defaultContent.story.intro.bg,
+    disc: "#000000",
     tone: c.tone,
     trail: c.trail,
     caption: toCaption(c.caption),
@@ -356,21 +371,22 @@ function toStory(h: Homepage, d: Content): Content["story"] {
     intro: {
       year: intro.year,
       counter: intro.counter,
-      bg: str(intro.bg, d.story.intro.bg),
+      bg: d.story.intro.bg,
       heading: intro.heading,
     },
     range: { start: intro.year, end: intro.end },
     chapters: (h.chapters ?? []).map(toChapter),
     mura: {
-      bg: str(m?.bg, d.story.mura.bg),
+      bg: d.story.mura.bg,
       counter: str(m?.counter, intro.year),
       rows: (m?.rows ?? []).map((r) => ({ words: [r.first, r.second], direction: r.direction === "-1" ? -1 : 1 })),
       caption: toCaption(m?.caption),
     },
     laterChapters: (h.laterChapters ?? []).map(toChapter),
+    values: d.story.values,
     affiliations: toLines(h.affiliations),
     programmes: {
-      bg: str(p?.bg, d.story.programmes.bg),
+      bg: d.story.programmes.bg,
       counter: str(p?.counter, intro.end),
       title: toLines(p?.title),
       note: str(p?.note),

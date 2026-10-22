@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { TextReveal } from "@/components/animation/TextReveal";
-import { ContactBlock } from "@/components/contact/ContactBlock";
 import { MapBlock } from "@/components/contact/MapBlock";
 import { WhatsAppButton } from "@/components/contact/WhatsAppButton";
 import { Button } from "@/components/ui/Button";
+import { faceStyle, monoStyle } from "@/components/story/fonts";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
-import { formatLocality, telHref } from "@/data/site";
+import { addressLines, formatLocality } from "@/data/site";
 import { getContent } from "@/lib/content";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     {
       title: "Contact",
       description:
-        "Visit Choorakkodi Martial Arts Academy in Kozhikode, Kerala. WhatsApp, call or get directions to the kalari.",
+        "Visit Choorakkodi Martial Arts Academy in Chelavoor, Kozhikode. Services, batch timings and how to find the academy.",
       path: "/contact",
     },
     site,
@@ -28,32 +31,30 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Contact. The cleanest page on the site by design — three actions, one
- * address block, one map. NAP data comes from data/site.ts so it stays
- * identical here, in the footer and in the structured data.
+ * Contact. WhatsApp and directions, then what the academy offers, when it
+ * trains and where. This is the one page that holds the services, the batch
+ * timings and the address; the other pages link here rather than repeat them.
  */
 export default async function ContactPage() {
-  const { site, contact } = await getContent();
+  const { site, contact, story, kalarippayattu } = await getContent();
+  const address = addressLines(site) ?? [`${formatLocality(site)}, India`];
+
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/contact")}
         eyebrow={contact.eyebrow}
         lines={contact.heading}
         standfirst={contact.standfirst}
         meta={formatLocality(site)}
       >
-        <TextReveal delay={0.35} className="mt-14 flex flex-wrap gap-4">
+        <TextReveal delay={0.35} className="mt-14 flex flex-wrap justify-center gap-4">
           <WhatsAppButton
             label="WhatsApp us"
             message="Hello Choorakkodi — I would like to get in touch."
             size="lg"
             magnetic
           />
-          {site.contact.phone ? (
-            <Button href={telHref(site)} external variant="outline" size="lg" className="text-ink">
-              Call the academy
-            </Button>
-          ) : null}
           <Button
             href={site.contact.mapDirectionsUrl ?? undefined}
             external
@@ -68,51 +69,37 @@ export default async function ContactPage() {
 
       <SectionReveal tone="bone" spacing="lg">
         <PageContainer>
-          <div className="grid gap-16 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-5">
-              <h2 className="eyebrow mb-10 text-muted">Academy details</h2>
-              <ContactBlock />
-            </div>
+          <Block id="contact-services" title="Services">
+            <List
+              items={story.programmes.items.map((item) => ({ name: item.title, detail: item.detail }))}
+            />
+          </Block>
 
-            <div className="lg:col-span-6 lg:col-start-7">
-              <h2 className="eyebrow mb-10 text-muted">Find the kalari</h2>
-              <MapBlock />
-            </div>
-          </div>
-        </PageContainer>
-      </SectionReveal>
+          <Block id="contact-schedule" title="Training schedule">
+            <List items={kalarippayattu.schedule.items.map((item) => ({ name: item }))} />
+          </Block>
 
-      {/* Closing panel — quieter than a full CTA section, which would be
-          redundant on the page people already came to in order to get in touch. */}
-      <SectionReveal tone="green" spacing="md" grain aria-labelledby="contact-close">
-        <PageContainer>
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
-              <h2
-                id="contact-close"
-                className="text-headline font-semibold tracking-[-0.033em] text-bone"
-              >
-                The fastest reply is on WhatsApp.
-              </h2>
-              <p className="measure mt-6 text-lead text-bone/70">
-                Timings, directions and trial sessions are all arranged there.
-              </p>
+          <Block id="contact-location" title="Location" last>
+            <div style={monoStyle} className="text-lead font-medium">
+              <p className="font-bold">{site.name}</p>
+              <address className="mt-2 not-italic">
+                {address.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </address>
+              <p className="mt-6 text-ink/72">{contact.landmark.body}</p>
             </div>
-            <TextReveal delay={0.1} className="lg:col-span-4 lg:col-start-9 lg:justify-self-end">
-              <WhatsAppButton
-                label="Message the academy"
-                message="Hello Choorakkodi — I would like to arrange a visit."
-                variant="bone"
-                size="lg"
-                magnetic
-              />
-            </TextReveal>
-          </div>
+            <MapBlock className="mt-10" />
+          </Block>
         </PageContainer>
       </SectionReveal>
 
       {/* Organization is emitted once site-wide from the root layout; repeating
           it here would ship the same @id node twice on this page. */}
+      <NextChapter from="/contact" />
+
       <JsonLd
         schema={breadcrumbSchema([
           { name: "Home", path: "/" },
@@ -120,5 +107,38 @@ export default async function ContactPage() {
         ])}
       />
     </>
+  );
+}
+
+/** One labelled block: the title in the homepage's heading face, the list beside it. */
+function Block({ id, title, last = false, children }: { id: string; title: string; last?: boolean; children: ReactNode }) {
+  return (
+    <section
+      aria-labelledby={id}
+      data-reveal
+      className={`grid gap-8 border-t border-ink/12 py-[10vw] md:grid-cols-12 md:gap-[2vw] md:py-[4vw] ${last ? "border-b" : ""}`}
+    >
+      <h2
+        id={id}
+        style={faceStyle.archivo}
+        className="m-0 text-[9vw] leading-[0.95] font-normal uppercase md:col-span-4 md:text-[2.8vw]"
+      >
+        {title}
+      </h2>
+      <div className="md:col-span-7 md:col-start-6">{children}</div>
+    </section>
+  );
+}
+
+function List({ items }: { items: { name: string; detail?: string }[] }) {
+  return (
+    <ul style={monoStyle} className="m-0 list-none p-0">
+      {items.map((item) => (
+        <li key={item.name} className="flex flex-col gap-1 border-b border-ink/10 py-4 first:pt-0 last:border-b-0 md:flex-row md:gap-8">
+          <span className={`text-lead font-bold ${item.detail ? "md:w-[40%] md:shrink-0" : ""}`}>{item.name}</span>
+          {item.detail ? <span className="text-lead font-medium text-ink/72">{item.detail}</span> : null}
+        </li>
+      ))}
+    </ul>
   );
 }

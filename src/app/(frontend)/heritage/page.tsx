@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { SectionHeading } from "@/components/content/SectionHeading";
@@ -39,11 +41,13 @@ export async function generateMetadata(): Promise<Metadata> {
  */
 export default async function HeritagePage() {
   const { site, heritage, gallery } = await getContent();
-  const archivalStrip = gallery.filter((item) => item.category === "Heritage" || item.category === "Kalari");
+  // Only prints that have a photograph; empty slots share captions and would repeat.
+  const archivalStrip = gallery.filter((item) => (item.category === "Heritage" || item.category === "Kalari") && item.image.src);
 
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/heritage")}
         eyebrow={heritage.eyebrow}
         lines={heritage.heading}
         standfirst={heritage.standfirst}
@@ -212,6 +216,8 @@ export default async function HeritagePage() {
         whatsappLabel="Contribute to the archive"
         secondary={{ label: "Contact", href: "/contact" }}
       />
+
+      <NextChapter from="/heritage" />
 
       <JsonLd
         schema={breadcrumbSchema([

@@ -72,7 +72,7 @@ export const site: Site = {
   wordmark: "Choorakkodi",
   tagline: "Kalarippayattu · Kozhikode, Kerala",
   description:
-    "CMM Gurukkal's Choorakkodi Martial Arts Academy, Chelavoor, Kozhikode — Kalarippayattu and kalari marma chikitsa since 1960. Weekly classes, summer camp and intensive courses for ages 7 and above.",
+    "CMM Gurukkal's Choorakkodi Martial Arts Academy, Chelavoor, Kozhikode — Kalarippayattu and kalari marma chikitsa since 1960. Sub-junior training for ages 6–14, weekly classes, summer camp and intensive courses.",
   locale: siteLocale,
   language: siteLanguage,
 
@@ -108,7 +108,7 @@ export const site: Site = {
     name: "Usthad C.M.M. Gurukkal",
     /** Full name, as supplied by the academy. */
     fullName: "Chottanikkara Mamu Moulavi Gurukkal",
-    role: "Founder · Gurukkal",
+    role: "Founder · Former president · Gurukkal",
   },
 
   /** Year the academy's story begins, per the supplied timeline. */

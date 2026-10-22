@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { EventList } from "@/components/events/EventList";
@@ -35,6 +37,7 @@ export default async function EventsPage() {
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/events")}
         eyebrow="Calendar"
         lines={["Events."]}
         standfirst="Demonstrations, gatherings and consultation days. Upcoming occasions are announced here first."
@@ -55,6 +58,8 @@ export default async function EventsPage() {
         whatsappLabel="Ask about events"
         secondary={{ label: "Contact", href: "/contact" }}
       />
+
+      <NextChapter from="/events" />
 
       <JsonLd
         schema={breadcrumbSchema([

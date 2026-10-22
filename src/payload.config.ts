@@ -20,8 +20,26 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET ?? "",
   admin: {
     user: "users",
+    theme: "light",
     importMap: { baseDir: path.resolve(dirname) },
-    meta: { titleSuffix: " — Choorakkodi admin" },
+    meta: {
+      titleSuffix: " — Choorakkodi Studio",
+      icons: [{ rel: "icon", type: "image/svg+xml", url: "/icon.svg" }],
+    },
+    components: {
+      graphics: {
+        Logo: "/components/admin/AdminChrome#AdminLogo",
+        Icon: "/components/admin/AdminChrome#AdminIcon",
+      },
+      beforeLogin: ["/components/admin/AdminChrome#LoginWelcome"],
+      afterLogin: ["/components/admin/AdminChrome#LoginFooter"],
+      beforeNavLinks: ["/components/admin/NavIntro#NavIntro"],
+      afterNavLinks: ["/components/admin/AdminChrome#NavFooter"],
+      actions: ["/components/admin/AdminChrome#ViewWebsite"],
+      views: {
+        dashboard: { Component: "/components/admin/Dashboard#Dashboard" },
+      },
+    },
   },
   collections,
   globals,

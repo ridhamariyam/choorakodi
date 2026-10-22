@@ -96,7 +96,8 @@ export function colorField(name: string, label: string, description?: string): F
     name,
     label,
     type: "text",
-    admin: { description: description ?? "A hex colour, e.g. #10706c." },
+    // Colours are set in code; editors change content only.
+    admin: { hidden: true, description: description ?? "A hex colour, e.g. #10706c." },
     validate: (value: unknown) =>
       !value || /^#[0-9a-fA-F]{6}$/.test(String(value)) || "Use a six-digit hex colour like #10706c.",
   };

@@ -119,7 +119,7 @@ export function CinematicHero({ intro }: { intro: Story["intro"] }) {
       const onLeaving = () => {
         // Continues the preloader's zoom into the logo: the camera keeps
         // travelling in and settles on the first frame.
-        gsap.fromTo(lens, { scale: 1.2 }, { scale: 1, duration: 2.4, ease: "power3.out", clearProps: "transform" });
+        gsap.fromTo(lens, { scale: 1.2 }, { scale: 1, duration: 1.4, ease: "power3.out", clearProps: "transform" });
       };
       window.addEventListener("ck-leaving", onLeaving, { once: true });
 

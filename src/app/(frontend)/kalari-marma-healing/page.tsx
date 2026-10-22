@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Info } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { SectionHeading } from "@/components/content/SectionHeading";
@@ -10,11 +12,10 @@ import { PendingCopy } from "@/components/content/PendingCopy";
 import { TextReveal } from "@/components/animation/TextReveal";
 import { ParallaxImage } from "@/components/animation/ParallaxImage";
 import { MaskedReveal } from "@/components/animation/MaskedReveal";
-import { FAQ } from "@/components/content/FAQ";
 import { CTASection } from "@/components/content/CTASection";
 import { BodyMap } from "@/components/marma/BodyMap";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { breadcrumbSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 import { getContent } from "@/lib/content";
 
@@ -32,10 +33,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function MarmaPage() {
-  const { marma, faq } = await getContent();
+  const { marma } = await getContent();
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/kalari-marma-healing")}
         eyebrow={marma.eyebrow}
         lines={marma.heading}
         standfirst={marma.standfirst}
@@ -117,6 +119,14 @@ export default async function MarmaPage() {
                 lines={["Healing."]}
                 size="headline"
               />
+              <ParallaxImage
+                slot={marma.campus}
+                ratio="3 / 4"
+                index="Vaidyasala"
+                wrapperClassName="mt-14 w-full lg:max-w-[26rem]"
+                sizes="(max-width: 1024px) 92vw, 34vw"
+                strength={8}
+              />
             </div>
 
             <div className="lg:col-span-6 lg:col-start-7">
@@ -148,28 +158,6 @@ export default async function MarmaPage() {
         </PageContainer>
       </SectionReveal>
 
-      {/* FAQ ---------------------------------------------------------------- */}
-      <SectionReveal tone="bone" spacing="lg" aria-labelledby="marma-faq">
-        <PageContainer>
-          <div className="grid gap-14 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <div className="lg:sticky lg:top-32">
-                <SectionHeading
-                  id="marma-faq"
-                  index="04"
-                  eyebrow="Questions"
-                  lines={["Before", "booking."]}
-                  size="headline"
-                />
-              </div>
-            </div>
-            <div className="lg:col-span-7 lg:col-start-6">
-              <FAQ items={faq.marma} defaultOpen={0} />
-            </div>
-          </div>
-        </PageContainer>
-      </SectionReveal>
-
       <CTASection
         eyebrow="Consultation"
         lines={["Book a marma", "consultation."]}
@@ -179,7 +167,8 @@ export default async function MarmaPage() {
         secondary={{ label: "Contact", href: "/contact" }}
       />
 
-      <JsonLd schema={faqSchema(faq.marma)} />
+      <NextChapter from="/kalari-marma-healing" />
+
       <JsonLd
         schema={breadcrumbSchema([
           { name: "Home", path: "/" },

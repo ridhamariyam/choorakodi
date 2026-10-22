@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { Quote } from "@/components/content/Quote";
@@ -43,6 +45,7 @@ export default async function TestimonialsPage() {
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/testimonials")}
         eyebrow="Voices"
         lines={["Voices", "from the", "kalari."]}
         standfirst="Accounts from people who train here. Collected on the record, with permission to publish the name and the photograph."
@@ -123,16 +126,7 @@ export default async function TestimonialsPage() {
                     </TextReveal>
                   ) : null}
 
-                  {item.isPlaceholder ? (
-                    <PendingCopy
-                      tone={dark ? "dark" : "light"}
-                      className="mt-10"
-                      label="Placeholder story"
-                    >
-                      No real testimonial has been supplied for this slot. Nothing on this page is
-                      published as structured data until it is.
-                    </PendingCopy>
-                  ) : null}
+                  {/* The page says once, at the top, that these are placeholders. */}
                 </div>
               </div>
             </PageContainer>
@@ -148,6 +142,8 @@ export default async function TestimonialsPage() {
         whatsappLabel="Share your story"
         secondary={{ label: "Admissions", href: "/admissions" }}
       />
+
+      <NextChapter from="/testimonials" />
 
       <JsonLd
         schema={breadcrumbSchema([

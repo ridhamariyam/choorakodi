@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { ImageSlot } from "@/data/assets";
-import { InkDrop } from "@/components/animation/InkDrop";
 import { cn } from "@/lib/utils";
 
 type Tone = "bone" | "ink" | "green" | "wenge";
@@ -79,7 +78,6 @@ export function Figure({
         ) : (
           <Placeholder slot={slot} styles={styles} index={index} />
         )}
-        {hasImage ? <InkDrop /> : null}
       </div>
 
       {caption ? (

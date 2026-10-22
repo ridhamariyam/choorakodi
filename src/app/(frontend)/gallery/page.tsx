@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { GalleryGrid } from "@/components/gallery/GalleryGrid";
@@ -24,14 +26,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function GalleryPage() {
-  const { gallery } = await getContent();
+  // Heritage and Kalari prints are shown on the Heritage page, not twice.
+  const gallery = (await getContent()).gallery.filter((item) => item.category !== "Heritage" && item.category !== "Kalari" && item.image.src);
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/gallery")}
         eyebrow="Images"
         lines={["Gallery."]}
-        standfirst="Six categories, one archive. Every slot below is composed and captioned, waiting on the academy's own photography."
-        meta={`${gallery.length} slots`}
+        standfirst="Six decades on one floor: the old prints from the academy's albums beside the kalari as it trains today. Every photograph is the academy's own."
+        meta={`${gallery.length} photographs`}
       />
 
       <SectionReveal tone="bone" spacing="md">
@@ -47,6 +51,8 @@ export default async function GalleryPage() {
         message="Hello Choorakkodi — I would like to visit the kalari."
         secondary={{ label: "Admissions", href: "/admissions" }}
       />
+
+      <NextChapter from="/gallery" />
 
       <JsonLd
         schema={breadcrumbSchema([

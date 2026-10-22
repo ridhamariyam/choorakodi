@@ -10,6 +10,7 @@ import { useGsap } from "@/hooks/useGsap";
 import { TransitionLink } from "@/components/animation/PageTransition";
 import { condensedStyle, faceStyle, monoStyle } from "./fonts";
 import { ScrollWords } from "./Caption";
+import { TrialStamp } from "./TrialStamp";
 import { animateChapterParts } from "./motion";
 
 /**
@@ -107,29 +108,26 @@ export function ProgrammeStrip({ programmes }: { programmes: Story["programmes"]
     >
       <div data-cards-pin>
         <div className="relative z-[1]">
-          <h2 id="begin-title" className="relative m-0 font-normal" style={faceStyle.unbounded}>
-            {programmes.title.map((line, i) => (
-              <span
-                key={line}
-                data-mega
-                className={`block text-[12.5vw] leading-[0.92] uppercase md:text-[9.5vw] ${i % 2 === 0 ? "pl-[5vw]" : "pl-[5vw] md:pl-[16vw]"}`}
-              >
+          {/* One line; the words slide in towards each other from opposite sides. */}
+          <h2
+            id="begin-title"
+            className="relative m-0 flex flex-wrap gap-x-[0.28em] pl-[5vw] font-normal text-[12.5vw] leading-[0.92] uppercase md:text-[9.5vw]"
+            style={faceStyle.unbounded}
+          >
+            {programmes.title.map((line) => (
+              <span key={line} data-mega className="block">
                 {line}
               </span>
             ))}
           </h2>
 
-          {/* Inked beside the heading like an old rubber stamp. */}
+          {/* Inked beside the heading like a round commemorative postmark. */}
           <div
             data-stamp
-            className="story-stamp absolute bottom-[1vw] right-[5vw] md:bottom-[0.5vw] md:right-[8vw]"
+            className="story-stamp absolute right-[5vw] top-1/2 -translate-y-1/2"
             style={condensedStyle}
           >
-            <span style={monoStyle} className="story-stamp-small">
-              ★ Choorakkodi Kalari · Est. 1960 ★
-            </span>
-            <span className="story-stamp-big">Trial classes</span>
-            <span className="story-stamp-big">available</span>
+            <TrialStamp image="/images/heritage/archive-staff-drill.webp" />
           </div>
         </div>
 
@@ -150,7 +148,7 @@ export function ProgrammeStrip({ programmes }: { programmes: Story["programmes"]
               <li key={item.title} className="w-[68vw] shrink-0 md:w-[17vw]">
                 <TransitionLink
                   href={item.href}
-                  className="story-card group block h-full bg-white pb-[2vw] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[0.6vw]"
+                  className="story-card group block h-full bg-[#dccdb6] pb-[2vw] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[0.6vw]"
                   style={monoStyle}
                 >
                   <div className="aspect-[4/3] overflow-hidden">
@@ -170,9 +168,7 @@ export function ProgrammeStrip({ programmes }: { programmes: Story["programmes"]
                     <p className="mt-3 text-[20px] leading-tight md:text-[22px]">
                       <ScrollWords text={item.title} />
                     </p>
-                    <p className="mt-2 text-[13px] leading-snug opacity-75">
-                      <ScrollWords text={item.detail} />
-                    </p>
+                    {/* Each programme's details are given once, on the Contact page. */}
                     <span className="mt-4 inline-flex items-center gap-2 text-[12px] uppercase tracking-[3px]">
                       Read more
                       <ArrowRight aria-hidden="true" className="size-3.5 transition-transform group-hover:translate-x-1" />

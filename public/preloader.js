@@ -1,13 +1,20 @@
-/* Choorakodi preloader — dependency-free, reusable Web Component. */
+/* Choorakodi preloader — dependency-free, reusable Web Component.
+ *
+ * The logo traces itself on the sky the homepage hero opens on: cream, old
+ * map paper and the same two cloud banks, set exactly where the hero sets
+ * them. On leaving, the camera flies through the logo and the preloader's
+ * sky fades over the hero's identical one, so the page simply carries on.
+ */
 (() => {
   'use strict';
   if (customElements.get('ck-preloader')) return;
 
+  const sky = '/images/hero/sky';
   const template = document.createElement('template');
   template.innerHTML = `
     <style>
       :host {
-        --ck-background: #f3efe6;
+        --ck-background: #fbf8ef;
         --ck-accent: #c4a487;
         --ck-foreground: #0d6f6b;
         position: fixed; inset: 0; display: grid; place-items: center;
@@ -17,14 +24,21 @@
       }
       :host([preview]) { position: absolute; z-index: 5; }
       *, *::before, *::after { box-sizing: border-box; }
-      .door {
-        position: absolute; top: 0; bottom: 0; width: 50.1%;
-        /* A warm haze at the top echoes the sunlit cloud the hero opens on. */
-        background: linear-gradient(180deg, color-mix(in srgb, var(--ck-background) 78%, #e8c49a) 0%, var(--ck-background) 48%, color-mix(in srgb, var(--ck-background) 90%, #c9a27c) 100%);
-        transition: opacity 1000ms cubic-bezier(.4, 0, .2, 1) 450ms, transform 1100ms cubic-bezier(.22, 1, .36, 1);
+      /* The hero's first frame, layer for layer (see SkyHero). */
+      .sky { position: absolute; inset: 0; overflow: hidden; background: var(--ck-background);
+             transition: opacity 650ms cubic-bezier(.4, 0, .2, 1) 300ms; }
+      .paper { position: absolute; inset: -4%; opacity: .8; background: url('${sky}/paper.webp') center / cover no-repeat;
+               animation: settle 1600ms cubic-bezier(.22, 1, .36, 1) both; }
+      .bank { position: absolute; height: auto; max-width: none; opacity: .85; }
+      .b1 { bottom: -8%; left: -60%; width: 200%; animation: part-left 1600ms cubic-bezier(.22, 1, .36, 1) both; }
+      .b2 { bottom: -12%; right: -70%; width: 190%; animation: part-right 1600ms cubic-bezier(.22, 1, .36, 1) both; }
+      @media (min-width: 768px) {
+        .b1 { bottom: -30%; left: -14%; width: 78%; }
+        .b2 { bottom: -36%; right: -14%; width: 66%; }
       }
-      .left { left: 0; transform-origin: left; }
-      .right { right: 0; transform-origin: right; }
+      @keyframes settle { from { transform: scale(1.08); opacity: 0; } }
+      @keyframes part-left { from { transform: translate(14%, -18%) scale(1.25); } }
+      @keyframes part-right { from { transform: translate(-14%, -18%) scale(1.25); } }
       .glow {
         position: absolute; inset: 0;
         background: radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--ck-accent) 16%, transparent), transparent 62%);
@@ -37,8 +51,8 @@
       }
       .content {
         position: relative; z-index: 2; text-align: center; width: calc(100% - 40px);
-        /* Sit above optical centre: the eye reads true centre as low. */
-        top: clamp(-96px, -9vh, -36px);
+        /* Just above optical centre: the eye reads true centre as low. */
+        top: clamp(-32px, -3vh, -12px);
         transition: opacity 520ms ease, transform 900ms cubic-bezier(.22, 1, .36, 1), filter 700ms ease;
       }
       .brand-logo {
@@ -46,19 +60,19 @@
         /* The point the exit zooms into: the open ground inside the emblem's
            ring, below the figure, so the camera passes through the mark. */
         transform-origin: 50% 57%;
-        transition: transform 1500ms cubic-bezier(.7, 0, .84, 0), opacity 650ms ease 800ms;
+        transition: transform 700ms cubic-bezier(.7, 0, .84, 0), opacity 350ms ease 350ms;
         will-change: transform;
       }
       .brand-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
       .logo-emblem .st1, .logo-emblem .st2 {
         stroke: #c4a487; stroke-width: 2; fill-opacity: 0;
         stroke-dasharray: 1; stroke-dashoffset: 1;
-        animation: trace 1050ms cubic-bezier(.25,.1,.25,1) 70ms forwards, fill-logo 550ms ease 780ms forwards;
+        animation: trace 600ms cubic-bezier(.25,.1,.25,1) 40ms forwards, fill-logo 300ms ease 450ms forwards;
       }
-      .logo-emblem .st0 { opacity: 0; transform: translateY(8px); animation: stance 650ms cubic-bezier(.2,.7,.2,1) 290ms forwards; }
-      .logo-wordmark { opacity: 0; clip-path: inset(0 100% 0 0); animation: word-reveal 700ms cubic-bezier(.2,.7,.2,1) 470ms forwards; }
-      .logo-tagline { opacity: 0; animation: appear 650ms ease 900ms forwards; }
-      .loading { width: 124px; margin: 32px auto 0; opacity: 0; animation: appear 600ms ease 750ms forwards; }
+      .logo-emblem .st0 { opacity: 0; transform: translateY(8px); animation: stance 400ms cubic-bezier(.2,.7,.2,1) 160ms forwards; }
+      .logo-wordmark { opacity: 0; clip-path: inset(0 100% 0 0); animation: word-reveal 400ms cubic-bezier(.2,.7,.2,1) 260ms forwards; }
+      .logo-tagline { opacity: 0; animation: appear 350ms ease 500ms forwards; }
+      .loading { width: 124px; margin: 32px auto 0; opacity: 0; animation: appear 300ms ease 400ms forwards; }
       .rail { height: 1px; position: relative; background: color-mix(in srgb, var(--ck-accent) 22%, transparent); overflow: hidden; }
       .beam { position: absolute; inset: 0; background: var(--ck-accent); transform: translateX(-110%); animation: travel 1800ms ease-in-out infinite; }
       .status { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -80,9 +94,9 @@
       /* Exit: the camera flies into the logo. The mark zooms in, accelerating,
          until it is far larger than the screen; the ground dissolves like haze
          into the hero's sky behind it, and the hero settles out of its own
-         zoom (CinematicHero), so the first frame is arrived at, not cut to. */
+         zoom (SkyHero), so the first frame is arrived at, not cut to. */
       :host(.leaving) { pointer-events: none; }
-      :host(.leaving) .left, :host(.leaving) .right { opacity: 0; }
+      :host(.leaving) .sky { opacity: 0; }
       :host(.leaving) .brand-logo { transform: scale(26); opacity: 0; }
       :host(.leaving) .loading { opacity: 0; transition: opacity 250ms ease; }
       :host(.leaving) .glow, :host(.leaving) .grain, :host(.leaving) .skip, :host(.leaving) .dust { opacity: 0; }
@@ -102,7 +116,7 @@
         .beam { transform: none; opacity: .7; }
       }
     </style>
-    <div class="door left"></div><div class="door right"></div>
+    <div class="sky" aria-hidden="true"><div class="paper"></div><img class="bank b1" src="${sky}/cloud-bank.webp" alt=""><img class="bank b2" src="${sky}/cloud-bank-2.webp" alt=""></div>
     <div class="glow"></div><div class="grain"></div>
     <div class="dust-field" aria-hidden="true"><i class="dust"></i><i class="dust"></i><i class="dust"></i><i class="dust"></i></div>
     <div class="content">
@@ -262,8 +276,9 @@
         this.later(() => {
           this.classList.add('leaving');
           this.dispatchEvent(new CustomEvent('ck-leaving', { bubbles: true, composed: true }));
-          this.later(() => this.complete(), 1550);
-        }, 180);
+          // Removed once its sky has faded over the hero's (300ms + 650ms).
+          this.later(() => this.complete(), 950);
+        }, 60);
       }, remaining);
     }
 

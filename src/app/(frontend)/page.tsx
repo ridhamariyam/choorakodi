@@ -45,12 +45,20 @@ export async function generateMetadata(): Promise<Metadata> {
  * src/components/home and are still used by other routes where relevant.
  */
 export default async function HomePage() {
-  const [{ site, story, about, faq }, portrait] = await Promise.all([getContent(), findFounderPortrait()]);
+  const [{ site, story, about, founder, faq }, portrait] = await Promise.all([getContent(), findFounderPortrait()]);
 
-  // The inner pages' FAQs, joining questions first; only answered ones, and
-  // each question once. "Can children train?" is left out here: on the
-  // homepage it repeats "What age can students join?" just above it.
-  const seen = new Set<string>(["Can children train?"]);
+  // Every FAQ on the site lives here, joining questions first; only answered
+  // ones, and each question once. Left out: questions whose answer the page
+  // already tells (branches → "Who carries it now", events → "Beyond
+  // Kerala", "Can children train?" → "What age can students join?"), and the
+  // address and timings, which the Contact page holds.
+  const seen = new Set<string>([
+    "Can children train?",
+    "Are other Choorakkodi kalaris branches of this academy?",
+    "Does the academy perform at events?",
+    "Where is the academy?",
+    "What are the class timings and fees?",
+  ]);
   const homeFaq = [...faq.admissions, ...faq.kalarippayattu, ...faq.marma].filter(
     (item) => !item.pending && !seen.has(item.question) && Boolean(seen.add(item.question)),
   );
@@ -58,7 +66,22 @@ export default async function HomePage() {
 
   return (
     <>
-      <StoryExperience story={story} portrait={portrait} recognition={about.recognition} faq={homeFaq} />
+      <StoryExperience
+        story={story}
+        portrait={portrait}
+        recognition={about.recognition}
+        faq={homeFaq}
+        // The founder's journey; his founding of the kalari and the treatment
+        // centre (the rest of his story) are the chapters around it.
+        founder={{
+          items: founder.intro.split(/\n\s*\n/).slice(0, 2).map((text) => ({ text })),
+          highlights: founder.highlights,
+        }}
+        academy={{
+          items: about.sections.map((section) => ({ label: section.title, text: section.body })),
+          highlights: about.highlights,
+        }}
+      />
       <JsonLd schema={personSchema(site)} />
       {faqJson ? <JsonLd schema={faqJson} /> : null}
     </>

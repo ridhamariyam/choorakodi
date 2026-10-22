@@ -19,12 +19,14 @@ export type PageHeaderProps = {
   size?: "display" | "mega";
   children?: ReactNode;
   grain?: boolean;
+  /** Where the page sits in the site's story, e.g. "Chapter 03 of 12". */
+  chapter?: string;
 };
 
 /**
  * The opening of every page below the home page, built like one of the
  * homepage chronicle's chapters: the trail comes in, the academy mark and a
- * letterspaced kicker, a giant title in an era face over a taupe disc, then
+ * letterspaced kicker, a giant title in an era face over a black disc, then
  * the standfirst as a typewriter caption that lights up as you scroll.
  */
 export function PageHeader({
@@ -37,6 +39,7 @@ export function PageHeader({
   size = "mega",
   children,
   grain = false,
+  chapter,
 }: PageHeaderProps) {
   const seed = lines.join(" ");
   const face = faceFor(seed);
@@ -50,14 +53,17 @@ export function PageHeader({
           <div className="flex flex-col items-center gap-[1.6vw] md:gap-[0.6vw]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/logo-square.svg" alt="" aria-hidden="true" className="story-knockout h-auto w-[10vw] md:w-[4.2vw]" />
+            {chapter ? (
+              <span className="text-center text-[2.2vw] uppercase tracking-[0.32em] opacity-60 md:text-[0.7vw]">{chapter}</span>
+            ) : null}
             <span className="text-center text-[2.6vw] uppercase tracking-[0.32em] md:text-[0.8vw]">{eyebrow}</span>
           </div>
         </TextReveal>
 
-        <div className="relative mt-[3vw] md:mt-[1.2vw]">
+        <div className="relative flow-root mt-[3vw] md:mt-[1.2vw]">
           <span
             aria-hidden="true"
-            className="story-disc absolute left-1/2 top-1/2 -z-10 size-[46vw] rounded-full bg-[#c4a487] md:size-[26vw]"
+            className="story-disc disc-ink pointer-events-none absolute left-1/2 top-1/2 z-10 aspect-square h-full rounded-full"
           />
           <SplitHeading
             as="h1"

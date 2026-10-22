@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Anton, Archivo_Black, Bodoni_Moda, Inconsolata, Shrikhand, Syne, Unbounded } from "next/font/google";
+import { Anton, Archivo_Black, Bodoni_Moda, Cinzel, Inconsolata, Shrikhand, Syne, Unbounded } from "next/font/google";
 import type { StoryChapter } from "@/data/story";
 
 /**
@@ -14,8 +14,10 @@ const shrikhand = Shrikhand({ subsets: ["latin"], weight: "400", variable: "--fo
 const archivo = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-story-archivo", display: "swap" });
 const unbounded = Unbounded({ subsets: ["latin"], weight: ["800"], variable: "--font-story-unbounded", display: "swap" });
 const syne = Syne({ subsets: ["latin"], weight: ["800"], variable: "--font-story-syne", display: "swap" });
+/** Engraved capitals of the sky hero and the preloader (which reads --font-sky-serif). */
+const skySerif = Cinzel({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-sky-serif", display: "swap" });
 
-export const storyFontVariables = [mono, bodoni, anton, shrikhand, archivo, unbounded, syne]
+export const storyFontVariables = [mono, bodoni, anton, shrikhand, archivo, unbounded, syne, skySerif]
   .map((font) => font.variable)
   .join(" ");
 
@@ -36,6 +38,8 @@ export const faceStyle: Record<StoryChapter["face"], CSSProperties> = {
   unbounded: headingStyle,
   syne: headingStyle,
 };
+
+export const serifStyle: CSSProperties = { fontFamily: "var(--font-sky-serif), Georgia, serif" };
 
 /** Condensed face for the odometer and the rubber stamp, which are not headings. */
 export const condensedStyle: CSSProperties = { fontFamily: "var(--font-story-anton), sans-serif", fontWeight: 400, letterSpacing: "-0.01em" };

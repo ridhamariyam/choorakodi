@@ -42,12 +42,32 @@ export const kalarippayattuFaq: FaqItem[] = [
   {
     question: "Can children train?",
     answer:
-      "Yes. Most students are children, and the academy takes students of all genders from 7 years of age. Sub-juniors train from 4.30 to 6 pm.",
+      "Yes. The sub-junior programme is designed for children aged 6–14, of all genders. Sub-juniors train from 4.30 to 6 pm, with practice introduced according to each learner's level and the instructor's guidance.",
+  },
+  {
+    question: "What happens in a children's training session?",
+    answer:
+      "Sessions begin with a 15–20-minute stretching routine, followed by foundational Kalari practices: Meythari, Poothara Vanakkam, Kalari Vandanam, basic meypayattu, kalugal (kicks) and chuvadukal (steps). Training follows each learner's level and the instructor's guidance.",
+  },
+  {
+    question: "What are the Four Anghanghal?",
+    answer:
+      "Meypayattu, Vadipayattu, Angappayattu and Marmmakai are the four traditional practices in Choorakkodi Kalari's training repertoire. The four main training sections are Meythari, Kolthari, Angathari and Verumkai.",
+  },
+  {
+    question: "How long before a child sees progress?",
+    answer:
+      "Over about two years, consistent, age-appropriate practice may help a child improve flexibility, coordination, movement control and confidence. Progress depends on attendance, individual development and the instructor's assessment, and differs from student to student.",
+  },
+  {
+    question: "How does training support self-defence and personal development?",
+    answer:
+      "Structured martial arts practice develops body control, awareness, defensive responses and confidence. Training also encourages discipline, concentration and mental resilience.",
   },
   {
     question: "Do you offer certification?",
     answer:
-      "Yes. Training runs at beginner, intermediate and advanced levels, and certification is offered. Weekly classes, a one-month summer camp and intensive courses are all available.",
+      "Yes. Training runs at beginner, intermediate and advanced levels, with certification and annual belt grading. The academy also offers district and state championship coaching, weekly classes, a one-month summer camp and intensive courses.",
   },
   {
     question: "Are other Choorakkodi kalaris branches of this academy?",
@@ -80,7 +100,7 @@ export const admissionsFaq: FaqItem[] = [
   },
   {
     question: "What age can students join?",
-    answer: "From 7 years of age, of all genders. Beginners start at the conditioning stage.",
+    answer: "The sub-junior programme is designed for children aged 6–14, of all genders. Junior, senior and adult beginners are also welcome. Training starts with foundational body work and follows the instructor's guidance.",
   },
   {
     question: "Do you accept adult beginners?",

@@ -75,7 +75,6 @@ export function Chapter({
               marker={chapter.marker}
               face={chapter.face}
               kicker={chapter.kicker}
-              disc={chapter.disc}
               countFrom={/^\d{4}$/.test(chapter.marker.trim()) ? countFrom : undefined}
             />
           </div>

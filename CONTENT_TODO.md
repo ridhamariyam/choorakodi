@@ -1,10 +1,18 @@
 # Content inventory — what the academy still needs to supply
 
-The onboarding sheet, proposal, page architecture and brand book are in `docs/`. Their facts
+The onboarding sheet, proposal, page architecture, brand book and `CHOORAKKODI.pdf` are in `docs/`. Their facts
 are now on the site: founding (1960), the founder's full name, teachers and styles, the Shafi Dawa
 Khana / Chikitsalayam / Kalari Sangam history, Dr. Saheer Ali, affiliations, championships and
-appearances, the Covid pause, age bands (7+, all genders), levels, batch timings, programmes,
+appearances, the Covid pause, sub-junior ages (6–14, all genders), levels, batch timings, programmes,
 address, landmark, hours and phone. Nothing beyond those documents has been invented.
+
+`CHOORAKKODI.pdf` supplies President Dr. Saheer Ali, General Secretary A. Moosa Haji,
+founder/former president C. M. M. Gurukkal, the four training sections (Maithaari,
+Koolthaari, Anghathaari, Verum Kaimura), Four Anghanghal, the children's stretching
+and foundational practice routine, annual belt grading, championship coaching, and
+Kalari Payattu and yoga participation. The latest document's ages 6–14 replace the
+older minimum age of 7. To apply this content to an existing CMS, back up the database
+and run `npm run import:choorakkodi`; a fresh `npm run seed` already uses these defaults.
 
 Everything below is a real gap that the documents do not answer. Each item names the file to edit
 (the live copy is edited in the admin at `/admin`; `src/data` holds the defaults).
@@ -47,11 +55,12 @@ captions/dates for the archive prints so they can be used on `/heritage` and `/a
   Not used yet: confirm the names and spelling before publishing.
 - **Dr. Saheer Ali's title at SDK** — onboarding sheet says "Chairman"; shafidawakhana.in says
   "Managing Director and Chief Physician" / "Managing Partner". The site uses the latter.
+  His separate role as President of Choorakkodi Kalari is supplied by `CHOORAKKODI.pdf`.
 - **Press coverage** — onboarding answer was blank.
 - **Fees** — not supplied, or confirm "on enquiry only".
 - **Marma consultations** — format and duration (booking and who conducts them now come from shafidawakhana.in).
-- **Disciplines** — the academy is affiliated to the Taekwondo and Yoga associations of Kerala.
-  Confirm whether Taekwondo and Yoga are taught, so the "Martial Arts" card can name them.
+- **Disciplines** — Kalari Payattu and yoga participation and annual belt grading are confirmed.
+  Confirm additional martial arts, whether dedicated yoga classes are offered, and the grading system.
 - **Self-defence programme** — length and batches.
 - **FAQ topics from the sheet still unanswered** — how many years it takes to learn
   Kalarippayattu; how it compares with karate or kung fu (needs the academy's own answer).

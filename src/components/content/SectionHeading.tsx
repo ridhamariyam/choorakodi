@@ -19,13 +19,14 @@ export type SectionHeadingProps = {
   headingClassName?: string;
   /** Hairline rule above the block. */
   rule?: boolean;
-  align?: "left" | "right";
+  align?: "left" | "right" | "center";
 };
 
 const sizeClasses = {
   mega: "text-mega",
   display: "text-display",
-  headline: "text-headline",
+  // Set like the homepage chronicle's chapter headings ("The kalari takes shape").
+  headline: "text-[11vw] leading-[0.95] font-normal uppercase md:text-[4.6vw]",
 } as const;
 
 /**
@@ -47,7 +48,7 @@ export function SectionHeading({
   align = "left",
 }: SectionHeadingProps) {
   return (
-    <div className={cn(align === "right" && "text-right", className)}>
+    <div className={cn(align === "right" && "text-right", align === "center" && "text-center", className)}>
       {rule ? <LineReveal tone={tone} className="mb-6" /> : null}
 
       {(eyebrow || index) && (
@@ -55,6 +56,7 @@ export function SectionHeading({
           className={cn(
             "mb-10 flex items-baseline gap-6 sm:mb-14",
             align === "right" && "justify-end",
+            align === "center" && "justify-center",
           )}
           y={16}
         >

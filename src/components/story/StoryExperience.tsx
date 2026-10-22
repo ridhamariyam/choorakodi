@@ -5,7 +5,7 @@ import type { Story } from "@/lib/content/defaults";
 import type { StoryPhoto } from "@/data/story";
 import { useGsap } from "@/hooks/useGsap";
 import { animateScrubText } from "./motion";
-import { CinematicHero } from "./hero/CinematicHero";
+import { SkyHero } from "./hero/SkyHero";
 import { Chapter } from "./Chapter";
 import { KineticMura } from "./KineticMura";
 import { Recognition } from "./Affiliations";
@@ -14,6 +14,7 @@ import type { FaqItem } from "@/data/faq";
 import { ProgrammeStrip } from "./ProgrammeStrip";
 import { YearCounter } from "./YearCounter";
 import { StoryTrail } from "./StoryTrail";
+import { StoryProse, type ProseItem } from "./StoryProse";
 
 /**
  * The homepage chronicle, 1960 → 2026.
@@ -27,6 +28,8 @@ export function StoryExperience({
   portrait = null,
   recognition,
   faq = [],
+  founder,
+  academy,
 }: {
   story: Story;
   portrait?: StoryPhoto | null;
@@ -34,6 +37,10 @@ export function StoryExperience({
   recognition: { title: string; items: string[] };
   /** Answered questions from the inner pages' FAQs. */
   faq?: FaqItem[];
+  /** The founder's own story, told after the 1960 chapter. */
+  founder: { items: ProseItem[]; highlights: string[] };
+  /** Lineage, leadership and authenticity, told after the present day. */
+  academy: { items: ProseItem[]; highlights: string[] };
 }) {
   const { intro, chapters, laterChapters } = story;
   const scope = useRef<HTMLDivElement>(null);
@@ -84,19 +91,39 @@ export function StoryExperience({
       style={{ backgroundColor: intro.bg }}
     >
       <StoryTrail scope={scope} />
-      <CinematicHero intro={intro} />
+      <SkyHero intro={intro} />
       {chapters.map((chapter, i) => (
         <Chapter
           key={chapter.id}
           chapter={chapter}
+          // The first chapter rises over the hero's last, settled viewport.
           overlapHero={i === 0}
           portrait={i === 0 ? portrait : null}
         />
       ))}
+      <StoryProse
+        id="founder"
+        heading="A journey of learning"
+        items={founder.items}
+        highlights={founder.highlights}
+        counter={intro.counter}
+        trail="right"
+        bg={intro.bg}
+      />
       <KineticMura mura={story.mura} />
       {laterChapters.map((chapter) => (
         <Chapter key={chapter.id} chapter={chapter} countFrom={countFrom.get(chapter.id)} />
       ))}
+      <StoryProse
+        id="academy"
+        heading="Who carries it now"
+        items={academy.items}
+        highlights={academy.highlights}
+        counter={story.range.end}
+        trail="right"
+        bg={intro.bg}
+      />
+      <KineticMura mura={story.values} id="values" label="What training builds" />
       <Recognition title={recognition.title} items={recognition.items} />
       <HomeFaq items={faq} />
       <ProgrammeStrip programmes={story.programmes} />

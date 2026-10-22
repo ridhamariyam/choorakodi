@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { PageHeader } from "@/components/layout/PageHeader";
+import { NextChapter } from "@/components/story/NextChapter";
+import { KineticMura } from "@/components/story/KineticMura";
+import { chapterLabel } from "@/data/navigation";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { SectionReveal } from "@/components/animation/SectionReveal";
 import { SectionHeading } from "@/components/content/SectionHeading";
@@ -12,10 +16,9 @@ import { ParallaxImage } from "@/components/animation/ParallaxImage";
 import { ScaleImage } from "@/components/animation/ScaleImage";
 import { HorizontalScroll } from "@/components/animation/HorizontalScroll";
 import { LineReveal } from "@/components/animation/LineReveal";
-import { FAQ } from "@/components/content/FAQ";
 import { CTASection } from "@/components/content/CTASection";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { breadcrumbSchema, faqSchema } from "@/lib/schema";
+import { breadcrumbSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 import { formatLocality } from "@/data/site";
 import { getContent } from "@/lib/content";
@@ -26,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     {
       title: "Kalarippayattu",
       description:
-        "Kerala's classical martial art, taught in its traditional four-stage order at Choorakkodi Martial Arts Academy, Kozhikode — meythari, kolthari, ankathari and verumkai.",
+        "Kalarippayattu at Choorakkodi, Chelavoor: Meythari, Kolthari, Angathari and Verumkai. Sub-junior training for ages 6–14 and championship coaching.",
       path: "/kalarippayattu",
     },
     site,
@@ -34,10 +37,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function KalarippayattuPage() {
-  const { site, kalarippayattu: page, faq } = await getContent();
+  const { site, kalarippayattu: page } = await getContent();
   return (
     <>
       <PageHeader
+        chapter={chapterLabel("/kalarippayattu")}
         eyebrow={page.eyebrow}
         lines={page.heading}
         label="Kalarippayattu."
@@ -89,6 +93,9 @@ export default async function KalarippayattuPage() {
         </PageContainer>
       </SectionReveal>
 
+      {/* The Four Anghanghal, sliding past like the homepage's four styles. */}
+      <KineticMura mura={page.anghanghal} id="anghanghal" label="The Four Anghanghal" />
+
       {/* Training stages — horizontal ------------------------------------- */}
       <SectionReveal
         tone="wenge"
@@ -138,6 +145,45 @@ export default async function KalarippayattuPage() {
         </HorizontalScroll>
       </SectionReveal>
 
+      {/* What training builds --------------------------------------------- */}
+      <SectionReveal tone="bone" spacing="lg" aria-labelledby="kp-philosophy">
+        <PageContainer>
+          <div className="grid gap-14 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <SectionHeading
+                id="kp-philosophy"
+                index="03"
+                eyebrow="Training philosophy"
+                lines={["What the", "floor builds."]}
+                label={page.philosophy.title}
+                size="headline"
+              />
+              <TextReveal delay={0.12} className="mt-10">
+                <p className="measure text-lead text-ink/72">{page.philosophy.intro}</p>
+              </TextReveal>
+              <ParallaxImage
+                slot={page.philosophy.image}
+                ratio="4 / 3"
+                index="Flexibility"
+                wrapperClassName="mt-12 w-full"
+                sizes="(max-width: 1024px) 92vw, 40vw"
+                strength={8}
+              />
+            </div>
+
+            <ol className="m-0 grid list-none content-start gap-x-10 p-0 sm:grid-cols-2 lg:col-span-6 lg:col-start-7">
+              {page.philosophy.items.map((item, index) => (
+                <li key={item.title} data-reveal className="border-t border-ink/12 py-8">
+                  <span className="eyebrow text-soil">{String(index + 1).padStart(2, "0")}</span>
+                  <h3 className="mt-5 text-title font-semibold tracking-[-0.024em]">{item.title}</h3>
+                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink/72">{item.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </PageContainer>
+      </SectionReveal>
+
       {/* What students learn ---------------------------------------------- */}
       <SectionReveal tone="bone" spacing="lg" aria-labelledby="kp-learn">
         <PageContainer>
@@ -145,9 +191,9 @@ export default async function KalarippayattuPage() {
             <div className="lg:col-span-6">
               <SectionHeading
                 id="kp-learn"
-                index="03"
-                eyebrow="Syllabus"
-                lines={["What", "students", "learn."]}
+                index="04"
+                eyebrow="Training"
+                lines={[page.learn.title]}
                 size="headline"
               />
 
@@ -195,7 +241,7 @@ export default async function KalarippayattuPage() {
         <PageContainer>
           <SectionHeading
             id="kp-join"
-            index="04"
+            index="05"
             eyebrow="Practicalities"
             lines={["Who can join,", "and when."]}
             size="headline"
@@ -213,24 +259,18 @@ export default async function KalarippayattuPage() {
             </div>
 
             <div data-reveal className="border-t border-bone/20 pt-8">
-              <h3 className="text-title font-semibold text-bone">{page.schedule.title}</h3>
-              {page.schedule.items.length > 0 ? (
-                <ul className="mt-5 space-y-3 text-lead text-bone/70">
-                  {page.schedule.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              ) : null}
-              <PendingCopy tone="dark" className="mt-7" label="Timings pending">
-                {page.schedule.pending}
-              </PendingCopy>
-            </div>
-
-            <div data-reveal className="border-t border-bone/20 pt-8">
               <h3 className="text-title font-semibold text-bone">{page.fees.title}</h3>
               <PendingCopy tone="dark" className="mt-7" label="Fees pending">
                 {page.fees.pending}
               </PendingCopy>
+            </div>
+
+            {/* Batch timings are kept on the Contact page only. */}
+            <div data-reveal className="border-t border-bone/20 pt-8">
+              <h3 className="text-title font-semibold text-bone">{page.schedule.title}</h3>
+              <Link href="/contact#contact-schedule" className="mt-5 inline-block border-b border-current text-lead text-bone/70 hover:text-bone">
+                See the batch timings →
+              </Link>
             </div>
           </div>
         </PageContainer>
@@ -247,28 +287,6 @@ export default async function KalarippayattuPage() {
         />
       </SectionReveal>
 
-      {/* FAQ --------------------------------------------------------------- */}
-      <SectionReveal tone="bone" spacing="lg" aria-labelledby="kp-faq">
-        <PageContainer>
-          <div className="grid gap-14 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <div className="lg:sticky lg:top-32">
-                <SectionHeading
-                  id="kp-faq"
-                  index="05"
-                  eyebrow="Questions"
-                  lines={["Before", "you begin."]}
-                  size="headline"
-                />
-              </div>
-            </div>
-            <div className="lg:col-span-7 lg:col-start-6">
-              <FAQ items={faq.kalarippayattu} defaultOpen={0} />
-            </div>
-          </div>
-        </PageContainer>
-      </SectionReveal>
-
       <CTASection
         eyebrow="Admissions"
         lines={["Book a", "free trial."]}
@@ -278,7 +296,8 @@ export default async function KalarippayattuPage() {
         secondary={{ label: "Admissions", href: "/admissions" }}
       />
 
-      <JsonLd schema={faqSchema(faq.kalarippayattu)} />
+      <NextChapter from="/kalarippayattu" />
+
       <JsonLd
         schema={breadcrumbSchema([
           { name: "Home", path: "/" },

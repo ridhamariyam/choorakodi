@@ -1,0 +1,10 @@
+# Never upload local secrets, the CMS database or CMS uploads; Vercel runs
+# the site from its built-in content (no PAYLOAD_SECRET).
+.env
+.env.*
+!.env.example
+/data/
+/media/
+/node_modules
+/.next/
+*.tsbuildinfo

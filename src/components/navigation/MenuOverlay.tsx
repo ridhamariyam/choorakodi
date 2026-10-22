@@ -7,16 +7,10 @@ import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/hooks/useReducedMotion";
 import { useLenis } from "@/hooks/useLenis";
 import { TransitionLink } from "@/components/animation/PageTransition";
-import { Figure } from "@/components/content/Figure";
 import { WhatsAppButton } from "@/components/contact/WhatsAppButton";
 import { formatLocality } from "@/data/site";
 import { usePrimaryNav, useSite } from "@/components/content/ContentProvider";
-import { slot } from "@/data/assets";
 import { cn } from "@/lib/utils";
-
-const menuImage = slot("KALARI IMAGE", "The Choorakkodi kalari", {
-  brief: "public/images/hero — the menu's standing image",
-});
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -265,19 +259,9 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
               </ul>
             </nav>
 
-            {/* Standing image + contact */}
+            {/* Contact */}
             <div className="lg:col-span-5 lg:col-start-8">
               <div data-menu-meta>
-                <Figure
-                  slot={menuImage}
-                  ratio="4 / 5"
-                  tone="ink"
-                  sizes="(max-width: 1024px) 90vw, 32vw"
-                  className="hidden lg:block"
-                />
-              </div>
-
-              <div data-menu-meta className="mt-0 lg:mt-10">
                 <p className="eyebrow mb-4 text-bone/40">Get in touch</p>
                 <p className="text-lead text-bone/70">
                   {site.name}

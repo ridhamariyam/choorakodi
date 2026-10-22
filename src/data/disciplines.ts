@@ -31,13 +31,12 @@ export const disciplines: Discipline[] = [
     eyebrow: "Kerala · Traditional",
     summary:
       "Kerala's classical martial art, trained inside the kalari — the pit-floored hall that gives the practice its name. It moves through body conditioning, wooden weapons, edged weapons and finally the bare hand, in that order, because the body must be built before it is armed.",
-    pending:
-      "Confirm the Choorakkodi syllabus: which stage a beginner enters, how progression is assessed, and the weapons taught in-house.",
+    pending: "",
     highlights: [
       "Meythari · body conditioning",
       "Kolthari · wooden weapons",
-      "Ankathari · edged weapons",
-      "Verumkai · bare hand",
+      "Angathari · metal weapons",
+      "Verumkai · the empty hand",
     ],
     image: slot("TRAINING IMAGE", "Two Choorakkodi students leap with sword and shield inside the kalari", {
       src: "/images/training/shield-leap.webp",
@@ -51,12 +50,14 @@ export const disciplines: Discipline[] = [
     subtitle: "Beyond the kalari",
     eyebrow: "Contemporary · Structured",
     summary:
-      "Structured martial training that sits alongside the traditional syllabus — conditioning, striking mechanics, controlled sparring and the habits of attention that carry from the floor into the rest of a life.",
+      "Structured training with certified and experienced trainers develops physical fitness, flexibility, discipline and confidence. Academy activities include annual belt grading, district and state championship coaching, and participation in Kalari Payattu and yoga.",
     pending:
-      "Name the specific arts and belt or grading systems offered here. This section lists nothing until the academy confirms them.",
-    highlights: [],
-    image: slot("TRAINING IMAGE", "Students training in formation at the academy", {
-      brief: "public/images/training — group session, natural light",
+      "Confirm which additional martial arts are taught and the belt or grading system used.",
+    highlights: ["Annual belt grading", "District and state championship coaching", "Kalari Payattu and yoga participation"],
+    image: slot("TRAINING IMAGE", "Six Choorakkodi trainers stand with arms folded on the kalari floor", {
+      src: "/images/training/trainers-lineup.webp",
+      width: 1170,
+      height: 772,
     }),
   },
   {
@@ -66,12 +67,14 @@ export const disciplines: Discipline[] = [
     subtitle: "Practical, unarmed",
     eyebrow: "Applied · All ages",
     summary:
-      "Practical unarmed work drawn from the same principles — distance, timing, balance and the calm to read a situation early. Taught as a self-contained programme as well as inside the wider syllabus.",
+      "Self-defence training develops body control, awareness, defensive responses and confidence. Unarmed techniques form part of Verumkai, while structured practice encourages concentration, discipline and mental resilience.",
     pending:
-      "Confirm programme length, age bands and whether dedicated women's or children's batches run.",
-    highlights: [],
-    image: slot("TRAINING IMAGE", "A self-defence drill being practised in pairs", {
-      brief: "public/images/training — paired drill, mid-movement",
+      "Confirm dedicated self-defence programme length and batches.",
+    highlights: ["Body control and awareness", "Unarmed defensive responses", "Confidence and mental resilience"],
+    image: slot("TRAINING IMAGE", "One practitioner throws another across his shoulders, from the academy archive", {
+      src: "/images/heritage/archive-throw.webp",
+      width: 1081,
+      height: 815,
     }),
   },
   {
@@ -85,8 +88,8 @@ export const disciplines: Discipline[] = [
     pending:
       "Confirm which consultations and therapies are offered, by whom, and how sessions are booked.",
     highlights: [],
-    image: slot("MARMA IMAGE", "Hands-on marma therapy in the kalari treatment room", {
-      brief: "public/images/training — close, warm, respectful framing",
+    image: slot("MARMA IMAGE", "Kalari uzhichil: two practitioners massage a patient by foot on the kalari floor", {
+      src: "/images/training/kalari-uzhichil.webp",
     }),
   },
 ];

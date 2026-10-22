@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
     // Photos uploaded in the admin are served by Payload from /api/media/file.
     localPatterns: [{ pathname: "/api/media/file/**" }, { pathname: "/images/**" }],
   },
+  // The Our Legacy page is folded into the homepage for now; its route is
+  // kept in src/app so it can come back.
+  async redirects() {
+    return [{ source: "/about", destination: "/", permanent: false }];
+  },
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

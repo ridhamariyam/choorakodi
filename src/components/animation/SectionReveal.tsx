@@ -10,7 +10,7 @@ export type SectionTone = "bone" | "ink" | "green" | "wenge";
 
 const toneClasses: Record<SectionTone, string> = {
   bone: "bg-bone text-ink",
-  // The whole site is set on white: former dark tones flip to dark-on-white.
+  // The whole site is set on beige: former dark tones flip to dark-on-beige.
   ink: "tone-flip",
   green: "tone-flip",
   wenge: "tone-flip",

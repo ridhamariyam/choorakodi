@@ -60,7 +60,7 @@ export function GalleryGrid({ gallery }: { gallery: GalleryItem[] }) {
         aria-label="Filter gallery by category"
         className="flex flex-wrap items-center gap-x-1 gap-y-2 border-y border-ink/12 py-4"
       >
-        {(["All", ...galleryCategories] as Filter[]).map((category) => {
+        {(["All", ...galleryCategories.filter((c) => gallery.some((item) => item.category === c))] as Filter[]).map((category) => {
           const isActive = filter === category;
           return (
             <button

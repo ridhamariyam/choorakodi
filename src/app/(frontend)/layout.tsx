@@ -58,7 +58,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: light)", color: "#E6D9C6" },
     { media: "(prefers-color-scheme: dark)", color: "#101312" },
   ],
 };
@@ -72,11 +72,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en-IN" className={`${poppins.variable} ${storyFontVariables}`} suppressHydrationWarning>
       <body className="antialiased" suppressHydrationWarning>
         {/*
-         * Logo preloader (public/preloader.js). Runs during HTML parse so the
+         * Logo preloader (public/preloader.js), drawn on the hero's own sky. Runs during HTML parse so the
          * overlay covers the first paint. The element is attached to <html>,
          * outside React's tree, so hydration never sees it remove itself.
-         * On the homepage it waits for the cinematic hero to report its first
-         * frames ("hero:ready") so it dissolves straight into the sky; other
+         * On the homepage it waits for the sky hero to report its first
+         * scene ("hero:ready") so its clouds open onto the hero's; other
          * pages finish on window load. Client-side navigations keep this
          * layout, so it only plays once per visit.
          */}
@@ -84,7 +84,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script src="/preloader.js" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var l=document.createElement("ck-preloader");l.setAttribute("label",${JSON.stringify(site.name)});l.setAttribute("background","#f4ece0");l.setAttribute("accent","#c4a487");l.setAttribute("foreground","#0d6f6b");l.setAttribute("max-wait","9000");l.setAttribute("min-duration","2100");if(location.pathname==="/"){l.setAttribute("mode","manual");window.addEventListener("hero:ready",function(){l.finish&&l.finish();},{once:true});}document.documentElement.appendChild(l);})();`,
+            __html: `(function(){var l=document.createElement("ck-preloader");l.setAttribute("label",${JSON.stringify(site.name)});l.setAttribute("background","#fbf8ef");l.setAttribute("accent","#c4a487");l.setAttribute("foreground","#0d6f6b");l.setAttribute("max-wait","3500");l.setAttribute("min-duration","800");if(location.pathname==="/"){l.setAttribute("mode","manual");window.addEventListener("hero:ready",function(){l.finish&&l.finish();},{once:true});}document.documentElement.appendChild(l);})();`,
           }}
         />
         <a
