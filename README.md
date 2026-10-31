@@ -1,129 +1,84 @@
 # Choorakkodi Martial Arts Academy
 
-Editorial website for Choorakkodi Martial Arts Academy, Kozhikode, Kerala.
+Website and content manager (CMS) for the academy in Kozhikode, Kerala.
+Built with Next.js 16 and Payload CMS. Needs Node.js 20.9 or newer.
 
-Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · GSAP 3 + ScrollTrigger + SplitText · Lenis · Lucide.
+## Run the website
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000
-npm run build      # production build
-npm run lint       # eslint (flat config)
-npm run typecheck  # tsc --noEmit
+npm ci
+npm run dev
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` (see `.env.example`) before deploying — it drives canonical URLs, Open Graph and the sitemap.
+Open http://localhost:3000. Without a `.env` file, the site shows the built-in content from `src/data` and the CMS is off.
 
----
+## Turn on the CMS
 
-## The homepage
+1. Create the settings file:
 
-`src/components/story/StoryExperience.tsx` composes the chronicle: the pinned sky hero
-(`hero/SkyHero.tsx`), the dated and undated chapters, then the values, recognition, FAQ and programme sections.
+   ```bash
+   cp .env.example .env
+   ```
 
-See `docs/HANDOVER.md` for deployment, the CMS and what is still outstanding.
+2. Generate a secret, and paste it after `PAYLOAD_SECRET=` in `.env`:
 
----
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+   ```
 
-## Content is data, not markup
+3. Create the `data` folder and fill the database with the site's content:
 
-No page copy lives inside a component. Everything is typed and sits in `src/data/`:
+   ```bash
+   mkdir -p data
+   npm run seed
+   ```
 
-| File | Holds |
+4. Run `npm run dev`, open http://localhost:3000/admin and create your login.
+
+To have the seed create the login for you, set `SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD` in `.env` before step 3. Leave both empty on a live site.
+
+## Manage content
+
+Log in at `/admin`.
+
+| Menu | What you can change |
 | --- | --- |
-| `site.ts` | Brand, NAP, WhatsApp number, social links, helpers (`whatsAppHref`, `telHref`) |
-| `navigation.ts` | Menu and footer links |
-| `pages.ts` | Page-level editorial copy for every route |
-| `disciplines.ts` · `timeline.ts` · `testimonials.ts` · `gallery.ts` · `events.ts` · `blog.ts` · `faq.ts` | Collections |
-| `assets.ts` | The `ImageSlot` type and the `slot()` helper |
+| Content | Events, Journal articles, Testimonials, Gallery |
+| Pages | Homepage and the text on each page |
+| Library | Photos: upload here, or from any image field |
+| Settings | Academy details (phone, WhatsApp, email, hours, social links) and admin users |
 
-This is the CMS boundary: swap these modules for fetches and nothing above them changes.
+- Add another admin under Settings → Admin users.
+- Sample events and testimonials, and unreviewed articles, are hidden from Google. Untick the matching box when the record is real.
+- Forgot your password? Click "Forgot password" on the login page. No email service is set up, so copy the reset link from the terminal running the site.
 
-### Replacing placeholders
+## Commands
 
-**Images.** Every image is an `ImageSlot` with `src: null`. Drop the real file into the matching
-`public/images/<folder>/` and set `src`:
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Run locally |
+| `npm run build` | Build for production |
+| `npm start` | Run the production build |
+| `npm run lint` | Check code style |
+| `npm run typecheck` | Check types |
+| `npm run seed` | Fill an empty CMS from `src/data` |
+| `npm run seed:reset` | **Replace all CMS content** with `src/data`. Back up first. |
 
-```diff
-- image: slot("FOUNDER IMAGE", "Portrait of Usthad C.M.M. Gurukkal"),
-+ image: { ...slot("FOUNDER IMAGE", "Portrait of Usthad C.M.M. Gurukkal"), src: "/images/founder/gurukkal.jpg" },
-```
+## Go live
 
-`<Figure />` switches from the composed placeholder to an optimised `next/image` automatically —
-no component edits, no layout change. Alt text is already written for every slot.
+Set `NEXT_PUBLIC_SITE_URL` to the real domain. Then choose one:
 
-**Contact details.** Fill in `site.contact` in `src/data/site.ts`. One edit updates the contact
-page, the footer, the menu, every WhatsApp CTA and the `LocalBusiness` structured data at once.
-While `whatsapp` is `null`, WhatsApp buttons stay fully styled and route to `/contact` rather than
-dialling an invented number.
+- **Vercel, without the CMS:** the site runs from `src/data`, so content changes are code changes. `/admin` shows a 404.
+- **Your own server, with the CMS:** set everything in `.env`, then run `npm ci`, `npm run build` and `npm start`. `data/` and `media/` must be on a permanent disk.
 
-**Copy.** Text rendered through `<PendingCopy />` marks something only the academy can supply.
-See `CONTENT_TODO.md` for the full inventory.
+Vercel has no permanent disk, so the CMS can't run there as it is set up now.
 
-### Nothing is invented
+## Backups
 
-The brief forbids fabricating history, credentials, reviews, dates or claims, so the code enforces
-it rather than relying on discipline:
+The CMS stores everything in two folders: `data/` (content and logins) and `media/` (uploaded photos). Back up both together.
 
-- `schema.ts` builders return `null` for placeholder events and draft articles, and omit every
-  field with no real value — so no fake `Event`, `Article`, `Review` or address is ever published.
-- Placeholder events and draft articles are served `noindex`, and are excluded from `sitemap.xml`.
-- Placeholder records render a visible marker rather than passing as real content.
+Neither folder is in git. Never commit or email `.env` or `data/`.
 
-Flip `isPlaceholder` / `isDraft` to `false` and indexing, schema and sitemap entries switch on by
-themselves.
+## More
 
----
-
-## Architecture
-
-```
-src/
-  app/                    routes, sitemap.ts, robots.ts, opengraph-image.tsx
-  components/
-    animation/            TextReveal, SplitHeading, ImageReveal, ParallaxImage, ScaleImage,
-                          MaskedReveal, LineReveal, SectionReveal, HorizontalScroll,
-                          MagneticButton, PageTransition
-    blog/ contact/ content/ disciplines/ events/ gallery/ home/ layout/
-    marma/ navigation/ testimonials/ ui/ brand/
-  hooks/                  useGsap, useLenis, useScrollReveal, useReducedMotion
-  lib/                    gsap (single registration point), seo, schema, utils
-  data/                   typed content
-```
-
-**Animation.** No component registers GSAP plugins or writes its own cleanup. `useGsap` runs every
-callback inside a scoped `gsap.context` and reverts it on unmount or dependency change, which is
-what stops ScrollTriggers leaking across route transitions. Async work (after fonts load) goes
-through `context.add()` so it is reverted too.
-
-**Scrolling.** `SmoothScroll` owns one Lenis instance and drives it from GSAP's ticker, so Lenis
-and ScrollTrigger share a single rAF loop. `lagSmoothing` is off so scrub animations stay 1:1.
-
-**Reduced motion.** `prefers-reduced-motion: reduce` disables Lenis entirely, skips every
-scrub/parallax/pin, and reduces reveals to their resting state. Content is never left hidden:
-reveal targets render visible in the HTML and are hidden by GSAP inside a layout effect, before
-first paint — so a JS failure degrades to a fully readable page.
-
-**Navigation tone.** Sections carry `data-nav-theme`. The navbar watches a 1px band at its own
-height with an IntersectionObserver and inverts as sections pass beneath it — no scroll listener,
-no per-frame layout reads.
-
-**Page transitions.** `TransitionLink` renders a real crawlable `<a>` and honours modified clicks;
-a plain left click plays the green cover, pushes the route, resets scroll, refreshes ScrollTrigger
-and uncovers. A safety timeout uncovers if a route ever stalls.
-
----
-
-## Accessibility
-
-Skip link · visible focus rings that invert on dark grounds · fullscreen menu and gallery lightbox
-as focus-trapped dialogs with Escape, arrow keys and focus restoration · `inert` on hidden overlays
-so their links leave the tab order · FAQ as a real `aria-expanded` / `aria-controls` disclosure ·
-alt text on every image slot · `aria-live` announcements on route change and lightbox paging ·
-one `<h1>` per page.
-
-## Performance
-
-`next/image` with explicit `sizes` on every slot · lazy loading except the hero ·
-`optimizePackageImports` for Lucide · the map iframe is lazy · public routes prerender statically ·
-the Lenis/GSAP loop is shared rather than doubled.
+See `docs/HANDOVER.md` for technical notes. Brand files are in `docs/brand`, client documents in `docs/client` and original images in `docs/source-images`.
