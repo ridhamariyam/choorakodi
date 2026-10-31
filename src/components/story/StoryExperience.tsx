@@ -109,6 +109,7 @@ export function StoryExperience({
         counter={intro.counter}
         trail="right"
         bg={intro.bg}
+        tight
       />
       <KineticMura mura={story.mura} />
       {laterChapters.map((chapter) => (

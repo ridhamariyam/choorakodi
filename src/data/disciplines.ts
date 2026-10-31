@@ -50,10 +50,10 @@ export const disciplines: Discipline[] = [
     subtitle: "Beyond the kalari",
     eyebrow: "Contemporary · Structured",
     summary:
-      "Structured training with certified and experienced trainers develops physical fitness, flexibility, discipline and confidence. Academy activities include annual belt grading, district and state championship coaching, and participation in Kalari Payattu and yoga.",
+      "Structured training with certified and experienced trainers develops physical fitness, flexibility, discipline and confidence. Academy activities include annual belt grading, district and state championship coaching, and participation in Kalarippayattu and yoga.",
     pending:
       "Confirm which additional martial arts are taught and the belt or grading system used.",
-    highlights: ["Annual belt grading", "District and state championship coaching", "Kalari Payattu and yoga participation"],
+    highlights: ["Annual belt grading", "District and state championship coaching", "Kalarippayattu and yoga participation"],
     image: slot("TRAINING IMAGE", "Six Choorakkodi trainers stand with arms folded on the kalari floor", {
       src: "/images/training/trainers-lineup.webp",
       width: 1170,
@@ -88,8 +88,10 @@ export const disciplines: Discipline[] = [
     pending:
       "Confirm which consultations and therapies are offered, by whom, and how sessions are booked.",
     highlights: [],
-    image: slot("MARMA IMAGE", "Kalari uzhichil: two practitioners massage a patient by foot on the kalari floor", {
-      src: "/images/training/kalari-uzhichil.webp",
+    image: slot("MARMA IMAGE", "Feet working oil into a patient's shoulders during kalari uzhichil", {
+      src: "/images/training/uzhichil-detail.webp",
+      width: 1000,
+      height: 750,
     }),
   },
 ];

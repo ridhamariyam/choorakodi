@@ -2,7 +2,7 @@
 
 import { Fragment, useRef, type CSSProperties } from "react";
 import Image from "next/image";
-import { founderPortrait, hasYear, type StoryChapter, type StoryPhoto } from "@/data/story";
+import { founderPortrait, hasYear, PRINT_RATIO, PRINT_WIDTH, type StoryChapter, type StoryPhoto } from "@/data/story";
 import { useGsap } from "@/hooks/useGsap";
 import { Caption, ScrollWords } from "./Caption";
 import { faceStyle, monoStyle } from "./fonts";
@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 /** Height, in vw, the absolutely placed prints need on desktop. */
 function bandHeight(chapter: StoryChapter): number {
-  const photoBottoms = chapter.photos.map((p) => p.y + p.w * (p.height / p.width) + 4);
+  const photoBottoms = chapter.photos.map((p) => p.y + PRINT_WIDTH * PRINT_RATIO + 4);
   return Math.max(12, ...photoBottoms);
 }
 
@@ -85,7 +85,7 @@ export function Chapter({
           </div>
 
           {portrait ? (
-            <FounderFigure portrait={portrait} className="mx-auto mt-[14vw] mb-[20vw] w-[68vw] md:mt-[7vw] md:mb-[10vw] md:w-[26vw]" />
+            <FounderFigure portrait={portrait} className="mx-auto mt-[14vw] mb-[8vw] w-[68vw] md:mt-[7vw] md:mb-[3vw] md:w-[26vw]" />
           ) : null}
 
           {/* The founder's portrait closes the first chapter on its own. */}
@@ -98,7 +98,8 @@ export function Chapter({
                 <PhotoFrame key={photo.src} photo={photo} className="z-[2]" />
               ))}
             </div>
-          ) : (
+          ) : portrait ? null : (
+            // Media-less chapter: a little closing space. The portrait brings its own.
             <div className="h-[16vw]" />
           )}
 
@@ -133,7 +134,7 @@ function FounderFigure({ portrait, className }: { portrait: StoryPhoto; classNam
       <figcaption
         data-scrub-text
         style={monoStyle}
-        className="mt-[5vw] text-center text-[3vw] uppercase tracking-[0.32em] md:mt-[2vw] md:text-[0.85vw]"
+        className="mt-[5vw] text-center text-[max(11px,3vw)] uppercase tracking-[0.32em] md:mt-[2vw] md:text-[max(12px,0.85vw)]"
       >
         <ScrollWords text={founderPortrait.name} />
       </figcaption>
@@ -154,8 +155,19 @@ function SideChapter({ chapter }: { chapter: StoryChapter }) {
   return (
     <div className="gutter relative z-[1] grid items-center gap-[10vw] pb-[16vw] pt-[30vw] md:grid-cols-12 md:gap-[4vw] md:pb-[10vw] md:pt-[22vw]">
       {photo ? (
-        <div className={cn("md:col-span-6", imageRight ? "md:order-2 md:col-start-7" : "md:col-start-1")}>
-          <PhotoFrame photo={photo} positioned={false} sizes="(min-width: 768px) 46vw, 88vw" className="w-full" />
+        <div
+          style={{ "--print": `${PRINT_WIDTH}vw` } as CSSProperties}
+          className={cn(
+            "max-md:mx-auto max-md:w-[74vw] md:col-span-6 md:w-(--print)",
+            imageRight ? "md:order-2 md:col-start-7" : "md:col-start-1",
+          )}
+        >
+          <PhotoFrame
+            photo={photo}
+            positioned={false}
+            sizes={`(min-width: 768px) ${PRINT_WIDTH}vw, 74vw`}
+            className="w-full"
+          />
         </div>
       ) : null}
 
@@ -170,7 +182,7 @@ function SideChapter({ chapter }: { chapter: StoryChapter }) {
         <p
           data-scrub-text
           style={monoStyle}
-          className="mt-[6vw] text-[4.4vw] leading-[1.3] font-medium md:mt-[2.4vw] md:text-[1.45vw] md:leading-[1.35]"
+          className="mt-[6vw] text-[max(15px,4.4vw)] leading-[1.3] font-medium md:mt-[2.4vw] md:text-[max(15px,1.45vw)] md:leading-[1.35]"
         >
           {chapter.caption.map((line, i) => (
             <Fragment key={i}>

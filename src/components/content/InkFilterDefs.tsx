@@ -1,7 +1,7 @@
 /**
  * Watercolour-ink filters, defined once for the whole document.
  *
- * Every <InkSpill /> references these by id rather than carrying its own
+ * Every stamp references these by id rather than carrying its own
  * copy — one definition instead of one per blot, and no duplicate ids in the
  * DOM. Rendered from the root layout. If they were ever missing the filter
  * references are simply ignored and the blots render with clean edges, so

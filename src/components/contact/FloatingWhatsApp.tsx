@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { hasWhatsApp as siteHasWhatsApp, whatsAppHref } from "@/data/site";
+import { Phone } from "lucide-react";
+import { hasWhatsApp as siteHasWhatsApp, telHref, whatsAppHref } from "@/data/site";
 import { useSite } from "@/components/content/ContentProvider";
 import { useGsap } from "@/hooks/useGsap";
-import { TransitionLink } from "@/components/animation/PageTransition";
 import { WhatsAppIcon } from "./WhatsAppIcon";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +19,8 @@ const MESSAGE = "Hello Choorakkodi — I would like to know more about training 
  *
  * Restrained on purpose: no pulsing ring, no auto-opening bubble, no badge,
  * no label. It fades in once the hero is behind you and then stays put.
+ *
+ * Until a WhatsApp number exists it is a call button in the brand's green.
  */
 export function FloatingWhatsApp() {
   const scope = useRef<HTMLDivElement>(null);
@@ -62,12 +64,12 @@ export function FloatingWhatsApp() {
 
   const label = hasWhatsApp
     ? "Message Choorakkodi on WhatsApp"
-    : "Contact Choorakkodi";
+    : `Call Choorakkodi on ${site.contact.phone}`;
 
   const classes = cn(
     "flex h-14 w-14 items-center justify-center rounded-full",
     // WhatsApp brand green, so the icon is the thing people already know.
-    "bg-[#25D366] text-white",
+    hasWhatsApp ? "bg-[#25D366] text-white" : "bg-[#10706c] text-white",
     "transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.07]",
     "focus-visible:outline-offset-4",
     "sm:h-[3.75rem] sm:w-[3.75rem]",
@@ -76,7 +78,7 @@ export function FloatingWhatsApp() {
   return (
     <div
       ref={scope}
-      className="fixed bottom-0 right-0 z-[120] p-[max(1rem,env(safe-area-inset-bottom))] sm:p-6"
+      className="floating-contact fixed bottom-0 right-0 z-[120] p-[max(1rem,env(safe-area-inset-bottom))] sm:p-6"
     >
       <div className={cn("opacity-0", !visible && "pointer-events-none")}>
         {hasWhatsApp ? (
@@ -92,15 +94,9 @@ export function FloatingWhatsApp() {
             <WhatsAppIcon className="h-7 w-7 sm:h-[1.9rem] sm:w-[1.9rem]" />
           </a>
         ) : (
-          <TransitionLink
-            href="/contact"
-            aria-label={label}
-            title={label}
-            className={classes}
-            tabIndex={visible ? 0 : -1}
-          >
-            <WhatsAppIcon className="h-7 w-7 sm:h-[1.9rem] sm:w-[1.9rem]" />
-          </TransitionLink>
+          <a href={telHref(site)} aria-label={label} title={label} className={classes} tabIndex={visible ? 0 : -1}>
+            <Phone className="h-6 w-6" aria-hidden="true" />
+          </a>
         )}
       </div>
     </div>

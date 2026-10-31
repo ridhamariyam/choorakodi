@@ -23,7 +23,7 @@ const sizeClasses = {
 const toneClasses = {
   ink: "text-ink",
   bone: "text-bone",
-  soil: "text-soil",
+  soil: "text-soil-ink",
   green: "text-green",
 } as const;
 

@@ -177,9 +177,9 @@ export function GalleryLightbox({ items, index, onClose, onNavigate }: GalleryLi
       <div className="gutter mx-auto flex h-full w-full max-w-[110rem] flex-col py-6">
         {/* Bar */}
         <div className="flex items-center justify-between gap-6 border-b border-bone/12 pb-5">
-          <p className="eyebrow text-soil">{item?.category}</p>
+          <p className="eyebrow text-soil-ink">{item?.category}</p>
           <div className="flex items-center gap-6">
-            <p aria-live="polite" className="eyebrow text-bone/45">
+            <p aria-live="polite" className="eyebrow text-bone/62">
               {index !== null ? `${index + 1} / ${count}` : ""}
             </p>
             <button
@@ -216,7 +216,7 @@ export function GalleryLightbox({ items, index, onClose, onNavigate }: GalleryLi
         <div className="flex flex-wrap items-end justify-between gap-6 border-t border-bone/12 pt-5">
           <p className="measure-tight text-[0.9375rem] leading-relaxed text-bone/60">
             {item?.caption}
-            {item?.year ? <span className="ml-3 text-bone/35">{item.year}</span> : null}
+            {item?.year ? <span className="ml-3 text-bone/62">{item.year}</span> : null}
           </p>
 
           <div className="flex items-center gap-2">

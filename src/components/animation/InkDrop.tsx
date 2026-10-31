@@ -18,7 +18,7 @@ function random(seed: string) {
 
 const TEXTURE_SIZE = 256;
 /** Final blot size as a multiple of the frame. */
-const SPREAD = 1.04;
+const SPREAD = 1.26;
 const TEXTURE_VARIANTS = 4;
 let textures: string[] | null = null;
 
@@ -103,12 +103,13 @@ function dropsFor(seed: string): Drop[] {
  * Nothing of the picture — not even its rectangle — shows until it enters
  * the viewport. Then the image itself lands on the page as drops of ink:
  * a few small blots appear, bloom outwards with feathered edges and run
- * together until the photograph has soaked through almost the whole frame.
+ * together until the photograph has soaked through the whole frame, so the
+ * ragged edge only ever takes its margins and never a face.
  * It keeps a thin ragged ink edge; it never resolves into a hard rectangle.
  *
  * Renders an empty marker and works on its parent element (the image's
  * frame) through a set of CSS mask layers. Each blot is stretched to the
- * frame's proportions, so it fills the frame without touching its edges.
+ * frame's proportions, so it fills the frame.
  * Reduced motion gets the finished spread with no animation; without JS no
  * mask is applied and the image is simply there.
  */

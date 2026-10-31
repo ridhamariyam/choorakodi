@@ -23,9 +23,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
   return buildMetadata(
     {
-      title: "Admissions",
+      title: "Admissions and Trial Classes",
       description:
-        "Join Choorakkodi Martial Arts Academy in Kozhikode. Message on WhatsApp, book a trial, visit the kalari and begin training.",
+        "Join Choorakkodi Martial Arts Academy in Kozhikode: book a trial class, visit the kalari and begin. Sub-juniors aged 6–14, juniors, seniors and adult beginners.",
       path: "/admissions",
     },
     site,
@@ -51,7 +51,7 @@ export default async function AdmissionsPage() {
         <TextReveal delay={0.35} className="mt-14 flex flex-wrap gap-4">
           <WhatsAppButton
             label="WhatsApp us"
-            message="Hello Choorakkodi — I would like to book a free trial class."
+            message="Hello Choorakkodi — I would like to book a trial class."
             size="lg"
             magnetic
           />
@@ -129,7 +129,7 @@ export default async function AdmissionsPage() {
                     data-reveal
                     className="flex items-baseline gap-6 border-t border-ink/12 py-5"
                   >
-                    <span className="eyebrow shrink-0 text-soil">
+                    <span className="eyebrow shrink-0 text-soil-ink">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="text-lead text-ink/80">
@@ -209,6 +209,7 @@ export default async function AdmissionsPage() {
               <h3 className="text-title font-semibold tracking-[-0.024em]">
                 {admissions.feesTitle}
               </h3>
+              <p className="mt-5 text-lead">Ask the academy for current fees.</p>
               <PendingCopy className="mt-7" label="Fees pending">
                 {admissions.feesPending}
               </PendingCopy>
@@ -232,7 +233,7 @@ export default async function AdmissionsPage() {
         <PageContainer>
           <div className="grid gap-10 border-t border-ink/12 pt-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <p className="eyebrow text-soil">Off the floor</p>
+              <p className="eyebrow text-soil-ink">Off the floor</p>
               <h3
                 id="admissions-recovery"
                 className="mt-5 text-title font-semibold tracking-[-0.024em]"

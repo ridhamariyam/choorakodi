@@ -1,7 +1,9 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { Plus } from "lucide-react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/hooks/useGsap";
 import { prefersReducedMotion } from "@/hooks/useReducedMotion";
@@ -16,6 +18,8 @@ export type FaqProps = {
   className?: string;
   /** Index of the row open on first render. -1 for all closed. */
   defaultOpen?: number;
+  /** Rows shown until the visitor asks for the rest. Omit to show them all. */
+  limit?: number;
 };
 
 /**
@@ -29,10 +33,12 @@ export type FaqProps = {
  * commit as the click and the collapse animation would never be seen. Instead
  * every answer is present and open in the server HTML — good for crawlers and
  * for a JS failure — and the closed ones are hidden in a layout effect before
- * the first paint.
+ * the first paint. Rows past `limit` stay in the HTML for the same reason.
  */
-export function FAQ({ items, tone = "light", className, defaultOpen = -1 }: FaqProps) {
+export function FAQ({ items, tone = "light", className, defaultOpen = -1, limit }: FaqProps) {
   const [open, setOpen] = useState(defaultOpen);
+  const [showAll, setShowAll] = useState(false);
+  const collapsed = limit !== undefined && !showAll && items.length > limit;
   const baseId = useId();
   const scope = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -97,6 +103,14 @@ export function FAQ({ items, tone = "light", className, defaultOpen = -1 }: FaqP
     setOpen(next);
   };
 
+  const revealAll = () => {
+    flushSync(() => setShowAll(true));
+    // The button is gone; carry focus to the first row it revealed.
+    document.getElementById(`${baseId}-q-${limit}`)?.focus({ preventScroll: true });
+    // Everything below the list has moved, pinned sections included.
+    ScrollTrigger.refresh();
+  };
+
   return (
     <div ref={scope} className={cn("w-full", className)}>
       <LineReveal tone={tone} />
@@ -109,6 +123,7 @@ export function FAQ({ items, tone = "light", className, defaultOpen = -1 }: FaqP
           return (
             <div
               key={item.question}
+              hidden={collapsed && index >= (limit ?? 0)}
               className={cn("border-b", tone === "light" ? "border-ink/12" : "border-bone/15")}
             >
               <dt>
@@ -120,7 +135,7 @@ export function FAQ({ items, tone = "light", className, defaultOpen = -1 }: FaqP
                   onClick={() => toggle(index)}
                   className={cn(
                     "group flex w-full items-start justify-between gap-6 py-7 text-left transition-colors duration-500 sm:py-8",
-                    tone === "light" ? "hover:text-green" : "hover:text-soil",
+                    tone === "light" ? "hover:text-green" : "hover:text-soil-ink",
                   )}
                 >
                   <span className="text-lg font-medium tracking-[-0.018em] sm:text-xl">
@@ -169,6 +184,21 @@ export function FAQ({ items, tone = "light", className, defaultOpen = -1 }: FaqP
           );
         })}
       </dl>
+      {collapsed ? (
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={revealAll}
+            className={cn(
+              "flex items-center gap-3 py-2 text-[12px] font-semibold uppercase tracking-[4px] transition-colors duration-500",
+              tone === "light" ? "hover:text-green" : "hover:text-soil-ink",
+            )}
+          >
+            More questions
+            <Plus aria-hidden="true" className="h-4 w-4" strokeWidth={1.5} />
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -20,9 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
   return buildMetadata(
     {
-      title: "Disciplines",
+      title: "Kalarippayattu, Self-Defence and Marma",
       description:
-        "Kalarippayattu, martial arts, self defence and kalari marma healing at Choorakkodi Martial Arts Academy, Kozhikode.",
+        "What Choorakkodi Martial Arts Academy teaches in Kozhikode: traditional Kalarippayattu, structured martial arts, self-defence and kalari marma healing.",
       path: "/disciplines",
     },
     site,
@@ -42,7 +42,8 @@ export default async function DisciplinesPage() {
       <PageHeader
         chapter={chapterLabel("/disciplines")}
         eyebrow="What we teach"
-        lines={["Disci", "plines."]}
+        lines={["Disciplines."]}
+        size="display"
         label="Disciplines."
         standfirst="Four entries into one body of knowledge. The martial syllabus and the healing tradition share a map of the body; they are listed apart because they are entered apart."
         meta={`${disciplines.length} disciplines`}
@@ -89,8 +90,8 @@ export default async function DisciplinesPage() {
                 >
                   <TextReveal y={14}>
                     <div className="mb-8 flex items-baseline gap-6">
-                      <span className="eyebrow text-soil">{discipline.index}</span>
-                      <span className={cn("eyebrow", dark ? "text-bone/45" : "text-muted")}>
+                      <span className="eyebrow text-soil-ink">{discipline.index}</span>
+                      <span className={cn("eyebrow", dark ? "text-bone/62" : "text-muted")}>
                         {discipline.eyebrow}
                       </span>
                     </div>
@@ -101,13 +102,14 @@ export default async function DisciplinesPage() {
                     id={`discipline-${discipline.slug}`}
                     lines={[discipline.title]}
                     className={cn(
-                      "text-display font-semibold",
+                      // Sized for "Kalarippayattu" to fit its half of the row.
+                      "text-[clamp(1.875rem,3.6vw,3.25rem)] leading-[1] font-semibold",
                       dark ? "text-bone" : "text-ink",
                     )}
                   />
 
                   <TextReveal delay={0.12} className="mt-6">
-                    <p className={cn("eyebrow", dark ? "text-bone/40" : "text-muted")}>
+                    <p className={cn("eyebrow", dark ? "text-bone/62" : "text-muted")}>
                       {discipline.subtitle}
                     </p>
                   </TextReveal>

@@ -27,9 +27,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
   return buildMetadata(
     {
-      title: "Kalarippayattu",
+      title: "Kalarippayattu Training in Kozhikode, Kerala",
       description:
-        "Kalarippayattu at Choorakkodi, Chelavoor: Meythari, Kolthari, Angathari and Verumkai. Sub-junior training for ages 6–14 and championship coaching.",
+        "Train in Kalarippayattu, Kerala's traditional martial art, at Choorakkodi in Chelavoor, Kozhikode: Meythari, Kolthari, Angathari and Verumkai, ages 6–14 and up.",
       path: "/kalarippayattu",
     },
     site,
@@ -44,6 +44,7 @@ export default async function KalarippayattuPage() {
         chapter={chapterLabel("/kalarippayattu")}
         eyebrow={page.eyebrow}
         lines={page.heading}
+        size="long"
         label="Kalarippayattu."
         standfirst={page.standfirst}
         tone="ink"
@@ -72,9 +73,8 @@ export default async function KalarippayattuPage() {
                 id="kp-what"
                 index="01"
                 eyebrow="The art"
-                lines={["What is", "Kalari", "ppayattu?"]}
-                label="What is Kalarippayattu?"
-                size="headline"
+                lines={["What is", "Kalarippayattu?"]}
+                size="title"
               />
             </div>
             <div className="lg:col-span-6 lg:col-start-7">
@@ -121,7 +121,7 @@ export default async function KalarippayattuPage() {
                 The sequence is the safeguard. The body is built before it is armed, and the bare
                 hand comes last because it is the most consequential.
               </p>
-              <p className="eyebrow mt-8 text-bone/35">Scroll sideways →</p>
+              <p className="eyebrow mt-8 text-bone/62">Scroll sideways →</p>
             </TextReveal>
           </div>
         </PageContainer>
@@ -138,7 +138,7 @@ export default async function KalarippayattuPage() {
               <h3 className="mt-8 text-headline font-semibold tracking-[-0.033em] text-bone">
                 {stage.name}
               </h3>
-              <p className="eyebrow mt-4 text-soil">{stage.translation}</p>
+              <p className="eyebrow mt-4 text-soil-ink">{stage.translation}</p>
               <p className="measure mt-7 text-lead text-bone/62">{stage.body}</p>
             </article>
           ))}
@@ -174,7 +174,7 @@ export default async function KalarippayattuPage() {
             <ol className="m-0 grid list-none content-start gap-x-10 p-0 sm:grid-cols-2 lg:col-span-6 lg:col-start-7">
               {page.philosophy.items.map((item, index) => (
                 <li key={item.title} data-reveal className="border-t border-ink/12 py-8">
-                  <span className="eyebrow text-soil">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="eyebrow text-soil-ink">{String(index + 1).padStart(2, "0")}</span>
                   <h3 className="mt-5 text-title font-semibold tracking-[-0.024em]">{item.title}</h3>
                   <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink/72">{item.body}</p>
                 </li>
@@ -204,7 +204,7 @@ export default async function KalarippayattuPage() {
                     data-reveal
                     className="flex items-baseline gap-6 border-t border-ink/12 py-6"
                   >
-                    <span className="eyebrow shrink-0 text-soil">
+                    <span className="eyebrow shrink-0 text-soil-ink">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="text-lead text-ink/80">{item}</span>
@@ -260,6 +260,7 @@ export default async function KalarippayattuPage() {
 
             <div data-reveal className="border-t border-bone/20 pt-8">
               <h3 className="text-title font-semibold text-bone">{page.fees.title}</h3>
+              <p className="mt-5 text-lead text-bone/70">Ask the academy for current fees.</p>
               <PendingCopy tone="dark" className="mt-7" label="Fees pending">
                 {page.fees.pending}
               </PendingCopy>
@@ -289,10 +290,10 @@ export default async function KalarippayattuPage() {
 
       <CTASection
         eyebrow="Admissions"
-        lines={["Book a", "free trial."]}
+        lines={["Book a", "trial class."]}
         body="Start where everyone starts: conditioning, barefoot, on the floor."
-        message="Hello Choorakkodi — I would like to book a free Kalarippayattu trial class."
-        whatsappLabel="Book a free trial"
+        message="Hello Choorakkodi — I would like to book a Kalarippayattu trial class."
+        whatsappLabel="Book a trial class"
         secondary={{ label: "Admissions", href: "/admissions" }}
       />
 

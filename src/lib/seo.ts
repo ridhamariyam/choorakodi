@@ -6,7 +6,7 @@ export type PageSeo = {
   description: string;
   /** Path with a leading slash, e.g. "/about". */
   path: string;
-  /** Path to a page-specific OG image. Falls back to the site default. */
+  /** Path to a page-specific OG image. Falls back to opengraph-image.tsx. */
   image?: string;
   type?: "website" | "article";
   publishedTime?: string;
@@ -27,7 +27,6 @@ export function buildMetadata(
   site: Pick<Site, "name">,
 ): Metadata {
   const url = `${siteUrl}${path === "/" ? "" : path}`;
-  const ogImageUrl = image ?? "/opengraph-image";
 
   return {
     title,
@@ -43,7 +42,7 @@ export function buildMetadata(
       title,
       description,
       locale: siteLocale,
-      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: title }],
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: title }] } : {}),
       ...(publishedTime ? { publishedTime } : {}),
       ...(modifiedTime ? { modifiedTime } : {}),
     },
@@ -51,7 +50,7 @@ export function buildMetadata(
       card: "summary_large_image",
       title,
       description,
-      images: [ogImageUrl],
+      ...(image ? { images: [image] } : {}),
     },
   };
 }

@@ -8,7 +8,6 @@ import { SectionReveal } from "@/components/animation/SectionReveal";
 import { Quote } from "@/components/content/Quote";
 import { TextReveal } from "@/components/animation/TextReveal";
 import { ImageReveal } from "@/components/animation/ImageReveal";
-import { PendingCopy } from "@/components/content/PendingCopy";
 import { CTASection } from "@/components/content/CTASection";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -51,17 +50,14 @@ export default async function TestimonialsPage() {
         standfirst="Accounts from people who train here. Collected on the record, with permission to publish the name and the photograph."
         tone="ink"
         grain
-        meta={`${testimonials.length} stories`}
       />
 
       {publishableTestimonials(testimonials).length === 0 ? (
         <SectionReveal tone="ink" spacing="sm" grain>
           <PageContainer>
-            <PendingCopy tone="dark" label="No real testimonials supplied">
-              Every story below is a clearly marked placeholder. Replace them in
-              data/testimonials.ts and set <code>isPlaceholder: false</code>; the page then drops
-              its noindex and the placeholder labels disappear.
-            </PendingCopy>
+            <p className="measure text-lead text-bone/70">
+              Accounts are being collected from students and families at the academy.
+            </p>
           </PageContainer>
         </SectionReveal>
       ) : null}

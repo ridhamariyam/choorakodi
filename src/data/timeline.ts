@@ -1,7 +1,7 @@
 import { slot, type ImageSlot } from "./assets";
 
 /**
- * Milestones from the academy's onboarding sheet (docs/). Where the sheet gives
+ * Milestones from the academy's onboarding sheet (docs/client/). Where the sheet gives
  * an event but not its year, the entry is labelled by name and its `pending`
  * slot asks for the date. No dates, names, awards or events are fabricated.
  */

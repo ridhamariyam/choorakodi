@@ -19,6 +19,33 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [{ source: "/about", destination: "/", permanent: false }];
   },
+  // Without PAYLOAD_SECRET the CMS is off, and its routes would crash with a
+  // 500. Send them to the catch-all so they get the normal 404 page instead.
+  async rewrites() {
+    if (process.env.PAYLOAD_SECRET) return [];
+    return {
+      beforeFiles: [
+        { source: "/admin/:path*", destination: "/cms-disabled" },
+        { source: "/api/:path*", destination: "/cms-disabled" },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+        ],
+      },
+    ];
+  },
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

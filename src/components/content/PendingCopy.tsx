@@ -3,11 +3,9 @@ import { cn } from "@/lib/utils";
 /**
  * Marks copy that stands in for information only the academy can supply.
  *
- * The brief forbids inventing history, credentials, schedules or claims, and
- * asks for placeholders to be clearly marked. Rather than hiding that, the
- * marker is designed: a soil-coloured rule, a small label, and the note itself
- * set in a quieter voice. It reads as an editorial annotation, which is what
- * it is.
+ * These notes are instructions to the content owner, so visitors never see
+ * them. Set NEXT_PUBLIC_SHOW_PENDING=1 on a preview build to review them in
+ * place; CONTENT_TODO.md holds the same list.
  */
 export function PendingCopy({
   children,
@@ -21,6 +19,7 @@ export function PendingCopy({
   label?: string;
 }) {
   // The admin clears a pending note once the real copy is in; render nothing.
+  if (process.env.NEXT_PUBLIC_SHOW_PENDING !== "1") return null;
   if (children === null || children === undefined || children === "") return null;
 
   return (
@@ -34,7 +33,7 @@ export function PendingCopy({
       <p
         className={cn(
           "eyebrow mb-2.5",
-          tone === "light" ? "text-soil" : "text-soil/80",
+          tone === "light" ? "text-soil-ink" : "text-soil-ink",
         )}
       >
         {label}
@@ -42,7 +41,7 @@ export function PendingCopy({
       <p
         className={cn(
           "measure text-[0.9375rem] leading-relaxed italic",
-          tone === "light" ? "text-muted" : "text-bone/50",
+          tone === "light" ? "text-muted" : "text-bone/62",
         )}
       >
         {children}

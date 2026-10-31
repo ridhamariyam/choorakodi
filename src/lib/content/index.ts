@@ -35,8 +35,30 @@ export type { Content } from "./defaults";
  * Falls back to the built-in defaults (src/data) when the CMS is switched off
  * (no PAYLOAD_SECRET), has not been seeded yet, or cannot be reached — the
  * public site keeps working whatever state the admin is in.
+ *
+ * Placeholder events and testimonials stop here, so no page can show one, and
+ * the menu links to a section only once it has something real in it.
  */
-export const getContent = cache(async (): Promise<Content> => {
+export const getContent = cache(async (): Promise<Content> => publishable(await readContent()));
+
+function publishable(content: Content): Content {
+  const events = content.events.filter((event) => !event.isPlaceholder);
+  const testimonials = content.testimonials.filter((item) => !item.isPlaceholder);
+  const hidden = new Set<string>();
+  if (events.length === 0) hidden.add("/events");
+  if (testimonials.length === 0) hidden.add("/testimonials");
+  if (content.posts.every((post) => post.isDraft)) hidden.add("/blog");
+  const visible = <T extends { href: string }>(items: T[]) => items.filter((item) => !hidden.has(item.href));
+
+  return {
+    ...content,
+    events,
+    testimonials,
+    navigation: { primary: visible(content.navigation.primary), footer: visible(content.navigation.footer) },
+  };
+}
+
+async function readContent(): Promise<Content> {
   if (!process.env.PAYLOAD_SECRET) return defaultContent;
 
   try {
@@ -46,7 +68,7 @@ export const getContent = cache(async (): Promise<Content> => {
     const all = <S extends Parameters<typeof payload.find>[0]["collection"]>(collection: S, sort?: string) =>
       payload.find({ collection, depth: 1, pagination: false, sort }).then((r) => r.docs);
 
-    const [settings, home, shared, aboutPage, kalariPage, marmaPage, admissionsPage, heritagePage, contactPage, disciplinesPage, events, posts, testimonials, gallery] =
+    const [settings, home, shared, aboutPage, kalariPage, marmaPage, admissionsPage, contactPage, disciplinesPage, events, posts, testimonials, gallery] =
       await Promise.all([
         global("site-settings"),
         global("homepage"),
@@ -55,7 +77,6 @@ export const getContent = cache(async (): Promise<Content> => {
         global("kalarippayattu-page"),
         global("marma-page"),
         global("admissions-page"),
-        global("heritage-page"),
         global("contact-page"),
         global("disciplines-page"),
         all("events", "date"),
@@ -190,19 +211,6 @@ export const getContent = cache(async (): Promise<Content> => {
           feesPending: str(p?.feesPending),
         };
       })(),
-      heritage: {
-        ...header(heritagePage),
-        method: str(heritagePage.method),
-        entries: (heritagePage.entries ?? []).map((e) => ({
-          id: e.key,
-          index: str(e.index),
-          year: str(e.year),
-          title: e.title,
-          caption: str(e.caption),
-          pending: e.pending || undefined,
-          image: slot(e.image, "HISTORICAL IMAGE"),
-        })),
-      },
       contact: { ...header(contactPage), landmark: d.contact.landmark },
       faq: {
         kalarippayattu: faq(kalariPage.faq),
@@ -238,7 +246,7 @@ export const getContent = cache(async (): Promise<Content> => {
     console.error("[content] CMS unavailable — serving built-in content.", error);
     return defaultContent;
   }
-});
+}
 
 /* ------------------------------------------------------------ helpers */
 

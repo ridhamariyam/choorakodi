@@ -197,7 +197,7 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
         <div className="gutter mx-auto flex min-h-full w-full max-w-[110rem] flex-col pb-14 pt-6">
           {/* Bar matching the navbar, so the close button lands where MENU was. */}
           <div className="flex items-center justify-between py-4">
-            <span className="eyebrow text-bone/45">{formatLocality(site)}</span>
+            <span className="eyebrow text-bone/62">{formatLocality(site)}</span>
             <button
               type="button"
               onClick={onClose}
@@ -227,7 +227,7 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
                         aria-current={isActive ? "page" : undefined}
                         className="flex items-baseline gap-5 py-[0.28em] sm:gap-8"
                       >
-                        <span className="eyebrow w-7 shrink-0 text-soil/55 transition-colors duration-500 group-hover/item:text-soil">
+                        <span className="eyebrow w-7 shrink-0 text-soil-ink transition-colors duration-500 group-hover/item:text-soil-ink">
                           {String(index + 1).padStart(2, "0")}
                         </span>
 
@@ -239,7 +239,7 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
                             className={cn(
                               "block text-[clamp(1.6rem,4.1vw,3.1rem)] font-medium leading-[1.06] tracking-[-0.03em]",
                               "transition-[color,transform] duration-[0.6s] ease-[cubic-bezier(0.22,1,0.36,1)]",
-                              "group-hover/item:translate-x-2 group-hover/item:text-soil",
+                              "group-hover/item:translate-x-2 group-hover/item:text-soil-ink",
                               isActive ? "text-bone" : "text-bone/78",
                             )}
                           >
@@ -262,10 +262,10 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
             {/* Contact */}
             <div className="lg:col-span-5 lg:col-start-8">
               <div data-menu-meta>
-                <p className="eyebrow mb-4 text-bone/40">Get in touch</p>
+                <p className="eyebrow mb-4 text-bone/62">Get in touch</p>
                 <p className="text-lead text-bone/70">
                   {site.name}
-                  <span className="block text-bone/45">{formatLocality(site)}</span>
+                  <span className="block text-bone/62">{formatLocality(site)}</span>
                 </p>
                 <div className="mt-7">
                   <WhatsAppButton
@@ -283,10 +283,10 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
             data-menu-meta
             className="flex flex-wrap items-center justify-between gap-4 border-t border-bone/12 pt-7"
           >
-            <span className="eyebrow text-bone/35">
+            <span className="eyebrow text-bone/62">
               © {new Date().getFullYear()} {site.name}
             </span>
-            <span className="eyebrow text-bone/35">{site.tagline}</span>
+            <span className="eyebrow text-bone/62">{site.tagline}</span>
           </div>
         </div>
       </div>

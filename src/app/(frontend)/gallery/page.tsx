@@ -16,9 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
   return buildMetadata(
     {
-      title: "Gallery",
+      title: "Kalarippayattu Photo Gallery",
       description:
-        "Training, weapons, the kalari, marma, heritage and people — photography from Choorakkodi Martial Arts Academy, Kozhikode.",
+        "Photographs of traditional Kalarippayattu at Choorakkodi, Kozhikode: training, weapons, the kalari, marma, heritage prints and the people of the academy.",
       path: "/gallery",
     },
     site,
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function GalleryPage() {
-  // Heritage and Kalari prints are shown on the Heritage page, not twice.
+  // Heritage and Kalari prints are left out of the gallery.
   const gallery = (await getContent()).gallery.filter((item) => item.category !== "Heritage" && item.category !== "Kalari" && item.image.src);
   return (
     <>

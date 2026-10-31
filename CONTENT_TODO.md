@@ -1,6 +1,6 @@
 # Content inventory — what the academy still needs to supply
 
-The onboarding sheet, proposal, page architecture, brand book and `CHOORAKKODI.pdf` are in `docs/`. Their facts
+The onboarding sheet, proposal, page architecture and `CHOORAKKODI.pdf` are in `docs/client/`; the brand book is in `docs/brand/`. Their facts
 are now on the site: founding (1960), the founder's full name, teachers and styles, the Shafi Dawa
 Khana / Chikitsalayam / Kalari Sangam history, Dr. Saheer Ali, affiliations, championships and
 appearances, the Covid pause, sub-junior ages (6–14, all genders), levels, batch timings, programmes,
@@ -13,6 +13,9 @@ and foundational practice routine, annual belt grading, championship coaching, a
 Kalari Payattu and yoga participation. The latest document's ages 6–14 replace the
 older minimum age of 7. To apply this content to an existing CMS, back up the database
 and run `npm run import:choorakkodi`; a fresh `npm run seed` already uses these defaults.
+
+Notes marked "pending" are hidden from visitors. To see them in place on a preview build, set
+`NEXT_PUBLIC_SHOW_PENDING=1`.
 
 Everything below is a real gap that the documents do not answer. Each item names the file to edit
 (the live copy is edited in the admin at `/admin`; `src/data` holds the defaults).
@@ -31,17 +34,16 @@ The proposal names the intended domain as **choorakkodi.com** (with
 
 | Field | Status | Effect while empty |
 | --- | --- | --- |
-| `contact.whatsapp` | **missing** | Two numbers were given (96057 30952, 90723 30952) but not which takes WhatsApp. Every WhatsApp CTA routes to `/contact` until set. |
-| `contact.email` | missing | Email row hidden. |
+| `contact.whatsapp` | **missing** | Two numbers were given (96057 30952, 90723 30952) but not which takes WhatsApp. Every WhatsApp button is a call button until set. |
+| `contact.email` | **confirm** | `choorakkodima@gmail.com` was found only in the CMS, in none of the supplied documents. It is now on the site. |
 | `social` | empty | `sameAs` omitted from Organization schema. |
 
 ### Photography · `public/images/`
 
-`media/kalari-archive-01…16` (from `docs/Kalari Old Photos.pdf`) are used in the homepage story.
-Six training photos (`public/images/training/*.webp`, from `reference-image-addon/`) now fill the
-Kalarippayattu page, About wide shot, Heritage "today" entry, Disciplines card and six gallery slots.
-Still needed: founder portrait, current training, marma treatment, gallery, events, and the
-captions/dates for the archive prints so they can be used on `/heritage` and `/about`.
+Still needed: a second marma treatment photograph (the Disciplines row uses a closer crop of the
+uzhichil photograph on the Marma page), a larger original of `services/marmura.webp` (only 360 px
+wide), current training, events, and clean rescans of the album prints: `kalari-archive-*` carry
+heavy glare and a violet cast. Captions and dates for those prints are also needed.
 
 ---
 
@@ -64,7 +66,6 @@ captions/dates for the archive prints so they can be used on `/heritage` and `/a
 - **Self-defence programme** — length and batches.
 - **FAQ topics from the sheet still unanswered** — how many years it takes to learn
   Kalarippayattu; how it compares with karate or kung fu (needs the academy's own answer).
-- **Heritage archive captions** — date range and photographer for each print.
 
 ---
 
@@ -72,7 +73,8 @@ captions/dates for the archive prints so they can be used on `/heritage` and `/a
 
 ### Testimonials · `src/data/testimonials.ts` — 4 placeholder records
 
-All four are flagged `isPlaceholder: true` and labelled in the UI.
+All four are flagged `isPlaceholder: true`, so visitors never see them. `/testimonials` shows a
+short holding line and is left out of the menu until a real record exists.
 
 - No `Review` or `AggregateRating` schema is emitted anywhere on the site.
 - `/testimonials` is served `noindex` while every record is a placeholder.
@@ -86,8 +88,8 @@ All four are flagged `isPlaceholder: true` and labelled in the UI.
 All flagged `isPlaceholder: true`.
 
 - `Event` structured data is **not** emitted for placeholder records.
-- Placeholder event pages are `noindex` and excluded from `sitemap.xml`.
-- Cards and detail pages carry a "not a scheduled event" marker.
+- Placeholder event pages return 404 and are excluded from `sitemap.xml`.
+- Visitors never see them: `/events` shows its empty state and is left out of the menu.
 
 **To go live:** add a real event with `isPlaceholder: false`. Delete the placeholders and
 `/events` shows its empty state, which is a designed state.
@@ -103,7 +105,7 @@ They have not been reviewed by the academy, so:
 
 - `Article` schema is **not** emitted.
 - Every post and `/blog` is served `noindex` and excluded from `sitemap.xml`.
-- Each article renders a visible "unreviewed draft" note.
+- `/blog` is left out of the menu until an article is approved; the drafts stay reachable by URL for review.
 
 **To go live:** have the academy read and approve the text, then set `isDraft: false`.
 
@@ -120,3 +122,7 @@ They have not been reviewed by the academy, so:
   colonial period and revived in the twentieth century. If the academy wishes to make a stronger
   continuity claim, it should supply the evidence for it.
 - **`foundingDate: 1960`** in Organization schema matches the onboarding sheet.
+- **"Free trial"** — the proposal mentions a free trial offer, but the academy's own answers only
+  confirm that trial classes exist. The site says "trial class". Confirm before saying "free".
+- **Spelling** — the site and logo use "Choorakkodi"; the profile document uses "Choorakodi". The
+  second spelling is listed as an alternate name in structured data so searches for it still match.

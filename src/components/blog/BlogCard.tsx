@@ -22,10 +22,10 @@ export function BlogCard({ post, variant = "row", tone = "light" }: BlogCardProp
     <p
       className={cn(
         "flex flex-wrap items-center gap-x-4 gap-y-1 text-meta uppercase tracking-[0.18em]",
-        dark ? "text-bone/45" : "text-muted",
+        dark ? "text-bone/62" : "text-muted",
       )}
     >
-      <span className="text-soil">{post.category}</span>
+      <span className="text-soil-ink">{post.category}</span>
       <span aria-hidden="true">·</span>
       <time dateTime={post.publishedAt}>{formatPostDate(post.publishedAt)}</time>
       <span aria-hidden="true">·</span>
@@ -50,7 +50,7 @@ export function BlogCard({ post, variant = "row", tone = "light" }: BlogCardProp
             </div>
 
             <div className="lg:col-span-5 lg:self-center">
-              <p className="eyebrow mb-7 text-soil">Featured</p>
+              <p className="eyebrow mb-7 text-soil-ink">Featured</p>
               {meta}
               <h2
                 className={cn(
@@ -148,7 +148,7 @@ export function BlogCard({ post, variant = "row", tone = "light" }: BlogCardProp
         </div>
 
         <div className="hidden justify-end md:col-span-1 md:flex">
-          <span className={cn("text-2xl", dark ? "text-bone/45" : "text-ink/40")}>
+          <span className={cn("text-2xl", dark ? "text-bone/62" : "text-ink/62")}>
             <ArrowSlot />
           </span>
         </div>

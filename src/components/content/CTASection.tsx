@@ -28,7 +28,7 @@ export function CTASection({
   body,
   message,
   whatsappLabel = "WhatsApp us",
-  secondary = { label: "Book a free trial", href: "/admissions" },
+  secondary = { label: "Book a trial class", href: "/admissions" },
 }: CTASectionProps) {
   return (
     // "green" is the flipped tone: white ground, dark buttons.
@@ -59,10 +59,10 @@ export function CTASection({
       </h2>
 
       <div className="gutter relative z-[1] mt-[6vw] md:mt-[3vw] md:pl-[22vw]">
-        <p className="text-[3.4vw] uppercase tracking-[0.2em] opacity-70 md:text-[1vw]">{eyebrow}</p>
+        <p className="text-[max(15px,3.4vw)] uppercase tracking-[0.2em] opacity-70 md:text-[max(12px,1vw)]">{eyebrow}</p>
 
         {body ? (
-          <p data-scrub-text className="measure mt-[4vw] text-[4.4vw] leading-[1.25] font-medium md:mt-[1.6vw] md:text-[1.75vw] md:leading-[1.2]">
+          <p data-scrub-text className="measure mt-[4vw] text-[max(15px,4.4vw)] leading-[1.25] font-medium md:mt-[1.6vw] md:text-[max(15px,1.75vw)] md:leading-[1.2]">
             <ScrollWords text={body} />
           </p>
         ) : null}

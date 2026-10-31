@@ -36,7 +36,7 @@ export async function MapBlock({ className, tone = "light" }: { className?: stri
       <div
         className={cn(
           "mt-5 flex flex-wrap items-center justify-between gap-x-8 gap-y-3",
-          tone === "light" ? "text-muted" : "text-bone/50",
+          tone === "light" ? "text-muted" : "text-bone/62",
         )}
       >
         <p className="eyebrow">

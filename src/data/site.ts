@@ -11,7 +11,7 @@
  * Supplied by the academy      : brand name, address (onboarding sheet),
  *                                phone, hours, map link, founder's name.
  * NOT supplied (null below)    : WhatsApp number (not confirmed which line
- *                                takes WhatsApp), email, social handles.
+ *                                takes WhatsApp), social handles.
  *                                A second line, +91 90723 30952, was also given.
  *
  * Nothing in the UI invents these. Every consumer degrades gracefully while a
@@ -72,7 +72,7 @@ export const site: Site = {
   wordmark: "Choorakkodi",
   tagline: "Kalarippayattu · Kozhikode, Kerala",
   description:
-    "CMM Gurukkal's Choorakkodi Martial Arts Academy, Chelavoor, Kozhikode — Kalarippayattu and kalari marma chikitsa since 1960. Sub-junior training for ages 6–14, weekly classes, summer camp and intensive courses.",
+    "Traditional Kalarippayattu and kalari marma chikitsa at CMM Gurukkal's Choorakkodi Martial Arts Academy, Chelavoor, Kozhikode, since 1960. Classes from age 6.",
   locale: siteLocale,
   language: siteLanguage,
 
@@ -81,7 +81,7 @@ export const site: Site = {
     phone: "+91 96057 30952",
     /** Digits only with country code, e.g. "919847000000". Powers wa.me links. */
     whatsapp: null,
-    email: null,
+    email: "choorakkodima@gmail.com",
     address: {
       street: "State Highway 29, Chelavoor",
       locality: "Kozhikode",

@@ -65,10 +65,10 @@ export function KineticMura({
             <div
               key={row.words[0]}
               data-row={row.direction}
-              className="flex whitespace-nowrap text-[11vw] leading-[0.92] uppercase md:text-[7.5vw]"
+              className="flex whitespace-nowrap text-[6.8vw] leading-[1.05] uppercase md:text-[7.5vw] md:leading-[0.92]"
             >
               <span>{row.words[0]}</span>
-              <span className="ml-[3vw] text-[#c4a487]">{row.words[1]}</span>
+              <span className="ml-[3vw] text-[#9a5a36]">{row.words[1]}</span>
             </div>
           ))}
         </div>

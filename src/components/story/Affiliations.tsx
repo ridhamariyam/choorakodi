@@ -32,7 +32,7 @@ export function Recognition({ title, items }: { title: string; items: string[] }
       <h2
         id="home-recognition"
         data-scrub-text
-        className="m-0 text-center text-[3.6vw] font-bold uppercase tracking-[0.32em] md:text-[1.1vw]"
+        className="m-0 text-center text-[max(15px,3.6vw)] font-bold uppercase tracking-[0.32em] md:text-[max(12px,1.1vw)]"
       >
         <ScrollWords text={title} bold />
       </h2>
@@ -40,7 +40,7 @@ export function Recognition({ title, items }: { title: string; items: string[] }
         <div key={group.label} className="mx-auto mt-[10vw] max-w-[88vw] first-of-type:mt-[6vw] md:mt-[4vw] md:max-w-[70vw] md:first-of-type:mt-[3vw]">
           <h3
             data-scrub-text
-            className="m-0 mb-[3vw] text-[3vw] font-medium uppercase tracking-[0.28em] opacity-60 md:mb-[1vw] md:text-[0.8vw]"
+            className="m-0 mb-[3vw] text-[max(11px,3vw)] font-medium uppercase tracking-[0.28em] opacity-60 md:mb-[1vw] md:text-[max(12px,0.8vw)]"
           >
             <ScrollWords text={group.label} />
           </h3>
@@ -52,7 +52,7 @@ export function Recognition({ title, items }: { title: string; items: string[] }
                 <li
                   key={item}
                   className={cn(
-                    "flex items-center gap-[0.8em] py-[3vw] text-[4.4vw] leading-snug font-bold md:py-[1.2vw] md:text-[1.35vw]",
+                    "flex items-center gap-[0.8em] py-[3vw] text-[max(15px,4.4vw)] leading-snug font-bold md:py-[1.2vw] md:text-[max(15px,1.35vw)]",
                     lastAlone && "md:col-span-2 md:justify-center md:text-center",
                   )}
                 >

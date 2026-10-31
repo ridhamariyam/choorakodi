@@ -51,19 +51,21 @@ export function organizationSchema(site: Site): Json {
     name: site.name,
     // Official name and the names people search for, per the onboarding sheet.
     legalName: "CMM Gurukkal's Choorakkodi Martial Arts Academy",
-    alternateName: [site.shortName, "Choorakkodi Kalari Sangam", "Choorakkodi Kalari", "CKS Chelavoor"],
+    alternateName: [site.shortName, "Choorakodi", "Choorakkodi Kalari Sangam", "Choorakkodi Kalari", "CKS Chelavoor"],
     url: siteUrl,
-    logo: `${siteUrl}/brand/logo-square.svg`,
+    logo: `${siteUrl}/brand/logo-square.png`,
+    image: `${siteUrl}/images/training/crossed-swords.webp`,
     description: site.description,
     address: postalAddress(site),
     areaServed: `${site.contact.address.locality}, ${site.contact.address.region}`,
+    hasMap: site.contact.mapDirectionsUrl,
     telephone: site.contact.phone,
     email: site.contact.email,
     sameAs: site.social.map((s) => s.href),
     // foundingDate is a year the brief supplies; it is not invented here.
     foundingDate: String(site.foundedYear),
-    founder: { "@id": `${siteUrl}/about#founder` },
-    knowsAbout: ["Kalarippayattu", "Marma", "Martial arts", "Self defence"],
+    founder: { "@id": `${siteUrl}/#founder` },
+    knowsAbout: ["Kalarippayattu", "Kalaripayattu", "Kerala martial arts", "Marma", "Self defence"],
   });
 }
 
@@ -71,7 +73,7 @@ export function personSchema(site: Site): Json {
   return compact({
     "@context": "https://schema.org",
     "@type": "Person",
-    "@id": `${siteUrl}/about#founder`,
+    "@id": `${siteUrl}/#founder`,
     name: site.founder.name,
     alternateName: site.founder.fullName,
     jobTitle: site.founder.role,

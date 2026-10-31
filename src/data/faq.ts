@@ -47,7 +47,7 @@ export const kalarippayattuFaq: FaqItem[] = [
   {
     question: "What happens in a children's training session?",
     answer:
-      "Sessions begin with a 15–20-minute stretching routine, followed by foundational Kalari practices: Meythari, Poothara Vanakkam, Kalari Vandanam, basic meypayattu, kalugal (kicks) and chuvadukal (steps). Training follows each learner's level and the instructor's guidance.",
+      "Sessions begin with a 15–20-minute stretching routine, followed by foundational kalari practices: Meythari, Poothara Vanakkam, Kalari Vandanam, basic meypayattu, kalugal (kicks) and chuvadukal (steps). Training follows each learner's level and the instructor's guidance.",
   },
   {
     question: "What are the Four Anghanghal?",
@@ -85,7 +85,7 @@ export const admissionsFaq: FaqItem[] = [
   {
     question: "How do I book a trial class?",
     answer:
-      "Message the academy on WhatsApp. A trial is arranged around the batch that fits your schedule, and you are told what to bring before you arrive.",
+      "Call the academy. A trial is arranged around the batch that fits your schedule, and you are told what to bring before you arrive.",
   },
   {
     question: "Is there a joining fee or a minimum term?",
@@ -95,7 +95,7 @@ export const admissionsFaq: FaqItem[] = [
   {
     question: "Can I watch a session before joining?",
     answer:
-      "Visitors are usually welcome to observe, subject to the batch. Ask when you message so a suitable session can be suggested.",
+      "Visitors are usually welcome to observe, subject to the batch. Ask when you call so a suitable session can be suggested.",
     pending: true,
   },
   {

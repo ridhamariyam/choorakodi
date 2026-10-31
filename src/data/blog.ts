@@ -250,7 +250,7 @@ export const posts: BlogPost[] = [
         "Attribute every remembered detail to the person who remembered it.",
         "Publish uncertainty as uncertainty. 'Photographer unknown' is a legitimate credit.",
       ] },
-      { type: "p", text: "This site's Heritage section is built on that principle. Where a date or a name has not been confirmed, the archive says so rather than filling the gap." },
+      { type: "p", text: "This site is built on that principle. Where a date or a name has not been confirmed, it says so rather than filling the gap." },
       whatsAppCta(
         "Have photographs of the academy?",
         "Hello — I have photographs connected to the Choorakkodi kalari that may be of interest to the archive.",

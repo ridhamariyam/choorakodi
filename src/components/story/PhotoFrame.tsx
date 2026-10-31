@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import type { StoryPhoto } from "@/data/story";
+import { PRINT_WIDTH, type StoryPhoto } from "@/data/story";
 import { InkDrop } from "@/components/animation/InkDrop";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +8,9 @@ import { cn } from "@/lib/utils";
  * An archival print in an aged paper mount. Desktop placement is absolute, in
  * vw, read from the data; below md the frames fall back into the flow and
  * stagger left/right so the band still reads as a loose pile of prints.
+ *
+ * Every print is cropped to the same 4:3 frame; tall photos keep their upper
+ * part, where the subject sits.
  *
  * `data-speed` is picked up by the chapter's parallax pass.
  */
@@ -25,7 +28,7 @@ export function PhotoFrame({
   const vars = {
     "--x": `${photo.x}vw`,
     "--y": `${photo.y}vw`,
-    "--w": `${photo.w}vw`,
+    "--w": `${PRINT_WIDTH}vw`,
     "--r": `${photo.rotate}deg`,
   } as CSSProperties;
 
@@ -47,7 +50,10 @@ export function PhotoFrame({
           width={photo.width}
           height={photo.height}
           sizes={sizes}
-          className="story-print block h-auto w-full"
+          className={cn(
+            "story-print block aspect-[4/3] h-auto w-full object-cover",
+            photo.height > photo.width && "object-[50%_29%]",
+          )}
         />
         <InkDrop />
       </div>

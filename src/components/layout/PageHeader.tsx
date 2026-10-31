@@ -16,7 +16,8 @@ export type PageHeaderProps = {
   tone?: SectionTone;
   /** Printed under the title, e.g. "Kozhikode, Kerala". */
   meta?: string;
-  size?: "display" | "mega";
+  /** "long" fits a single long word, such as Kalarippayattu, on one line. */
+  size?: "display" | "mega" | "long";
   children?: ReactNode;
   grain?: boolean;
   /** Where the page sits in the site's story, e.g. "Chapter 03 of 12". */
@@ -54,9 +55,9 @@ export function PageHeader({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/logo-square.svg" alt="" aria-hidden="true" className="story-knockout h-auto w-[10vw] md:w-[4.2vw]" />
             {chapter ? (
-              <span className="text-center text-[2.2vw] uppercase tracking-[0.32em] opacity-60 md:text-[0.7vw]">{chapter}</span>
+              <span className="text-center text-[max(11px,2.2vw)] uppercase tracking-[0.32em] opacity-60 md:text-[max(12px,0.7vw)]">{chapter}</span>
             ) : null}
-            <span className="text-center text-[2.6vw] uppercase tracking-[0.32em] md:text-[0.8vw]">{eyebrow}</span>
+            <span className="text-center text-[max(11px,2.6vw)] uppercase tracking-[0.32em] md:text-[max(12px,0.8vw)]">{eyebrow}</span>
           </div>
         </TextReveal>
 
@@ -74,13 +75,13 @@ export function PageHeader({
             stagger={0.09}
             className="text-center leading-[0.9]"
             style={{
-              fontSize: size === "mega" ? "clamp(3.5rem, 13vw, 14rem)" : "clamp(3rem, 9vw, 10rem)",
+              fontSize: { mega: "clamp(3.5rem, 13vw, 14rem)", display: "clamp(3rem, 9vw, 10rem)", long: "clamp(1.875rem, 8.2vw, 9rem)" }[size],
             }}
           />
         </div>
 
         {meta ? (
-          <p className="mt-[5vw] text-center text-[2.6vw] uppercase tracking-[0.32em] opacity-60 md:mt-[2vw] md:text-[0.8vw]">
+          <p className="mt-[5vw] text-center text-[max(11px,2.6vw)] uppercase tracking-[0.32em] opacity-60 md:mt-[2vw] md:text-[max(12px,0.8vw)]">
             {meta}
           </p>
         ) : null}
@@ -88,7 +89,7 @@ export function PageHeader({
         {standfirst ? (
           <p
             data-scrub-text
-            className="mx-auto mt-[8vw] max-w-[88vw] text-center text-[4.4vw] leading-[1.25] font-medium md:mt-[4vw] md:max-w-[52vw] md:text-[1.75vw] md:leading-[1.2]"
+            className="mx-auto mt-[8vw] max-w-[88vw] text-center text-[max(15px,4.4vw)] leading-[1.25] font-medium md:mt-[4vw] md:max-w-[52vw] md:text-[max(15px,1.75vw)] md:leading-[1.2]"
           >
             <ScrollWords text={standfirst} />
           </p>

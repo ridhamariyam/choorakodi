@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: "This page could not be found.",
+  robots: { index: false, follow: true },
+};
 
 /**
  * The site and the admin are separate root layouts, so there is no single

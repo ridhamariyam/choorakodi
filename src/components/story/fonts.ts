@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Anton, Archivo_Black, Bodoni_Moda, Cinzel, Inconsolata, Shrikhand, Syne, Unbounded } from "next/font/google";
+import { Anton, Archivo_Black, Cinzel, Inconsolata } from "next/font/google";
 import type { StoryChapter } from "@/data/story";
 
 /**
@@ -8,16 +8,12 @@ import type { StoryChapter } from "@/data/story";
  * face survives only as the condensed odometer and stamp face.
  */
 const mono = Inconsolata({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-story-mono", display: "swap" });
-const bodoni = Bodoni_Moda({ subsets: ["latin"], weight: ["900"], variable: "--font-story-bodoni", display: "swap" });
 const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-story-anton", display: "swap" });
-const shrikhand = Shrikhand({ subsets: ["latin"], weight: "400", variable: "--font-story-shrikhand", display: "swap" });
 const archivo = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-story-archivo", display: "swap" });
-const unbounded = Unbounded({ subsets: ["latin"], weight: ["800"], variable: "--font-story-unbounded", display: "swap" });
-const syne = Syne({ subsets: ["latin"], weight: ["800"], variable: "--font-story-syne", display: "swap" });
 /** Engraved capitals of the sky hero and the preloader (which reads --font-sky-serif). */
 const skySerif = Cinzel({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-sky-serif", display: "swap" });
 
-export const storyFontVariables = [mono, bodoni, anton, shrikhand, archivo, unbounded, syne, skySerif]
+export const storyFontVariables = [mono, anton, archivo, skySerif]
   .map((font) => font.variable)
   .join(" ");
 

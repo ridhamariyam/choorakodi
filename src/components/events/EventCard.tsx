@@ -124,7 +124,7 @@ export function EventCard({ event, variant = "row", tone = "light" }: EventCardP
           <ArrowUpRight
             className={cn(
               "h-6 w-6 transition-transform duration-[0.7s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-x-1 group-hover/card:-translate-y-1",
-              dark ? "text-bone/45" : "text-ink/40",
+              dark ? "text-bone/62" : "text-ink/62",
             )}
             strokeWidth={1.3}
           />
@@ -158,7 +158,7 @@ function DateBlock({
       >
         {day}
       </span>
-      <span className={cn("eyebrow", dark ? "text-soil" : "text-soil")}>
+      <span className={cn("eyebrow", dark ? "text-soil-ink" : "text-soil-ink")}>
         {month} {year}
       </span>
     </p>
@@ -178,7 +178,7 @@ function Meta({
     <p
       className={cn(
         "flex items-center gap-2.5 text-meta uppercase tracking-[0.18em]",
-        dark ? "text-bone/45" : "text-muted",
+        dark ? "text-bone/62" : "text-muted",
         className,
       )}
     >
@@ -194,7 +194,7 @@ function PlaceholderTag({ dark }: { dark: boolean }) {
     <span
       className={cn(
         "mt-5 inline-block border-l pl-4 text-meta uppercase tracking-[0.18em]",
-        dark ? "border-soil/45 text-soil/85" : "border-soil/60 text-soil",
+        dark ? "border-soil/45 text-soil-ink" : "border-soil/60 text-soil-ink",
       )}
     >
       Placeholder — not a scheduled event

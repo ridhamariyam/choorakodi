@@ -1,4 +1,5 @@
 import { ArrowUpRight, ExternalLink, Feather, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 import { BrandMark } from "@/components/brand/BrandMark";
 
 export function AdminLogo() {
@@ -31,7 +32,7 @@ export function LoginFooter() {
   return (
     <div className="studio-login-footer">
       <span><ShieldCheck size={15} aria-hidden="true" /> Your private academy workspace</span>
-      <a href="/">Back to the website <ArrowUpRight size={14} aria-hidden="true" /></a>
+      <Link href="/">Back to the website <ArrowUpRight size={14} aria-hidden="true" /></Link>
     </div>
   );
 }

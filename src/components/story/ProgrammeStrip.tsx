@@ -127,14 +127,14 @@ export function ProgrammeStrip({ programmes }: { programmes: Story["programmes"]
             className="story-stamp absolute right-[5vw] top-1/2 -translate-y-1/2"
             style={condensedStyle}
           >
-            <TrialStamp image="/images/heritage/archive-staff-drill.webp" />
+            <TrialStamp image="/images/archive/kalari-archive-11.webp" />
           </div>
         </div>
 
         <p
           data-scrub-text
           style={monoStyle}
-          className="gutter relative z-[1] mt-[5vw] text-[3.4vw] uppercase tracking-[0.2em] md:mt-[1.5vw] md:text-[1vw]"
+          className="gutter relative z-[1] mt-[5vw] text-[max(15px,3.4vw)] uppercase tracking-[0.2em] md:mt-[1.5vw] md:text-[max(12px,1vw)]"
         >
           <ScrollWords text={programmes.note} />
         </p>
@@ -183,7 +183,7 @@ export function ProgrammeStrip({ programmes }: { programmes: Story["programmes"]
 
       <div
         style={monoStyle}
-        className="gutter relative z-[1] mt-[10vw] grid gap-[6vw] text-[4vw] leading-snug md:mt-[6vw] md:grid-cols-[17vw_1fr] md:gap-[2vw] md:text-[1.05vw]"
+        className="gutter relative z-[1] mt-[10vw] grid gap-[6vw] text-[max(15px,4vw)] leading-snug md:mt-[6vw] md:grid-cols-[17vw_1fr] md:gap-[2vw] md:text-[max(12px,1.05vw)]"
       >
         <div>
           <p className="text-[11px] uppercase tracking-[4px] opacity-60">Call</p>

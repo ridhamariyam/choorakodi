@@ -41,7 +41,7 @@ export default async function EventsPage() {
         eyebrow="Calendar"
         lines={["Events."]}
         standfirst="Demonstrations, gatherings and consultation days. Upcoming occasions are announced here first."
-        meta={`${upcoming.length} upcoming`}
+        meta={upcoming.length > 0 ? `${upcoming.length} upcoming` : undefined}
       />
 
       <SectionReveal tone="bone" spacing="md">

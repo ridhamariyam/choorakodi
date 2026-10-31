@@ -103,7 +103,6 @@ export interface Config {
     'kalarippayattu-page': KalarippayattuPage;
     'marma-page': MarmaPage;
     'admissions-page': AdmissionsPage;
-    'heritage-page': HeritagePage;
     'contact-page': ContactPage;
     'disciplines-page': DisciplinesPage;
   };
@@ -115,7 +114,6 @@ export interface Config {
     'kalarippayattu-page': KalarippayattuPageSelect<false> | KalarippayattuPageSelect<true>;
     'marma-page': MarmaPageSelect<false> | MarmaPageSelect<true>;
     'admissions-page': AdmissionsPageSelect<false> | AdmissionsPageSelect<true>;
-    'heritage-page': HeritagePageSelect<false> | HeritagePageSelect<true>;
     'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
     'disciplines-page': DisciplinesPageSelect<false> | DisciplinesPageSelect<true>;
   };
@@ -1730,59 +1728,6 @@ export interface AdmissionsPage {
   createdAt?: string | null;
 }
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "heritage-page".
- */
-export interface HeritagePage {
-  id: number;
-  /**
-   * The small label above the heading.
-   */
-  eyebrow?: string | null;
-  /**
-   * One line per row — the heading breaks exactly where you break it.
-   */
-  heading?: string | null;
-  /**
-   * The short introduction under the heading.
-   */
-  standfirst?: string | null;
-  method?: string | null;
-  entries?:
-    | {
-        key: string;
-        /**
-         * e.g. Archive 01
-         */
-        index?: string | null;
-        year?: string | null;
-        title: string;
-        caption?: string | null;
-        /**
-         * Shown as a small 'pending' note on the page. Clear this box once the real information is written above.
-         */
-        pending?: string | null;
-        image?: {
-          /**
-           * Leave empty to show a labelled placeholder instead of a photo.
-           */
-          image?: (number | null) | Media;
-          /**
-           * What the photo shows. Read aloud to blind visitors and used by Google.
-           */
-          alt?: string | null;
-          /**
-           * Printed on the placeholder while no photo is uploaded.
-           */
-          label?: string | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * Address, phone and timings are in Settings → Academy details.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2421,37 +2366,6 @@ export interface AdmissionsPageSelect<T extends boolean = true> {
         question?: T;
         answer?: T;
         pending?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "heritage-page_select".
- */
-export interface HeritagePageSelect<T extends boolean = true> {
-  eyebrow?: T;
-  heading?: T;
-  standfirst?: T;
-  method?: T;
-  entries?:
-    | T
-    | {
-        key?: T;
-        index?: T;
-        year?: T;
-        title?: T;
-        caption?: T;
-        pending?: T;
-        image?:
-          | T
-          | {
-              image?: T;
-              alt?: T;
-              label?: T;
-            };
         id?: T;
       };
   updatedAt?: T;

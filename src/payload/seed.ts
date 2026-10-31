@@ -6,8 +6,14 @@
  *   npm run seed
  *
  * It refuses to run once the CMS holds content, so it can never overwrite the
- * academy's edits. It does not create a login — the first visit to /admin
- * asks for one.
+ * academy's edits. It creates a login only when SEED_ADMIN_EMAIL and
+ * SEED_ADMIN_PASSWORD are set; otherwise the first visit to /admin asks for one.
+ *
+ *   npm run seed:reset
+ *
+ * Replaces the CMS content with the built-in content on purpose: every page,
+ * event, article, testimonial and gallery record. Logins and uploaded photo
+ * files are kept. Back up data/choorakkodi.db first.
  */
 import path from "node:path";
 import fs from "node:fs";
@@ -27,9 +33,15 @@ async function seed() {
   const payload = await getPayload({ config });
 
   const existing = await payload.findGlobal({ slug: "site-settings" });
-  if (existing.name) {
+  const reset = process.env.SEED_RESET === "1";
+  if (existing.name && !reset) {
     payload.logger.warn("The CMS already has content — nothing was changed. (Seeding only runs on an empty database.)");
     process.exit(0);
+  }
+  if (reset) {
+    for (const collection of ["events", "posts", "testimonials", "gallery"] as const) {
+      await payload.delete({ collection, where: { id: { exists: true } }, context: { disableRevalidate: true } });
+    }
   }
 
   const upload = uploader(payload);
@@ -242,26 +254,6 @@ async function seed() {
     },
   });
 
-  await payload.updateGlobal({
-    slug: "heritage-page",
-    context: ctx,
-    data: {
-      ...header(d.heritage),
-      method: d.heritage.method,
-      entries: await Promise.all(
-        d.heritage.entries.map(async (e) => ({
-          key: e.id,
-          index: e.index,
-          year: e.year,
-          title: e.title,
-          caption: e.caption,
-          pending: e.pending ?? "",
-          image: await image(e.image),
-        })),
-      ),
-    },
-  });
-
   await payload.updateGlobal({ slug: "contact-page", context: ctx, data: header(d.contact) });
 
   await payload.updateGlobal({
@@ -381,7 +373,15 @@ async function seed() {
     });
   }
 
-  payload.logger.info("Done. Open /admin to create the first login.");
+  const email = process.env.SEED_ADMIN_EMAIL;
+  const password = process.env.SEED_ADMIN_PASSWORD;
+  if (email && password) {
+    const { totalDocs } = await payload.count({ collection: "users", where: { email: { equals: email } } });
+    if (!totalDocs) await payload.create({ collection: "users", data: { email, password } });
+    payload.logger.info(`Done. Open /admin and log in as ${email}.`);
+  } else {
+    payload.logger.info("Done. Open /admin to create the first login.");
+  }
   process.exit(0);
 }
 
@@ -398,11 +398,13 @@ function uploader(payload: Payload) {
     if (!pending) {
       const filePath = path.join(publicDir, src);
       if (!fs.existsSync(filePath)) throw new Error(`Seed image missing: public${src}`);
-      pending = queue.then(() =>
-        payload
-          .create({ collection: "media", data: { alt }, filePath, context: { disableRevalidate: true } })
-          .then((doc) => doc.id),
-      );
+      pending = queue.then(async () => {
+        // A reset finds the photo already in the library.
+        const { docs } = await payload.find({ collection: "media", where: { filename: { equals: path.basename(src) } }, limit: 1, depth: 0 });
+        if (docs[0]) return docs[0].id;
+        const doc = await payload.create({ collection: "media", data: { alt }, filePath, context: { disableRevalidate: true } });
+        return doc.id;
+      });
       queue = pending;
       cache.set(src, pending);
     }

@@ -26,7 +26,7 @@ export function NextChapter({ from }: { from: string }) {
         className="group gutter relative z-[1] grid items-center gap-[10vw] pt-[30vw] md:grid-cols-12 md:gap-[4vw] md:pt-[20vw]"
       >
         <div className="md:col-span-6">
-          <p style={monoStyle} className="text-[2.6vw] uppercase tracking-[0.32em] opacity-70 md:text-[0.8vw]">
+          <p style={monoStyle} className="text-[max(11px,2.6vw)] uppercase tracking-[0.32em] opacity-70 md:text-[max(12px,0.8vw)]">
             {returning ? "Back to the beginning" : "Next chapter"} · {number} / {total}
           </p>
           <h2
@@ -40,13 +40,13 @@ export function NextChapter({ from }: { from: string }) {
           <p
             data-scrub-text
             style={monoStyle}
-            className="mt-[6vw] max-w-[88vw] text-[4.4vw] leading-[1.3] font-medium md:mt-[2.4vw] md:max-w-[34vw] md:text-[1.45vw] md:leading-[1.35]"
+            className="mt-[6vw] max-w-[88vw] text-[max(15px,4.4vw)] leading-[1.3] font-medium md:mt-[2.4vw] md:max-w-[34vw] md:text-[max(15px,1.45vw)] md:leading-[1.35]"
           >
             <ScrollWords text={next.teaser} />
           </p>
           <span
             style={monoStyle}
-            className="mt-[8vw] inline-flex items-center gap-3 border-b border-current pb-1 text-[3vw] uppercase tracking-[0.24em] md:mt-[3vw] md:text-[0.85vw]"
+            className="mt-[8vw] inline-flex items-center gap-3 border-b border-current pb-1 text-[max(11px,3vw)] uppercase tracking-[0.24em] md:mt-[3vw] md:text-[max(12px,0.85vw)]"
           >
             {returning ? "Return to 1960" : "Turn the page"}
             <span aria-hidden="true" className="transition-transform duration-500 ease-kalari group-hover:translate-x-2">

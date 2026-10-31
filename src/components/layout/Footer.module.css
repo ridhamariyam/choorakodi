@@ -64,7 +64,7 @@
 
 .colHead {
   margin: 0 0 3px;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0.12em;
@@ -81,7 +81,7 @@
 
 .link {
   display: block;
-  font-size: clamp(10px, 0.78vw, 12px);
+  font-size: clamp(12px, 0.9vw, 14px);
   font-weight: 400;
   line-height: 1.35;
   color: rgb(255 255 255 / 0.78);
@@ -120,7 +120,7 @@ a.link:focus-visible {
 }
 
 .social span {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0.12em;
@@ -134,7 +134,7 @@ a.link:focus-visible {
   gap: 1rem;
   padding-top: 1.2vw;
   border-top: 1px solid rgb(255 255 255 / 0.16);
-  font-size: clamp(8px, 0.65vw, 10px);
+  font-size: clamp(11px, 0.75vw, 12px);
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.04em;
@@ -153,48 +153,52 @@ a.link:focus-visible {
 
 @media (max-width: 768px) {
   .footer {
-    padding: 7vw var(--pad) 4vw;
+    padding: 20px var(--pad) 14px;
   }
   .inner {
-    gap: 6vw;
+    gap: 14px;
   }
   .top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 6vw;
+    gap: 14px;
   }
   .brandMark {
-    height: clamp(34px, 9vw, 44px);
+    height: 30px;
   }
+  /* Academy, Discover and Contact stay on one line; Contact takes what's left. */
   .cols {
-    flex-wrap: wrap;
-    gap: 5vw 10vw;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    gap: 12px;
     width: 100%;
   }
   .col {
-    gap: 5px;
+    gap: 2px;
   }
   .colHead {
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
   .link {
-    font-size: 12px;
-    line-height: 1.6;
+    font-size: 11px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
   }
   .socials {
-    gap: 24px;
+    gap: 20px;
   }
   .social svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
   .social span {
-    font-size: 10px;
+    font-size: 11px;
   }
   .bottom {
     flex-wrap: wrap;
-    padding-top: 5vw;
-    font-size: clamp(9px, 2.5vw, 11px);
+    gap: 4px 1rem;
+    padding-top: 10px;
+    font-size: 11px;
   }
 }
 

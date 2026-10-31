@@ -29,7 +29,7 @@ export function ArticleLayout({ post, related }: { post: BlogPost; related: Blog
       >
         <PageContainer width="narrow">
           <TextReveal y={14}>
-            <p className="eyebrow mb-10 text-soil">{post.category}</p>
+            <p className="eyebrow mb-10 text-soil-ink">{post.category}</p>
           </TextReveal>
 
           <SplitHeading
@@ -112,7 +112,7 @@ export function ArticleLayout({ post, related }: { post: BlogPost; related: Blog
       {related.length > 0 ? (
         <SectionReveal tone="ink" spacing="lg" grain aria-labelledby="related-articles">
           <PageContainer>
-            <h2 id="related-articles" className="eyebrow mb-12 text-bone/40">
+            <h2 id="related-articles" className="eyebrow mb-12 text-bone/62">
               Keep reading
             </h2>
             <div className="grid gap-12 md:grid-cols-3 md:gap-8">

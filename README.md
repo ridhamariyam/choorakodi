@@ -16,24 +16,12 @@ Set `NEXT_PUBLIC_SITE_URL` (see `.env.example`) before deploying — it drives c
 
 ---
 
-## The hero is deliberately unfinished
+## The homepage
 
-`src/components/home/HeroPlaceholder.tsx` holds the seat for the cinematic hero. It is a leaf
-component with no props and no dependents, so integration is one line in `src/app/page.tsx`:
+`src/components/story/StoryExperience.tsx` composes the chronicle: the pinned sky hero
+(`hero/SkyHero.tsx`), the dated and undated chapters, then the values, recognition, FAQ and programme sections.
 
-```diff
-- <HeroPlaceholder />
-+ <CinematicHero />
-```
-
-The replacement should honour four things so the rest of the page keeps working:
-
-1. occupy roughly `100svh` and sit first inside `<main>`
-2. carry `data-nav-theme="dark" | "light"` — the navbar samples this to invert itself
-3. render the page's single `<h1>`
-4. leave the top ~96px clear for the fixed navigation
-
-Nothing else on the homepage reads from, measures, or depends on the hero.
+See `docs/HANDOVER.md` for deployment, the CMS and what is still outstanding.
 
 ---
 
@@ -137,5 +125,5 @@ one `<h1>` per page.
 ## Performance
 
 `next/image` with explicit `sizes` on every slot · lazy loading except the hero ·
-`optimizePackageImports` for Lucide · the map iframe is lazy · all 26 routes prerender statically ·
+`optimizePackageImports` for Lucide · the map iframe is lazy · public routes prerender statically ·
 the Lenis/GSAP loop is shared rather than doubled.

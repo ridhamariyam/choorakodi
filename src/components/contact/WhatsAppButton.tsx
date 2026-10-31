@@ -1,6 +1,7 @@
 "use client";
 
-import { hasWhatsApp as siteHasWhatsApp, whatsAppHref } from "@/data/site";
+import { Phone } from "lucide-react";
+import { hasWhatsApp as siteHasWhatsApp, telHref, whatsAppHref } from "@/data/site";
 import { useSite } from "@/components/content/ContentProvider";
 import { Button, type ButtonSize, type ButtonVariant } from "@/components/ui/Button";
 import { WhatsAppIcon } from "./WhatsAppIcon";
@@ -20,9 +21,8 @@ export type WhatsAppButtonProps = {
 /**
  * The primary conversion control.
  *
- * While no WhatsApp number has been supplied the button stays fully
- * functional and routes to /contact instead — better than a dead link, and
- * far better than dialling an invented number.
+ * While no WhatsApp number has been supplied the button calls the academy
+ * instead, with a phone icon, so it never promises a chat that cannot happen.
  */
 export function WhatsAppButton({
   label = "WhatsApp us",
@@ -35,26 +35,28 @@ export function WhatsAppButton({
 }: WhatsAppButtonProps) {
   const site = useSite();
   const hasWhatsApp = siteHasWhatsApp(site);
-  const href = whatsAppHref(site, message);
+  const href = hasWhatsApp ? whatsAppHref(site, message) : telHref(site);
+  const text = !hasWhatsApp && /whatsapp/i.test(label) ? "Call the academy" : label;
+  const Icon = hasWhatsApp ? WhatsAppIcon : Phone;
 
   return (
     <Button
       href={href}
-      external={hasWhatsApp}
+      external={hasWhatsApp || href.startsWith("tel:")}
       variant={variant}
       size={size}
       magnetic={magnetic}
       arrow={!showIcon}
       className={cn("group/arrow", className)}
-      ariaLabel={hasWhatsApp ? `${label} (opens WhatsApp)` : `${label} — go to contact page`}
+      ariaLabel={hasWhatsApp ? `${text} (opens WhatsApp)` : `${text} — call ${site.contact.phone}`}
     >
       {showIcon ? (
         <span className="inline-flex items-center gap-2.5">
-          <WhatsAppIcon className="h-[1.15em] w-[1.15em]" />
-          {label}
+          <Icon className="h-[1.15em] w-[1.15em]" />
+          {text}
         </span>
       ) : (
-        label
+        text
       )}
     </Button>
   );

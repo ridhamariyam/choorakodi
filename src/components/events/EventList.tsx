@@ -54,7 +54,7 @@ export function EventList({ upcoming, past }: EventListProps) {
               )}
             >
               {option}
-              <span className={cn("ml-2", isActive ? "text-bone/50" : "text-muted/60")}>
+              <span className={cn("ml-2", isActive ? "text-bone/62" : "text-muted/60")}>
                 {count}
               </span>
             </button>
@@ -92,7 +92,7 @@ export function EventList({ upcoming, past }: EventListProps) {
 function EmptyState({ filter }: { filter: Filter }) {
   return (
     <div className="border-y border-ink/12 py-24 text-center md:py-32">
-      <CalendarX className="mx-auto h-8 w-8 text-soil" strokeWidth={1.2} />
+      <CalendarX className="mx-auto h-8 w-8 text-soil-ink" strokeWidth={1.2} />
       <p className="eyebrow mt-8 text-muted">
         {filter === "Upcoming" ? "Nothing scheduled" : "No past events recorded"}
       </p>

@@ -16,10 +16,8 @@ import {
   kalarippayattu,
   marma,
   admissions,
-  heritage,
   contact,
   notFound,
-  type ArchiveEntry,
   type StoryParagraph,
 } from "@/data/pages";
 import { kalarippayattuFaq, admissionsFaq, marmaFaq, type FaqItem } from "@/data/faq";
@@ -135,7 +133,6 @@ export type Content = {
     feesTitle: string;
     feesPending: string;
   };
-  heritage: Header & { method: string; entries: ArchiveEntry[] };
   contact: Header & { landmark: Titled<{ body: string; image: ImageSlot }> };
   faq: { kalarippayattu: FaqItem[]; admissions: FaqItem[]; marma: FaqItem[] };
   timeline: TimelineEntry[];
@@ -159,7 +156,6 @@ export const defaultContent: Content = {
   kalarippayattu,
   marma,
   admissions,
-  heritage,
   contact,
   faq: { kalarippayattu: kalarippayattuFaq, admissions: admissionsFaq, marma: marmaFaq },
   timeline,

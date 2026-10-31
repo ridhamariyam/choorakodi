@@ -13,7 +13,7 @@ export type SectionHeadingProps = {
   label?: string;
   as?: "h1" | "h2";
   id?: string;
-  size?: "display" | "headline" | "mega";
+  size?: "display" | "headline" | "mega" | "title";
   tone?: "light" | "dark";
   className?: string;
   headingClassName?: string;
@@ -23,6 +23,8 @@ export type SectionHeadingProps = {
 };
 
 const sizeClasses = {
+  // For headings that hold one long word in a narrow column.
+  title: "text-[clamp(1.875rem,3.6vw,3.25rem)] leading-[1] font-semibold",
   mega: "text-mega",
   display: "text-display",
   // Set like the homepage chronicle's chapter headings ("The kalari takes shape").
@@ -61,7 +63,7 @@ export function SectionHeading({
           y={16}
         >
           {index ? (
-            <span className={cn("eyebrow", tone === "light" ? "text-soil" : "text-soil/85")}>
+            <span className={cn("eyebrow", tone === "light" ? "text-soil-ink" : "text-soil-ink")}>
               {index}
             </span>
           ) : null}

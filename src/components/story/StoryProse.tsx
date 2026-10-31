@@ -1,4 +1,5 @@
 import { highlight } from "@/lib/highlight";
+import { cn } from "@/lib/utils";
 import { ScrollWords } from "./Caption";
 import { faceStyle, monoStyle } from "./fonts";
 
@@ -22,6 +23,7 @@ export function StoryProse({
   counter,
   trail,
   bg,
+  tight = false,
 }: {
   id: string;
   heading: string;
@@ -30,6 +32,8 @@ export function StoryProse({
   counter: string;
   trail: "left" | "right";
   bg: string;
+  /** Pull the section up close to what precedes it (e.g. the founder portrait). */
+  tight?: boolean;
 }) {
   if (items.length === 0) return null;
 
@@ -42,7 +46,10 @@ export function StoryProse({
       data-counter={counter}
       data-nav-theme="light"
       aria-labelledby={`${id}-heading`}
-      className="gutter relative z-[1] pb-[16vw] pt-[30vw] text-[#1f1d1e] md:pb-[10vw] md:pt-[22vw]"
+      className={cn(
+        "gutter relative z-[1] pb-[16vw] text-[#1f1d1e] md:pb-[10vw]",
+        tight ? "pt-[8vw] md:pt-[4vw]" : "pt-[30vw] md:pt-[22vw]",
+      )}
     >
       <h2
         id={`${id}-heading`}
@@ -60,12 +67,12 @@ export function StoryProse({
               {item.label && i === 0 ? (
                 <h3
                   data-scrub-text
-                  className="m-0 mb-[3vw] text-[3vw] font-medium uppercase tracking-[0.28em] opacity-60 md:mb-[1vw] md:text-[0.8vw]"
+                  className="m-0 mb-[3vw] text-[max(11px,3vw)] font-medium uppercase tracking-[0.28em] opacity-60 md:mb-[1vw] md:text-[max(12px,0.8vw)]"
                 >
                   <ScrollWords text={item.label} />
                 </h3>
               ) : null}
-              <p data-scrub-text className="m-0 text-[4.4vw] leading-[1.3] font-medium md:text-[1.45vw] md:leading-[1.35]">
+              <p data-scrub-text className="m-0 text-[max(15px,4.4vw)] leading-[1.3] font-medium md:text-[max(15px,1.45vw)] md:leading-[1.35]">
                 {highlight(text, highlights).map((part, j) => (
                   <ScrollWords key={j} text={part.text} bold={part.bold} />
                 ))}

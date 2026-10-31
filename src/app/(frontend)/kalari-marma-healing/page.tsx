@@ -23,9 +23,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
   return buildMetadata(
     {
-      title: "Kalari Marma Healing",
+      title: "Kalari Marma Healing in Kozhikode",
       description:
-        "Marma — the classical map of the body's vital points — and the hands-on kalari healing tradition that shares it, at Choorakkodi Martial Arts Academy, Kozhikode.",
+        "Marma, the classical map of the body's vital points, and the kalari healing tradition offered at Shafi Dawa Khana on the Choorakkodi campus in Chelavoor.",
       path: "/kalari-marma-healing",
     },
     site,
@@ -99,7 +99,7 @@ export default async function MarmaPage() {
             </div>
             <TextReveal delay={0.15} className="lg:col-span-4 lg:col-start-9 lg:self-end">
               <p className="measure text-lead text-bone/68">{marma.points.body}</p>
-              <p className="eyebrow mt-7 text-bone/40">{marma.points.note}</p>
+              <p className="eyebrow mt-7 text-bone/62">{marma.points.note}</p>
             </TextReveal>
           </div>
 

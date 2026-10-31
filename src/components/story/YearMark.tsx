@@ -37,7 +37,7 @@ export function YearMark({
       <div data-kicker className="flex flex-col items-center gap-[0.6vw]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/brand/logo-square.svg" alt="" aria-hidden="true" className="story-knockout h-auto w-[10vw] md:w-[4.2vw]" />
-        <span data-scrub-text style={monoStyle} className="text-[2.6vw] uppercase tracking-[0.32em] md:text-[0.8vw]">
+        <span data-scrub-text style={monoStyle} className="text-[max(11px,2.6vw)] uppercase tracking-[0.32em] md:text-[max(12px,0.8vw)]">
           <ScrollWords text={kicker} />
         </span>
       </div>

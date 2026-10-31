@@ -21,9 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getContent();
   return buildMetadata(
     {
-      title: "Contact",
+      title: "Contact and Directions",
       description:
-        "Visit Choorakkodi Martial Arts Academy in Chelavoor, Kozhikode. Services, batch timings and how to find the academy.",
+        "Find Choorakkodi Martial Arts Academy on State Highway 29, Chelavoor, Kozhikode. Phone, batch timings, office hours and directions to the kalari.",
       path: "/contact",
     },
     site,

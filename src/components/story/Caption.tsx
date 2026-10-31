@@ -35,7 +35,7 @@ export function Caption({ lines, className }: { lines: CaptionLine[]; className?
       data-scrub-text
       style={monoStyle}
       className={cn(
-        "mx-auto text-center text-[4.4vw] leading-[1.3] font-medium md:text-[1.45vw] md:leading-[1.35]",
+        "mx-auto text-center text-[max(15px,4.4vw)] leading-[1.3] font-medium md:text-[max(15px,1.45vw)] md:leading-[1.35]",
         className,
       )}
     >

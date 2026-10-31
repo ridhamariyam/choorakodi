@@ -682,30 +682,6 @@ export const AdmissionsPage = page("admissions-page", "Admissions", [
   },
 ]);
 
-export const HeritagePage = page("heritage-page", "Heritage", [
-  ...pageHeaderFields(),
-  { name: "method", type: "textarea" },
-  {
-    name: "entries",
-    label: "Archive entries",
-    type: "array",
-    fields: [
-      {
-        type: "row",
-        fields: [
-          { name: "key", label: "Key", type: "text", required: true, admin: { width: "20%" } },
-          { name: "index", label: "Label", type: "text", admin: { width: "25%", description: "e.g. Archive 01" } },
-          { name: "year", type: "text", admin: { width: "20%" } },
-          { name: "title", type: "text", required: true, admin: { width: "35%" } },
-        ],
-      },
-      { name: "caption", type: "textarea" },
-      pendingField(),
-      imageField("image", "Photo", "HISTORICAL IMAGE"),
-    ],
-  },
-]);
-
 export const ContactPage = page("contact-page", "Contact", pageHeaderFields(), "Address, phone and timings are in Settings → Academy details.");
 
 export const DisciplinesPage = page("disciplines-page", "Disciplines", [
@@ -739,7 +715,6 @@ export const globals = [
   KalarippayattuPage,
   MarmaPage,
   AdmissionsPage,
-  HeritagePage,
   ContactPage,
   DisciplinesPage,
 ];

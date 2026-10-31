@@ -6,9 +6,9 @@ type Tone = "bone" | "ink" | "green" | "wenge";
 
 const toneStyles: Record<Tone, { surface: string; rule: string; text: string }> = {
   bone: { surface: "bg-bone-dim", rule: "border-ink/12", text: "text-muted" },
-  ink: { surface: "bg-ink-soft", rule: "border-bone/14", text: "text-bone/45" },
-  green: { surface: "bg-green-deep", rule: "border-bone/16", text: "text-bone/50" },
-  wenge: { surface: "bg-wenge", rule: "border-bone/14", text: "text-soil/60" },
+  ink: { surface: "bg-ink-soft", rule: "border-bone/14", text: "text-bone/62" },
+  green: { surface: "bg-green-deep", rule: "border-bone/16", text: "text-bone/62" },
+  wenge: { surface: "bg-wenge", rule: "border-bone/14", text: "text-soil-ink" },
 };
 
 export type FigureProps = {
@@ -82,7 +82,7 @@ export function Figure({
 
       {caption ? (
         <figcaption className="mt-4 flex items-baseline gap-4">
-          {index ? <span className="eyebrow text-soil shrink-0">{index}</span> : null}
+          {index ? <span className="eyebrow text-soil-ink shrink-0">{index}</span> : null}
           <span className="text-sm leading-relaxed text-muted measure-tight">{caption}</span>
         </figcaption>
       ) : null}

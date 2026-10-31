@@ -116,7 +116,7 @@ export function GalleryGrid({ gallery }: { gallery: GalleryItem[] }) {
                 </div>
 
                 <figcaption className="mt-4 flex items-baseline gap-4">
-                  <span className="eyebrow shrink-0 text-soil">{item.category}</span>
+                  <span className="eyebrow shrink-0 text-soil-ink">{item.category}</span>
                   <span className="text-[0.8125rem] leading-relaxed text-muted">
                     {item.caption}
                   </span>

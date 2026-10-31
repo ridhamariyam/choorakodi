@@ -1,6 +1,6 @@
 /**
- * Import the academy's docs/CHOORAKKODI.pdf and
- * docs/Choorakodi_Martial_Arts_Academy_Profile.docx into an already seeded CMS.
+ * Import the academy's docs/client/CHOORAKKODI.pdf and
+ * docs/client/Choorakodi_Martial_Arts_Academy_Profile.docx into an already seeded CMS.
  *
  *   npm run import:choorakkodi
  *
@@ -160,7 +160,7 @@ async function importContent() {
   });
 
   /* ------------------------------------------------ the academy profile */
-  // From public/extra-images: the founder's photograph on the About page, the
+  // From docs/source-images/extra-images: the founder's photograph on the About page, the
   // new album prints in the gallery, and photographs for the Journal's empty
   // frames.
 
@@ -213,7 +213,7 @@ async function importContent() {
     },
   });
 
-  // The founder's photograph (public/extra-images/88.jpg) for the About page.
+  // The founder's photograph (docs/source-images/extra-images/88.jpg) for the About page.
   await payload.updateGlobal({ slug: "about-page", data: { about: { portrait: await image(d.about.portrait) } } });
 
   const gallery = await payload.find({ collection: "gallery", pagination: false, depth: 0 });

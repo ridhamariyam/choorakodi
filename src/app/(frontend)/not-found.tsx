@@ -28,7 +28,7 @@ export default async function NotFound() {
     >
       <PageContainer>
         <TextReveal y={14}>
-          <p className="eyebrow mb-12 text-soil">Error 404</p>
+          <p className="eyebrow mb-12 text-soil-ink">Error 404</p>
         </TextReveal>
 
         <SplitHeading
@@ -43,7 +43,7 @@ export default async function NotFound() {
           <div className="lg:col-span-4">
             <LineReveal tone="dark" />
             <TextReveal delay={0.25} className="mt-8">
-              <p className="text-title font-medium tracking-[-0.024em] text-soil">{copy.sub}</p>
+              <p className="text-title font-medium tracking-[-0.024em] text-soil-ink">{copy.sub}</p>
               <p className="measure mt-6 text-lead text-bone/62">{copy.body}</p>
             </TextReveal>
 
@@ -60,7 +60,7 @@ export default async function NotFound() {
           {/* A wrong turn is a good moment to show the map of the building. */}
           <nav aria-label="Site sections" className="lg:col-span-6 lg:col-start-7">
             <LineReveal tone="dark" />
-            <p className="eyebrow mt-8 text-bone/35">Or try one of these</p>
+            <p className="eyebrow mt-8 text-bone/62">Or try one of these</p>
             <MaskedReveal direction="up" delay={0.2}>
               <ul className="m-0 mt-8 grid list-none grid-cols-2 gap-x-8 gap-y-4 p-0">
                 {navigation.footer.map((item) => (

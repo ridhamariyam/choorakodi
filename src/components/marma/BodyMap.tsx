@@ -48,10 +48,10 @@ export function BodyMap({ regions }: { regions: readonly Region[] }) {
             />
           ))}
 
-          <span className="eyebrow pointer-events-none absolute left-7 top-7 text-bone/35">
+          <span className="eyebrow pointer-events-none absolute left-7 top-7 text-bone/62">
             Plate 01
           </span>
-          <span className="eyebrow pointer-events-none absolute bottom-7 right-7 text-bone/35">
+          <span className="eyebrow pointer-events-none absolute bottom-7 right-7 text-bone/62">
             Artwork pending
           </span>
 
@@ -85,7 +85,7 @@ export function BodyMap({ regions }: { regions: readonly Region[] }) {
                   aria-hidden="true"
                   className={cn(
                     "eyebrow absolute left-1/2 top-full mt-1.5 -translate-x-1/2 whitespace-nowrap transition-opacity duration-500",
-                    isActive ? "text-soil opacity-100" : "text-bone/40 opacity-0 group-hover:opacity-100",
+                    isActive ? "text-soil-ink opacity-100" : "text-bone/62 opacity-0 group-hover:opacity-100",
                   )}
                 >
                   {region.label}
@@ -98,7 +98,7 @@ export function BodyMap({ regions }: { regions: readonly Region[] }) {
 
       {/* Detail */}
       <div className="lg:col-span-5 lg:col-start-8 lg:self-center">
-        <p className="eyebrow text-soil">The classical grouping</p>
+        <p className="eyebrow text-soil-ink">The classical grouping</p>
 
         <div aria-live="polite" className="mt-7 min-h-[9rem]">
           <h3 className="text-headline font-semibold tracking-[-0.033em] text-bone">
@@ -117,7 +117,7 @@ export function BodyMap({ regions }: { regions: readonly Region[] }) {
                 onClick={() => setActiveId(region.id)}
                 className={cn(
                   "flex w-full items-center gap-4 border-t border-bone/14 py-4 text-left transition-colors duration-500",
-                  region.id === activeId ? "text-bone" : "text-bone/50 hover:text-bone/80",
+                  region.id === activeId ? "text-bone" : "text-bone/62 hover:text-bone/80",
                 )}
               >
                 <span

@@ -52,7 +52,7 @@ export function Quote({
               </span>
             ) : null}
             {meta ? (
-              <span className={cn("eyebrow", tone === "light" ? "text-muted" : "text-bone/50")}>
+              <span className={cn("eyebrow", tone === "light" ? "text-muted" : "text-bone/62")}>
                 {meta}
               </span>
             ) : null}

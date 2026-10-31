@@ -2,8 +2,8 @@
  * The homepage chronicle.
  *
  * Every fact below is taken from the academy's own onboarding answers
- * (docs/Choorakkodi Academy - Onboarding Questions), docs/CHOORAKKODI.pdf,
- * docs/Choorakodi_Martial_Arts_Academy_Profile.docx and the supplied proposal.
+ * (docs/client/Choorakkodi Academy - Onboarding Questions), docs/client/CHOORAKKODI.pdf,
+ * docs/client/Choorakodi_Martial_Arts_Academy_Profile.docx and the supplied proposal.
  * Where the academy has not yet confirmed a year, the chapter's marker reads
  * "Year to verify" and it is set beside its photograph instead of under a
  * giant year (see hasYear) — no year is invented. The archive photographs are
@@ -16,6 +16,11 @@ export type CaptionLine = CaptionSegment[];
 
 export type SilhouetteKind = "lamp" | "staff" | "shield" | "sword" | "fish";
 
+/** Desktop width, in vw, of every print on the homepage. */
+export const PRINT_WIDTH = 42;
+/** Height ÷ width of every print; the frame crops the photo to fit. */
+export const PRINT_RATIO = 3 / 4;
+
 export type StoryPhoto = {
   src: string;
   alt: string;
@@ -25,7 +30,7 @@ export type StoryPhoto = {
   x: number;
   /** Vertical offset, in vw, from the top of the chapter's media band. */
   y: number;
-  /** Frame width in vw (desktop). Mobile widths are derived. */
+  /** Superseded by PRINT_WIDTH; kept for existing content. */
   w: number;
   rotate: number;
   /** Parallax factor: 0 = scrolls with the page, 1 = strongly lagging. */
@@ -145,8 +150,7 @@ export const chapters: StoryChapter[] = [
       [{ text: "the start of " }, { text: "Choorakkodi Kalari", bold: true }, { text: "." }],
     ],
     photos: [
-      photo(1, "Two practitioners in a sword-and-shield exchange on the kalari floor", { x: 46, y: 0, w: 48, rotate: 4, speed: 0.35 }),
-      photo(4, "A practitioner raises a round shield against an opponent's strike", { x: 4, y: 22, w: 48, rotate: -5, speed: 0.6 }),
+      photo(16, "Two practitioners raise round shields against each other inside the old kalari", { x: 26, y: 0, w: 48, rotate: -3, speed: 0.35 }),
     ],
     trail: "left",
   },
@@ -186,7 +190,7 @@ export const laterChapters: StoryChapter[] = [
       [{ text: "It drew " }, { text: "enthusiasts from all over the world", bold: true }, { text: "." }],
     ],
     photos: [
-      still("/images/heritage/archive-visitor.webp", [1112, 737], "A visitor is welcomed with a handshake at Choorakkodi Kalari, from the academy archive", { x: 0, y: 0, w: 0, rotate: 3, speed: 0.3 }),
+      still("/images/heritage/archive-staff-drill.webp", [1170, 830], "Two practitioners cross long staffs in a paired drill, from the academy archive", { x: 0, y: 0, w: 0, rotate: 3, speed: 0.3 }),
     ],
     trail: "left",
   },
@@ -221,7 +225,7 @@ export const laterChapters: StoryChapter[] = [
     disc: "#000000",
     tone: "light",
     caption: [
-      [{ text: "Students carried their training beyond the Kalari," }],
+      [{ text: "Students carried their training beyond the kalari," }],
       [{ text: "sharing their knowledge and helping the tradition reach new generations." }],
       [{ text: "The academy's history records that " }, { text: "nearly fifty students", bold: true }],
       [{ text: "went on to establish their own academies." }],
@@ -247,7 +251,7 @@ export const laterChapters: StoryChapter[] = [
       [{ text: "appeared at the " }, { text: "National Games", bold: true }, { text: "." }],
     ],
     photos: [
-      still("/images/heritage/archive-rope-leap.webp", [1053, 880], "A practitioner swings from a rope and flies feet-first over a crouching partner, from the academy archive", { x: 0, y: 0, w: 0, rotate: 2, speed: 0.3 }),
+      still("/images/heritage/archive-rope-leap.webp", [1053, 880], "A practitioner swings from a rope and flies feet-first over a crouching partner, from the academy archive", { x: 0, y: 0, w: 37, rotate: 2, speed: 0.3 }),
     ],
     trail: "right",
   },
@@ -269,9 +273,8 @@ export const laterChapters: StoryChapter[] = [
       [{ text: "C.M.M. Gurukkal's", bold: true }, { text: " legacy alive." }],
     ],
     photos: [
-      still("/images/academy/team-with-leadership.webp", [1170, 909], "Choorakkodi trainers and students gathered with senior members of the academy in the kalari", { x: 50, y: 0, w: 44, rotate: 3, speed: 0.35 }),
-      still("/images/training/trainers-lineup.webp", [1170, 772], "Six Choorakkodi trainers stand with arms folded on the kalari floor", { x: 4, y: 16, w: 46, rotate: -4, speed: 0.6 }),
-      still("/images/training/aerial-sword-leap.webp", [922, 785], "Two students leap at each other with sword and shield above the kalari floor", { x: 46, y: 40, w: 40, rotate: 2, speed: 0.45 }),
+      still("/images/academy/team-with-leadership.webp", [1170, 909], "Choorakkodi trainers and students gathered with senior members of the academy in the kalari", { x: 48, y: 0, w: 46, rotate: 3, speed: 0.35 }),
+      still("/images/training/aerial-sword-leap.webp", [922, 785], "Two students leap at each other with sword and shield above the kalari floor", { x: 6, y: 14, w: 40, rotate: -3, speed: 0.6 }),
     ],
     trail: "left",
   },
@@ -322,28 +325,28 @@ export const programmes = {
       title: "Kalari classes",
       detail: "Mon – Sat · sub-juniors aged 6–14, 4.30 – 6 pm · juniors & seniors 6.30 – 8.30 pm",
       href: "/kalarippayattu",
-      image: still("/images/training/rings-split.webp", [1170, 871], "A sub-junior holds a split between two trainers on the kalari rings", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
+      image: still("/images/training/crossed-lunge.webp", [1600, 1263], "Two students cross sword and shield overhead in a deep lunge on the kalari floor", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
     },
     {
       kicker: "One month",
       title: "Summer camp",
       detail: "A special one-month class through the summer",
       href: "/admissions",
-      image: photo(5, "A student mid-leap", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
+      image: still("/images/training/kalari-academy-leap.webp", [1600, 1318], "A student leaps with sword and shield over a lunging partner", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
     },
     {
       kicker: "Advanced",
       title: "Intensive course",
       detail: "Beginner, intermediate and advanced levels, with certification",
       href: "/disciplines",
-      image: photo(15, "Two students in a close sword-and-stick exchange", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
+      image: still("/images/heritage/archive-short-weapons.webp", [1170, 825], "Two practitioners face each other with short weapons, from the academy archive", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
     },
     {
       kicker: "Treatment",
       title: "Kalari marma chikitsa",
       detail: "Traditional kalari treatment, as part of care",
       href: "/kalari-marma-healing",
-      image: still("/images/training/kalari-uzhichil.webp", [1600, 1067], "Kalari uzhichil: two practitioners massage a patient by foot on the kalari floor", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
+      image: still("/images/services/marmura.webp", [360, 381], "Warm medicated oil poured into a dough ring on a patient's back", { x: 0, y: 0, w: 0, rotate: 0, speed: 0 }),
     },
   ] satisfies Programme[],
 };

@@ -3,19 +3,18 @@ import Link from "next/link";
 import {
   ArrowDownRight, ArrowRight, ArrowUpRight, BookOpen, CalendarDays,
   Check, Clock3, FileText, HeartHandshake, House, Images, Landmark,
-  MessageSquareQuote, PanelTop, Plus, Settings2, Shield, Sparkles,
+  MessageSquareQuote, PanelTop, Plus, Settings2, Sparkles,
   Swords, Upload, type LucideIcon,
 } from "lucide-react";
-import type { ServerProps } from "payload";
+import type { CollectionSlug, GlobalSlug, ServerProps } from "payload";
 import { BrandMark } from "@/components/brand/BrandMark";
 
-const pages: { slug: string; label: string; description: string; icon: LucideIcon }[] = [
+const pages: { slug: GlobalSlug; label: string; description: string; icon: LucideIcon }[] = [
   { slug: "homepage", label: "Homepage", description: "The first impression", icon: House },
   { slug: "about-page", label: "About & legacy", description: "The people and the story", icon: Landmark },
   { slug: "kalarippayattu-page", label: "Kalarippayattu", description: "The art and its practice", icon: Swords },
   { slug: "marma-page", label: "Marma healing", description: "Care, rooted in tradition", icon: HeartHandshake },
   { slug: "admissions-page", label: "Admissions", description: "Welcome the next generation", icon: FileText },
-  { slug: "heritage-page", label: "Heritage", description: "Preserve the memories", icon: Shield },
   { slug: "disciplines-page", label: "Disciplines", description: "What the academy teaches", icon: BookOpen },
   { slug: "contact-page", label: "Contact", description: "Help people find you", icon: MessageSquareQuote },
   { slug: "shared-sections", label: "Shared sections", description: "Content used across the site", icon: PanelTop },
@@ -37,8 +36,8 @@ function formatDate(value: string) {
 
 export async function Dashboard({ payload, user, permissions, visibleEntities }: ServerProps) {
   const adminPath = payload.config.routes.admin;
-  const canRead = (slug: string) => visibleEntities?.collections.includes(slug) ?? false;
-  const canEditPage = (slug: string) => visibleEntities?.globals.includes(slug) ?? false;
+  const canRead = (slug: CollectionSlug) => visibleEntities?.collections.includes(slug) ?? false;
+  const canEditPage = (slug: GlobalSlug) => visibleEntities?.globals.includes(slug) ?? false;
   const visibleLibraries = libraries.filter((library) => canRead(library.slug));
   const results = await Promise.allSettled(visibleLibraries.map((library) => payload.find({
     collection: library.slug,
@@ -72,7 +71,8 @@ export async function Dashboard({ payload, user, permissions, visibleEntities }:
     { slug: "posts", label: "Write a story", detail: "Share something worth telling", icon: Plus, href: `${adminPath}/collections/posts/create` },
     { slug: "media", label: "Upload photos", detail: "Add to your image library", icon: Upload, href: `${adminPath}/collections/media/create` },
     { slug: "events", label: "Add an event", detail: "Give people a reason to gather", icon: CalendarDays, href: `${adminPath}/collections/events/create` },
-  ].filter((action) => canRead(action.slug) && permissions?.collections?.[action.slug]?.create);
+  ] as const satisfies { slug: CollectionSlug; label: string; detail: string; icon: LucideIcon; href: string }[];
+  const visibleActions = quickActions.filter((action) => canRead(action.slug) && permissions?.collections?.[action.slug]?.create);
 
   return (
     <div className="studio-dashboard">
@@ -132,9 +132,9 @@ export async function Dashboard({ payload, user, permissions, visibleEntities }:
         </section>
 
         <div className="studio-side-stack">
-          {quickActions.length > 0 && <section className="studio-panel studio-quick-actions" aria-labelledby="studio-actions-title">
+          {visibleActions.length > 0 && <section className="studio-panel studio-quick-actions" aria-labelledby="studio-actions-title">
             <div className="studio-section-heading"><h2 id="studio-actions-title">A little something new</h2><Sparkles size={18} strokeWidth={1.5} aria-hidden="true" /></div>
-            {quickActions.map(({ label, detail, icon: Icon, href }) => <Link className="studio-quick-action" href={href} key={href}>
+            {visibleActions.map(({ label, detail, icon: Icon, href }) => <Link className="studio-quick-action" href={href} key={href}>
               <span className="studio-quick-action__icon"><Icon size={18} strokeWidth={1.7} aria-hidden="true" /></span><span><strong>{label}</strong><small>{detail}</small></span><ArrowRight size={15} aria-hidden="true" />
             </Link>)}
           </section>}

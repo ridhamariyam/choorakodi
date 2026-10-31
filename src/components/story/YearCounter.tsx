@@ -11,8 +11,7 @@ type Stop = { from: number; to: number; year: number };
  * Where each dated chapter holds its year, in scroll pixels: from the moment
  * its top reaches the middle of the viewport until the last of its
  * `data-year-hold` parts (marker and caption, the founder's portrait) has
- * passed it. The prints below then count on towards
- * the next year. Only chapters with a confirmed year carry `data-year`.
+ * passed it. Only chapters with a confirmed year carry `data-year`.
  */
 function measure(): Stop[] {
   const middle = window.innerHeight / 2;
@@ -31,7 +30,10 @@ function measure(): Stop[] {
     .sort((a, b) => a.from - b.from);
 }
 
-/** The year at a scroll position: held inside a dated chapter, counted between them. */
+/**
+ * The year at a scroll position: the last confirmed year passed. The undated
+ * chapters between two years must not be given a year by the counter.
+ */
 function yearAt(scroll: number, stops: Stop[], fallback: number): number {
   const first = stops[0];
   if (!first) return fallback;
@@ -39,19 +41,15 @@ function yearAt(scroll: number, stops: Stop[], fallback: number): number {
   for (let i = 0; i < stops.length - 1; i++) {
     const a = stops[i]!;
     const b = stops[i + 1]!;
-    if (scroll <= b.from) {
-      const t = Math.min(1, Math.max(0, (scroll - a.to) / Math.max(1, b.from - a.to)));
-      return Math.round(a.year + (b.year - a.year) * t);
-    }
+    if (scroll < b.from) return a.year;
     if (scroll <= b.to) return b.year;
   }
   return stops[stops.length - 1]!.year;
 }
 
 /**
- * Fixed year counter: the founding year, a rule, and an odometer that counts
- * through every year as you scroll — holding on each dated chapter's year and
- * rolling 1961, 1962 … on the way to the next.
+ * Fixed year counter: the founding year, a rule, and an odometer that rolls to
+ * each dated chapter's year as it arrives.
  */
 export function YearCounter({ range }: { range: Story["range"] }) {
   const start = Number(range.start) || 1960;

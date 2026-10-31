@@ -72,7 +72,7 @@ export default async function AboutPage() {
           {/* His story down the middle, large, lighting up as it scrolls. */}
           <div className="mx-auto mt-[16vw] max-w-[88vw] text-center md:mt-[8vw] md:max-w-[56vw]">
             <TextReveal>
-              <p style={monoStyle} className="text-[3vw] uppercase tracking-[0.32em] text-green md:text-[0.9vw]">
+              <p style={monoStyle} className="text-[max(11px,3vw)] uppercase tracking-[0.32em] text-green md:text-[max(12px,0.9vw)]">
                 {founder.name}
               </p>
             </TextReveal>
@@ -81,7 +81,7 @@ export default async function AboutPage() {
                 <p
                   key={text.slice(0, 24)}
                   data-scrub-text
-                  className="text-[4.4vw] leading-[1.35] font-medium text-[#1f1d1e] md:text-[1.6vw] md:leading-[1.4]"
+                  className="text-[max(15px,4.4vw)] leading-[1.35] font-medium text-[#1f1d1e] md:text-[max(15px,1.6vw)] md:leading-[1.4]"
                 >
                   {highlight(text, founder.highlights).map((part, i) => (
                     <ScrollWords key={i} text={part.text} bold={part.bold} />

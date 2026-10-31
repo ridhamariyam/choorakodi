@@ -1,4 +1,4 @@
-import { slot, type ImageSlot } from "./assets";
+import { slot } from "./assets";
 
 /** A paragraph told down the middle of a page, its photos on either side. */
 export type StoryParagraph = {
@@ -42,7 +42,7 @@ export const founder = {
   name: "Usthad C.M.M. Gurukkal",
   heading: ["The hand", "that taught", "the hands."],
   intro: [
-    "Usthad C.M.M. Gurukkal (Chottanikkara Mamu Moulavi Gurukkal) admired Kalari from childhood. He travelled across Kerala to learn its different methods: Thekkan, Vadakkan, Thulunadan and Kadathanadan Mura.",
+    "Usthad C.M.M. Gurukkal (Chottanikkara Mamu Moulavi Gurukkal) admired the kalari from childhood. He travelled across Kerala to learn its different methods: Thekkan, Vadakkan, Thulunadan and Kadathanadan Mura.",
     "He studied under around fifty Gurus, among them E.P. Abdulrahiman Gurukkal, Floor Abdullakutty Gurukkal, Chirakkal T. Sreedharan Nair Gurukkal, Hydros Gurukkal and Francis Eelam. He learned kalari chikitsa and Ayurveda from Hakeem Abu Ahammed Ponnani, K.T. Mahavan Vadiyar and Raghavan Thirumulpad.",
     "In 1960 he began teaching kalari and offering kalari treatment from his home, first as Shafi Dawa Khana Ayurveda Chikitsalayam and later as Choorakkodi Kalari Chikitsalayam. He then established Choorakkodi Kalari Sangam as a martial arts centre alongside the treatment centre, and it drew enthusiasts from all over the world. He is also the visionary behind SDK Health Complex, where Shafi Dawa Khana is now an Ayurveda hospital run by his son, Dr. Saheer Ali.",
   ].join("\n\n"),
@@ -198,13 +198,13 @@ export const about = {
 
 export const kalarippayattu = {
   eyebrow: "The art",
-  heading: ["Kalari", "ppayattu."],
+  heading: ["Kalarippayattu."],
   standfirst:
     "Kerala's classical martial art. Trained barefoot on earth, in a room built for it, in an order that has not changed.",
   what: {
     title: "What is Kalarippayattu?",
     body: [
-      "Kalari is the training hall; payattu is the practice carried out in it. The art belongs to Kerala and is trained inside a hall traditionally sunk below ground level, entered by steps, with a floor of packed earth.",
+      "Kalarippayattu, also spelled Kalaripayattu, takes its name from its two parts: kalari is the training hall; payattu is the practice carried out in it. The art belongs to Kerala and is trained inside a hall traditionally sunk below ground level, entered by steps, with a floor of packed earth.",
       "It is usually described as combining conditioning, weapons work, unarmed technique and a detailed knowledge of the body's vital points — the last of which it shares with the region's medical tradition rather than having invented.",
       "The Four Anghanghal in Choorakkodi's training repertoire are Meypayattu, Vadipayattu, Angappayattu and Marmmakai. Meypayattu is sequence-based body movement — coordinated steps, kicks, jumps and postures; Vadipayattu is stick-fighting practice; Marmmakai is associated with hand techniques and knowledge of the marma, the body's sensitive points.",
     ],
@@ -285,7 +285,7 @@ export const kalarippayattu = {
       "Training with certified and experienced trainers",
       "Annual belt grading",
       "District and state championship coaching",
-      "Participation in Kalari Payattu and yoga",
+      "Participation in Kalarippayattu and yoga",
     ],
   },
   who: {
@@ -350,7 +350,7 @@ export const marma = {
   points: {
     title: "The 107 vital points",
     body: "One hundred and seven is the figure most often cited in the classical enumeration. The points are grouped by region of the body, and the grouping — rather than any single point — is what a practitioner works from.",
-    note: "The regions below reflect the classical grouping. The interactive body map is a placeholder and will accept commissioned artwork.",
+    note: "The regions below reflect the classical grouping.",
     regions: [
       { id: "head", label: "Head & neck", blurb: "The most guarded region of the classical map." },
       { id: "torso", label: "Thorax & abdomen", blurb: "Points associated with the trunk and its organs." },
@@ -394,8 +394,8 @@ export const admissions = {
   steps: [
     {
       index: "01",
-      title: "WhatsApp us",
-      body: "Send a message saying who is joining and roughly when you can train. You will get current timings back.",
+      title: "Get in touch",
+      body: "Tell the academy who is joining and roughly when you can train. You will get current timings back.",
     },
     {
       index: "02",
@@ -463,118 +463,6 @@ export const admissions = {
   schedulePending: "",
   feesTitle: "Fees",
   feesPending: "Supply the fee structure, or confirm that fees are quoted on enquiry only.",
-};
-
-/* -------------------------------------------------------------- heritage */
-
-export type ArchiveEntry = {
-  id: string;
-  index: string;
-  year: string;
-  title: string;
-  caption: string;
-  pending?: string;
-  image: ImageSlot;
-};
-
-export const heritage = {
-  eyebrow: "The archive",
-  heading: ["Heritage."],
-  standfirst:
-    "An academy's archive is only as good as its honesty. Where a date or a name is not confirmed, this archive says so.",
-  method:
-    "Entries record what is visible in the photograph, separately from what is remembered, and attribute every remembered detail to the person who remembered it. Undated is a legitimate caption.",
-  entries: [
-    {
-      id: "a-01",
-      index: "Archive 01",
-      year: "1960",
-      title: "Foundation",
-      caption: "Kalari lessons and kalari treatment begin at Usthad C.M.M. Gurukkal's home, as Shafi Dawa Khana Ayurveda Chikitsalayam. His portrait hangs in the kalari today, above the weapons.",
-      pending: "Supply the date the portrait was taken, and a photograph of the first kalari if one survives.",
-      image: slot("HISTORICAL IMAGE", "Framed portrait of Usthad C.M.M. Gurukkal above the kalari weapons", {
-        src: "/images/heritage/founder-portrait-framed.webp",
-        width: 1170,
-        height: 1695,
-      }),
-    },
-    {
-      id: "a-02",
-      index: "Archive 02",
-      year: "Gurus",
-      title: "The teachers",
-      caption: "Usthad Gurukkal learned under around fifty Gurus across Kerala. Three men in conversation, from the academy's black-and-white prints.",
-      pending: "Confirm the names of those pictured, with permission, and the date.",
-      image: slot("HISTORICAL IMAGE", "Three men seated in conversation, a black-and-white print from the academy archive", {
-        src: "/images/heritage/archive-elders.webp",
-        width: 1093,
-        height: 792,
-      }),
-    },
-    {
-      id: "a-03",
-      index: "Archive 03",
-      year: "Kolthari",
-      title: "The staff",
-      caption: "Two practitioners lock a long staff overhead. Wooden weapons come second in the syllabus, after the body is built.",
-      pending: "Supply the date and the names of the practitioners.",
-      image: slot("HISTORICAL IMAGE", "Two practitioners lock a long staff overhead, a black-and-white print", {
-        src: "/images/heritage/archive-staff-lock.webp",
-        width: 1170,
-        height: 1947,
-      }),
-    },
-    {
-      id: "a-04",
-      index: "Archive 04",
-      year: "Verumkai",
-      title: "The empty hand",
-      caption: "A knife attack turned into a hold. Unarmed technique comes last, when control has been shown rather than assumed.",
-      pending: "Supply the date and the names of the practitioners.",
-      image: slot("HISTORICAL IMAGE", "A practitioner bends an attacker backwards and controls the knife hand, from the academy archive", {
-        src: "/images/heritage/archive-knife-defence.webp",
-        width: 1170,
-        height: 1971,
-      }),
-    },
-    {
-      id: "a-05",
-      index: "Archive 05",
-      year: "Guests",
-      title: "Visitors",
-      caption: "Choorakkodi Kalari Sangam drew enthusiasts from all over the world. A visitor is welcomed at the kalari.",
-      pending: "Confirm who is pictured, with permission, and the date of the visit.",
-      image: slot("HISTORICAL IMAGE", "A visitor is welcomed with a handshake at Choorakkodi Kalari, from the academy archive", {
-        src: "/images/heritage/archive-visitor.webp",
-        width: 1112,
-        height: 737,
-      }),
-    },
-    {
-      id: "a-06",
-      index: "Archive 06",
-      year: "Sport",
-      title: "Recognition",
-      caption: "The academy is affiliated to the Kerala Kalarippayattu Association, the District Sports Council and the Taekwondo and Yoga Associations of Kerala.",
-      image: slot("HISTORICAL IMAGE", "The Sports Kalaripayattu Association crest, framed at the academy", {
-        src: "/images/heritage/association-certificate.webp",
-        width: 1170,
-        height: 1659,
-      }),
-    },
-    {
-      id: "a-07",
-      index: "Archive 07",
-      year: "Today",
-      title: "The floor now",
-      caption: "66 years on, in Chelavoor. Six generations of students; nearly 50 now run academies of their own.",
-      image: slot("KALARI IMAGE", "Choorakkodi trainers and students gathered with senior members of the academy in the kalari", {
-        src: "/images/academy/team-with-leadership.webp",
-        width: 1170,
-        height: 909,
-      }),
-    },
-  ] satisfies ArchiveEntry[],
 };
 
 /* --------------------------------------------------------------- contact */

@@ -20,11 +20,11 @@ export function HomeFaq({ items }: { items: FaqItem[] }) {
       <h2
         id="home-faq"
         data-scrub-text
-        className="m-0 text-center text-[3.6vw] font-bold uppercase tracking-[0.32em] md:text-[1.1vw]"
+        className="m-0 text-center text-[max(15px,3.6vw)] font-bold uppercase tracking-[0.32em] md:text-[max(12px,1.1vw)]"
       >
         <ScrollWords text="Frequently asked questions" bold />
       </h2>
-      <FAQ items={items} className="mx-auto mt-[6vw] max-w-[88vw] md:mt-[3vw] md:max-w-[70vw]" />
+      <FAQ items={items} limit={3} className="mx-auto mt-[6vw] max-w-[88vw] md:mt-[3vw] md:max-w-[70vw]" />
     </section>
   );
 }

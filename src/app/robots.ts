@@ -6,12 +6,11 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
-        // Next's own build output; nothing crawlable lives here.
-        disallow: ["/_next/"],
+        // Uploaded photos stay crawlable; the admin and its API do not.
+        allow: ["/", "/api/media/file/"],
+        disallow: ["/admin", "/api/"],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
-    host: siteUrl,
   };
 }

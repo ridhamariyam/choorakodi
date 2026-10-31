@@ -56,10 +56,14 @@ export function SkyHero({ intro }: { intro: Story["intro"] }) {
       const drifts = root.querySelectorAll<HTMLElement>("[data-drift]");
       const html = document.documentElement;
 
-      // The clouds along the foot of the sky never stop drifting.
-      drifts.forEach((cloud, i) => {
-        gsap.to(cloud, { xPercent: i % 2 ? -4 : 4, duration: 14 + i * 4, ease: "sine.inOut", repeat: -1, yoyo: true });
-      });
+      // The clouds along the foot of the sky drift while the hero is on screen.
+      const drifting = Array.from(drifts, (cloud, i) =>
+        gsap.to(cloud, { xPercent: i % 2 ? -4 : 4, duration: 14 + i * 4, ease: "sine.inOut", repeat: -1, yoyo: true }),
+      );
+
+      // Blur is the costliest thing a scrubbed frame can ask for, so the words
+      // never use it and phones skip it on the photographs too.
+      const blur = (px: number) => (mobile ? {} : { filter: `blur(${px}px)` });
 
       // Every scene but the first starts hidden in cloud.
       scenes.forEach((scene, i) => gsap.set(scene, { autoAlpha: i === 0 ? 1 : 0 }));
@@ -87,17 +91,17 @@ export function SkyHero({ intro }: { intro: Story["intro"] }) {
           // until the scroll reaches them.
           tl.fromTo(covers, { autoAlpha: 1, scale: 1.6, yPercent: -14 }, { autoAlpha: 0, scale: 1, yPercent: 0, duration: 1, ease: "power2.out", immediateRender: false }, at);
           tl.fromTo(veil, { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.7, ease: "power1.out", immediateRender: false }, at);
-          tl.fromTo(photo, { scale: 1.14, filter: "blur(14px)", autoAlpha: 0 }, { scale: 1, filter: "blur(0px)", autoAlpha: 1, duration: 1.1, ease: "power2.out" }, at);
-          tl.fromTo(chars, { autoAlpha: 0, filter: "blur(10px)", x: "-0.3em" }, { autoAlpha: 1, filter: "blur(0px)", x: 0, duration: 0.5, stagger: 0.035, ease: "power2.out" }, at + 0.35);
-          if (line) tl.fromTo(line, { autoAlpha: 0, filter: "blur(6px)" }, { autoAlpha: 1, filter: "blur(0px)", duration: 0.5 }, at + 0.8);
+          tl.fromTo(photo, { scale: 1.14, ...blur(14), autoAlpha: 0 }, { scale: 1, ...blur(0), autoAlpha: 1, duration: 1.1, ease: "power2.out" }, at);
+          tl.fromTo(chars, { autoAlpha: 0, x: "-0.3em" }, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.035, ease: "power2.out" }, at + 0.35);
+          if (line) tl.fromTo(line, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 }, at + 0.8);
         }
         tl.to(paper, { xPercent: i % 2 ? 2 : -2, yPercent: i % 2 ? -1.5 : 1.5, scale: 1.04 + (i % 3) * 0.02, duration: 3 }, at);
 
         // Out: the words smear sideways, the clouds rise over the frame.
         const out = at + 2;
-        tl.to(chars, { autoAlpha: 0, filter: "blur(8px)", x: "0.5em", scaleX: 1.4, duration: 0.45, stagger: 0.015, ease: "power2.in" }, out);
-        if (line) tl.to(line, { autoAlpha: 0, filter: "blur(6px)", x: "1em", duration: 0.4, ease: "power2.in" }, out);
-        tl.to(photo, { scale: 1.08, filter: "blur(10px)", duration: 1, ease: "power2.in" }, out);
+        tl.to(chars, { autoAlpha: 0, x: "0.5em", scaleX: 1.4, duration: 0.45, stagger: 0.015, ease: "power2.in" }, out);
+        if (line) tl.to(line, { autoAlpha: 0, x: "1em", duration: 0.4, ease: "power2.in" }, out);
+        tl.to(photo, { scale: 1.08, ...blur(10), duration: 1, ease: "power2.in" }, out);
         tl.fromTo(covers, { autoAlpha: 0, scale: 1, yPercent: 0 }, { autoAlpha: 1, scale: 1.6, yPercent: -14, duration: 1, ease: "power2.in", immediateRender: false }, out);
         // The last close is into the page's ground.
         if (i === last) tl.set(veil, { backgroundColor: intro.bg }, out);
@@ -126,6 +130,7 @@ export function SkyHero({ intro }: { intro: Story["intro"] }) {
         animation: tl,
         onToggle: (self) => {
           html.dataset.heroActive = String(self.isActive);
+          drifting.forEach((tween) => tween.paused(!self.isActive));
         },
       });
       html.dataset.heroActive = String(trigger.isActive || window.scrollY < 10);
@@ -146,9 +151,9 @@ export function SkyHero({ intro }: { intro: Story["intro"] }) {
           if (entered) return;
           entered = true;
           const entrance = gsap.timeline({ delay: 0.2 });
-          entrance.fromTo(photo, { autoAlpha: 0, scale: 1.14, filter: "blur(14px)" }, { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 1.4, ease: "power2.out", clearProps: "filter,transform" }, 0);
-          entrance.fromTo(chars, { autoAlpha: 0, filter: "blur(10px)", x: "-0.3em" }, { autoAlpha: 1, filter: "blur(0px)", x: 0, duration: 0.7, stagger: 0.045, ease: "power2.out", clearProps: "filter,transform" }, 0.45);
-          if (line) entrance.fromTo(line, { autoAlpha: 0, filter: "blur(6px)" }, { autoAlpha: 1, filter: "blur(0px)", duration: 0.7, clearProps: "filter" }, 0.9);
+          entrance.fromTo(photo, { autoAlpha: 0, scale: 1.14, ...blur(14) }, { autoAlpha: 1, scale: 1, ...blur(0), duration: 1.4, ease: "power2.out", clearProps: "filter,transform" }, 0);
+          entrance.fromTo(chars, { autoAlpha: 0, x: "-0.3em" }, { autoAlpha: 1, x: 0, duration: 0.7, stagger: 0.045, ease: "power2.out", clearProps: "transform" }, 0.45);
+          if (line) entrance.fromTo(line, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.7 }, 0.9);
         };
         // ck-leaving on a normal exit; ck-finished alone when it is skipped.
         window.addEventListener("ck-leaving", enter, { once: true });
@@ -246,7 +251,7 @@ function Scene({ scene, eager }: { scene: SkyScene; eager: boolean }) {
           height={scene.image.height}
           fetchPriority={eager ? "high" : undefined}
           loading={eager ? "eager" : "lazy"}
-          className="absolute inset-0 h-full w-full object-cover mix-blend-multiply [filter:grayscale(.7)_sepia(.22)_brightness(1.12)_contrast(.96)]"
+          className="absolute inset-0 h-full w-full object-cover mix-blend-multiply [filter:grayscale(.3)_sepia(.2)_brightness(1.08)]"
         />
         <Cloud src={skyTextures.cloudBank} className="bottom-[-26%] left-[-6%] z-[1] w-[70%] opacity-60" />
       </div>
@@ -259,14 +264,14 @@ function Scene({ scene, eager }: { scene: SkyScene; eager: boolean }) {
           center && "md:absolute md:inset-x-0 md:top-[15%]",
         )}
       >
-        <p className="m-0 text-[3vw] font-semibold uppercase tracking-[0.3em] opacity-80 md:text-[0.95vw]">
+        <p className="m-0 text-[max(11px,3vw)] font-semibold uppercase tracking-[0.3em] opacity-80 md:text-[max(12px,0.95vw)]">
           <Letters text={scene.kicker} />
         </p>
         <h2 className="m-0 mt-[2vw] text-[9vw] leading-[1.02] font-bold uppercase tracking-[0.04em] md:mt-[0.8vw] md:text-[3.6vw]">
           <Letters text={scene.title} />
         </h2>
         {scene.line ? (
-          <p data-line className="m-0 mt-[3vw] text-[3.4vw] font-semibold uppercase tracking-[0.16em] opacity-75 md:mt-[1.2vw] md:text-[0.95vw]">
+          <p data-line className="m-0 mt-[3vw] text-[max(15px,3.4vw)] font-semibold uppercase tracking-[0.16em] opacity-75 md:mt-[1.2vw] md:text-[max(12px,0.95vw)]">
             {scene.line}
           </p>
         ) : null}

@@ -22,7 +22,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/disciplines", priority: 0.8, changeFrequency: "monthly" },
     { path: "/kalari-marma-healing", priority: 0.8, changeFrequency: "monthly" },
     { path: "/admissions", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/heritage", priority: 0.7, changeFrequency: "yearly" },
     { path: "/gallery", priority: 0.7, changeFrequency: "monthly" },
     { path: "/contact", priority: 0.8, changeFrequency: "yearly" },
   ];

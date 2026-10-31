@@ -34,8 +34,8 @@ export function EventDetail({
         <PageContainer>
           <TextReveal y={14}>
             <div className="mb-12 flex flex-wrap items-baseline gap-x-8 gap-y-3">
-              <span className="eyebrow text-soil">Event</span>
-              <span className="eyebrow text-bone/45">
+              <span className="eyebrow text-soil-ink">Event</span>
+              <span className="eyebrow text-bone/62">
                 {day} {month} {year}
               </span>
             </div>
@@ -130,7 +130,7 @@ export function EventDetail({
                         data-reveal
                         className="flex items-baseline gap-8 border-t border-ink/12 py-5"
                       >
-                        <dt className="eyebrow w-20 shrink-0 text-soil">{item.time}</dt>
+                        <dt className="eyebrow w-20 shrink-0 text-soil-ink">{item.time}</dt>
                         <dd className="m-0 text-lead text-ink/78">{item.label}</dd>
                       </div>
                     ))}
@@ -192,7 +192,7 @@ function Fact({
 }) {
   return (
     <div className="flex items-baseline justify-between gap-6 border-b border-ink/12 py-5">
-      <dt className="flex items-center gap-2.5 text-soil">
+      <dt className="flex items-center gap-2.5 text-soil-ink">
         {icon}
         <span className="eyebrow">{label}</span>
       </dt>
